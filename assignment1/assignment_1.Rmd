@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(stargazer)
 library(readr)
-
+library(ivreg)
 ```
 
 ## Question 1
@@ -37,4 +37,25 @@ The results show that 1 additional year of schooling has an effect of 0.216 on l
 Hoi bas dit is een test. Hieronder doe ik code, wat ik wil laten zien:
 ```{r, include=TRUE}
 x <- 3*3 + 1
+```
+
+(b) The researcher has collected data on two potential instrumental vari- ables subsidy and distance for years of schooling.
+    - distance measures the distance between the school location and the residence of the individual while at school-going age.
+    - subsidy is an indicator depending on regional subsidies of families for covering school expenses.
+    
+The researcher has the option to use only distance as an instrumen- tal variable, or to use only the instrumental variable subsidy, or to use both distance and subsidy as instrumental variables. Perform in- strumental variables estimation for these three options. Which option do you prefer? Include in your answer the necessary analyses and numbers on which you base your choice.
+
+```{r}
+firstoption <- ivreg(data = data, formula = 
+                         logWage ~ age + age2 + schooling | distance + age + age2)
+
+secondoption <- ivreg(data = data, formula =
+                          logWage ~ age + age2 + schooling | subsidy + age + age2)
+
+thirdoption <- ivreg(data = data, formula =
+                          logWage ~ age + age2 + schooling | subsidy + distance + age + age2)
+```
+
+```{r results='asis'}
+stargazer(firstoption, secondoption, thirdoption)
 ```
