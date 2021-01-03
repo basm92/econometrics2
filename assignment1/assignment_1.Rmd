@@ -26,15 +26,16 @@ library(readr)
 data <- read_csv("./Data/logEarnings.csv")
 ```
     
-```{r, results='asis'}
+```{r, results='asis', echo=FALSE}
 model <- lm(data = data, formula = logWage ~ schooling + age + age2)
-stargazer(model, type = "html")
+stargazer(model, type = "latex", header=FALSE)
 ```
 
 The results show that 1 additional year of schooling has an effect of 0.216 on log(Wage), which means that it has an effect of `r exp(0.216)` on schooling. Hence, each year of schooling supposedly increases earnings with `r exp(0.216)`.
 
-
-Hoi bas dit is een test. Hieronder doe ik code, wat ik wil laten zien:
-```{r, include=TRUE}
-x <- 3*3 + 1
+```{python, echo=FALSE}
+import numpy as np
+x=np.array([1,2,3])
+print(x)
 ```
+
