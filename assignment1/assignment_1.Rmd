@@ -18,8 +18,15 @@ library(readr)
 
 1. The sample selection model. A researcher aims to gain insight in the potential earnings of the non-employed. (In the data, the non-employed can be identified by a missing value for the earnings variable). She realizes that the sample of observed wages may be subject to sample selection.
 
-    (a) Run an OLS regression for log-earnings on schooling, age, and age squared. Present the results and comment on the estimates.
+(a) Run an OLS regression for log-earnings on schooling, age, and age squared. Present the results and comment on the estimates.
     
-    ```{r}
-    read_csv("./Data/logEarnings.csv")
-    ```
+```{r, include=FALSE}
+data <- read_csv("./Data/logEarnings.csv")
+```
+    
+```{r, results='asis'}
+model <- lm(data = data, formula = logWage ~ schooling + age + age2)
+stargazer(model, type = "html")
+```
+
+The results show that 1 additional year of schooling has an effect of 0.216 on log(Wage), which means that it has an effect of `r exp(0.216)` on schooling. Hence, each year of schooling supposedly increases earnings with `r exp(0.216)`. 

@@ -394,36 +394,184 @@ summary {
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
 <ol style="list-style-type: decimal">
-<li><p>The sample selection model. A researcher aims to gain insight in the potential earnings of the non-employed. (In the data, the non-employed can be identified by a missing value for the earnings variable). She realizes that the sample of observed wages may be subject to sample selection.</p>
+<li>The sample selection model. A researcher aims to gain insight in the potential earnings of the non-employed. (In the data, the non-employed can be identified by a missing value for the earnings variable). She realizes that the sample of observed wages may be subject to sample selection.</li>
+</ol>
 <ol style="list-style-type: lower-alpha">
 <li>Run an OLS regression for log-earnings on schooling, age, and age squared. Present the results and comment on the estimates.</li>
 </ol>
-<pre class="r"><code>read_csv(&quot;./Data/logEarnings.csv&quot;)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   age = col_double(),
-##   age2 = col_double(),
-##   distance = col_double(),
-##   married = col_double(),
-##   schooling = col_double(),
-##   subsidy = col_double(),
-##   logWage = col_double()
-## )</code></pre>
-<pre><code>## # A tibble: 666 x 7
-##      age  age2 distance married schooling subsidy logWage
-##    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-##  1    33  1089        1       1         4       5    2.87
-##  2    26   676        3       1         7      10   NA   
-##  3    34  1156        4       0         8       9    2.93
-##  4    30   900        5       1         4       9    8.29
-##  5    26   676        3       1         7       4   NA   
-##  6    26   676        3       1         8       9   NA   
-##  7    31   961        4       1         5       2    6.78
-##  8    33  1089        4       1         4       2   NA   
-##  9    31   961        3       0         8       8   NA   
-## 10    33  1089        4       0         8       4    3.01
-## # … with 656 more rows</code></pre></li>
-</ol>
+<pre class="r"><code>model &lt;- lm(data = data, formula = logWage ~ schooling + age + age2)
+stargazer(model, type = &quot;html&quot;)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="1" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+logWage
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+schooling
+</td>
+<td>
+0.216<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.032)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+age
+</td>
+<td>
+-0.342
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.521)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+age2
+</td>
+<td>
+-0.011
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+26.409<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(8.057)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+416
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.815
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.813
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+1.499 (df = 412)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+604.261<sup>***</sup> (df = 3; 412)
+</td>
+</tr>
+<tr>
+<td colspan="2" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<p>The results show that 1 additional year of schooling has an effect of 0.216 on log(Wage), which means that it has an effect of 1.2411024 on schooling. Hence, each year of schooling supposedly increases earnings with 1.2411024.</p>
 </div>
 
 
