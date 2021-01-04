@@ -52,7 +52,20 @@ An individual is only in this dataset if they earn wages, i.e. if they are emplo
 
 Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})$. The given estimation only concerns $\mathbb{E[\text{Earnings}|\text{Having a job}]}$. 
 
+
 __(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?__
+
+
+
+__(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
+
+
+
+__(e) Estimate the sample selection model with Maximum Likelihood, both with and without the exclusion restriction and compare the outcomes.__
+
+
+
+__(f) On the basis of your results, how would you specify the distribution of potential earnings for the non-employed?__
 
 
 
