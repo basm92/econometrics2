@@ -40,7 +40,7 @@ pvals_1 <- results_1$coefficients[,4]
 
 stargazer(model_1, style = "AER", 
           font.size = "small",
-          header = F, label = 'q1_a_ols', 
+          header = F, label = 'tab:q1_a_ols', 
           caption = 'OLS regression for log-earnings on schooling, age and age squared.')
 ```
 
