@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.3)  4 JAN 2021 13:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.3)  4 JAN 2021 13:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -557,7 +557,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
 58.
 (c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [2] [3] (./assignment_1.aux)
+) [2] [3] [4] (./assignment_1.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -565,15 +565,15 @@ Package rerunfilecheck Info: File `assignment_1.out' has not changed.
 (rerunfilecheck)             Checksum: 61352E81D8CA8CB721EBADCAFA06FEF7;480.
  ) 
 Here is how much of TeX's memory you used:
- 10961 strings out of 481258
- 159017 string characters out of 5913987
- 455172 words of memory out of 5000000
- 27692 multiletter control sequences out of 15000+600000
- 460967 words of font info for 75 fonts, out of 8000000 for 9000
+ 10965 strings out of 481258
+ 159052 string characters out of 5913987
+ 456172 words of memory out of 5000000
+ 27693 multiletter control sequences out of 15000+600000
+ 465230 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 68i,10n,70p,373b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.
-enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
+ 68i,10n,70p,373b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.e
+nc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1
 .enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-r
 m.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-
 mathsy.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
@@ -587,19 +587,20 @@ texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/walte/AppData/Roaming/Tiny
 TeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/walte/AppData/Roaming/T
 inyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/walte/AppData/Roamin
 g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb><c:/Users/walte/AppData/Roa
-ming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb><c:/Users/walte/AppData
-/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/walte/Ap
-pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb><c:/Users/walt
-e/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/
-walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb><c:/Us
-ers/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><
-c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.
-pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfo
-nts/symbols/msbm10.pfb>
-Output written on assignment_1.pdf (3 pages, 284144 bytes).
+ming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/walte/AppDat
+a/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb><c:/Users/walte/Ap
+pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/wal
+te/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb><c:/Users
+/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/U
+sers/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb><
+c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.
+pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lm
+tt10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/
+amsfonts/symbols/msbm10.pfb>
+Output written on assignment_1.pdf (4 pages, 296958 bytes).
 PDF statistics:
- 115 PDF objects out of 1000 (max. 8388607)
- 92 compressed objects within 1 object stream
- 11 named destinations out of 1000 (max. 500000)
+ 125 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
+ 13 named destinations out of 1000 (max. 500000)
  17 words of extra memory for PDF output out of 10000 (max. 10000000)
 
