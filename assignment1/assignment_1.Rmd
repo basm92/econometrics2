@@ -25,7 +25,7 @@ library(ivreg)
 
 A researcher aims to gain insight in the potential earnings of the non-employed. (In the data, the non-employed can be identified by a missing value for the earnings variable). She realizes that the sample of observed wages may be subject to sample selection.
 
-(a) Run an OLS regression for log-earnings on schooling, age, and age squared. Present the results and comment on the estimates.
+__(a) Run an OLS regression for log-earnings on schooling, age, and age squared. Present the results and comment on the estimates.__
     
 ```{r, include=FALSE}
 data <- read_csv("./Data/logEarnings.csv")
@@ -46,13 +46,13 @@ stargazer(model_1, style = "AER",
 
 The results show that 1 additional year of schooling has an effect of `r coeffs_1[2]` on log(Wage), which means that 1 additional year of schooling has an estimated `r coeffs_1[2]*100`% effect on wages earned. This result is highly significant (p-value is `r pvals_1[2]`) Another result shown in figure \ref{tab:q1_a_ols} is that being 1 year older has an estimated effect of `r coeffs_1[3]` on log(Wage). Thus, being 1 year older is estimated to have a `r coeffs_1[3]*100`% on wages. This result is not significant at a common level (p-value is `r pvals_1[3]`). The third estimated coefficients is the one corresponding to the variable age squared. It has an estimated coefficient of `r coeffs_1[4]`, which represents the estimated effect of a one unit increase in age squared on log(Wage). This also means that a one unit increase in age squared is equal to an estimate effect of `r coeffs_1[4]*100`% on the linear representation of wage. This effect is not significant at common levels, because the p-value is `r pvals_1[4]`. Finally, the estimated constant in the model is estimated at `r coeffs_1[1]`. This means that if all other coefficients are 0, then the log(Wage) will be equal to `r coeffs_1[1]`. Thus, if all other variables are 0, then wage is estimated to be equal to exp(`r coeffs_1[1]`)=`r exp(coeffs_1[1])`. This is an extremely high number given the characteristics of the wage variable. However, this result is highly significant, because the p-value is `r pvals_1[1]`.
 
-(b) Briefly discuss the sample selection problem that may arise in using these OLS estimates for the purpose of predicting the potential earnings of the non-employed. Formulate the sample selection model. In your answer, include an explanation why OLS may fail in this context.
+__(b) Briefly discuss the sample selection problem that may arise in using these OLS estimates for the purpose of predicting the potential earnings of the non-employed. Formulate the sample selection model. In your answer, include an explanation why OLS may fail in this context.__
 
 An individual is only in this dataset if they earn wages, i.e. if they are employed. Being employed itself is not randomly allocated, but rather, a function of e.g. age, age^2, and schooling. Hence, the estimates of schooling on earnings are conditional on having earnings to begin with, whereas unbiased estimates must also include those individuals 
 
 Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})$. The given estimation only concerns $\mathbb{E[\text{Earnings}|\text{Having a job}]}$. 
 
-(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?
+__(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?__
 
 
 
@@ -60,13 +60,14 @@ Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having 
 
 The same researcher is interested in estimating the causal effect of schooling on earnings for employed individuals only. As a consequence, she performs the subsequent analysis on the (sub)sample of employed individuals.
 
-(a) Discuss the estimation of the causal effect of schooling on earnings by OLS. In particular, address whether or not it is plausible that regularity conditions for applying OLS are satisfied.
+__(a) Discuss the estimation of the causal effect of schooling on earnings by OLS. In particular, address whether or not it is plausible that regularity conditions for applying OLS are satisfied.__
 
 It is not plausible that the regularity conditions are satisfied. In particular, an observable such as an individual's __ability__ might be correlated with the wage, but also with the decision to live close to a school. Hence, the estimates suffer from endogeneity.
 
-(b) The researcher has collected data on two potential instrumental variables subsidy and distance for years of schooling.
-    - distance measures the distance between the school location and the residence of the individual while at school-going age.
-    - subsidy is an indicator depending on regional subsidies of families for covering school expenses.
+__(b) The researcher has collected data on two potential instrumental variables subsidy and distance for years of schooling.__
+
+- __distance measures the distance between the school location and the residence of the individual while at school-going age.__
+- __subsidy is an indicator depending on regional subsidies of families for covering school expenses.__
     
 The researcher has the option to use only distance as an instrumental variable, or to use only the instrumental variable subsidy, or to use both distance and subsidy as instrumental variables. Perform instrumental variables estimation for these three options. Which option do you prefer? Include in your answer the necessary analyses and numbers on which you base your choice.
 
@@ -78,7 +79,8 @@ secondoption <- ivreg(data = data, formula =
                           logWage ~ age + age2 + schooling | subsidy + age + age2)
 
 thirdoption <- ivreg(data = data, formula =
-                          logWage ~ age + age2 + schooling | subsidy + distance + age + age2)
+                          logWage ~ age + age2 + schooling | subsidy + distance + age 
+                     + age2)
 ```
 
 ```{r results='asis'}

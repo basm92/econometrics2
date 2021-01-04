@@ -116,13 +116,8 @@ non-employed. (In the data, the non-employed can be identified by a
 missing value for the earnings variable). She realizes that the sample
 of observed wages may be subject to sample selection.
 
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\tightlist
-\item
-  Run an OLS regression for log-earnings on schooling, age, and age
-  squared. Present the results and comment on the estimates.
-\end{enumerate}
+\textbf{(a) Run an OLS regression for log-earnings on schooling, age,
+and age squared. Present the results and comment on the estimates.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -206,16 +201,10 @@ extremely high number given the characteristics of the wage variable.
 However, this result is highly significant, because the p-value is
 0.001.
 
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Briefly discuss the sample selection problem that may arise in using
-  these OLS estimates for the purpose of predicting the potential
-  earnings of the non-employed. Formulate the sample selection model. In
-  your answer, include an explanation why OLS may fail in this context.
-\end{enumerate}
+\textbf{(b) Briefly discuss the sample selection problem that may arise
+in using these OLS estimates for the purpose of predicting the potential
+earnings of the non-employed. Formulate the sample selection model. In
+your answer, include an explanation why OLS may fail in this context.}
 
 An individual is only in this dataset if they earn wages, i.e.~if they
 are employed. Being employed itself is not randomly allocated, but
@@ -229,14 +218,8 @@ Formally,
 The given estimation only concerns
 \(\mathbb{E[\text{Earnings}|\text{Having a job}]}\).
 
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  Which variable in your data may be a suitable candidate as an
-  exclusion restriction for the sample selection model?
-\end{enumerate}
+\textbf{(c) Which variable in your data may be a suitable candidate as
+an exclusion restriction for the sample selection model?}
 
 \hypertarget{question-2-earnings-and-schooling}{%
 \subsection{Question 2: Earnings and
@@ -247,38 +230,27 @@ schooling on earnings for employed individuals only. As a consequence,
 she performs the subsequent analysis on the (sub)sample of employed
 individuals.
 
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\tightlist
-\item
-  Discuss the estimation of the causal effect of schooling on earnings
-  by OLS. In particular, address whether or not it is plausible that
-  regularity conditions for applying OLS are satisfied.
-\end{enumerate}
+\textbf{(a) Discuss the estimation of the causal effect of schooling on
+earnings by OLS. In particular, address whether or not it is plausible
+that regularity conditions for applying OLS are satisfied.}
 
 It is not plausible that the regularity conditions are satisfied. In
 particular, an observable such as an individual's \textbf{ability} might
 be correlated with the wage, but also with the decision to live close to
 a school. Hence, the estimates suffer from endogeneity.
 
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\setcounter{enumi}{1}
+\textbf{(b) The researcher has collected data on two potential
+instrumental variables subsidy and distance for years of schooling.}
+
+\begin{itemize}
 \tightlist
 \item
-  The researcher has collected data on two potential instrumental
-  variables subsidy and distance for years of schooling.
-
-  \begin{itemize}
-  \tightlist
-  \item
-    distance measures the distance between the school location and the
-    residence of the individual while at school-going age.
-  \item
-    subsidy is an indicator depending on regional subsidies of families
-    for covering school expenses.
-  \end{itemize}
-\end{enumerate}
+  \textbf{distance measures the distance between the school location and
+  the residence of the individual while at school-going age.}
+\item
+  \textbf{subsidy is an indicator depending on regional subsidies of
+  families for covering school expenses.}
+\end{itemize}
 
 The researcher has the option to use only distance as an instrumental
 variable, or to use only the instrumental variable subsidy, or to use
