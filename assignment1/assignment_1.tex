@@ -140,7 +140,7 @@ and age squared. Present the results and comment on the estimates.}
 \KeywordTok{stargazer}\NormalTok{(model_}\DecValTok{1}\NormalTok{, }\DataTypeTok{style =} \StringTok{"AER"}\NormalTok{, }
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
           \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_a_ols'}\NormalTok{, }
-          \DataTypeTok{caption =} \StringTok{'OLS regression for log-earnings on schooling, age and age squared.'}\NormalTok{)}
+          \DataTypeTok{notes =} \StringTok{'OLS regression for log-earnings on schooling, age and age squared.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -174,18 +174,7 @@ F Statistic & 604.000$^{***}$ (df = 3; 412) \\
 \textit{Notes:} & \multicolumn{1}{l}{$^{***}$Significant at the 1 percent level.} \\ 
  & \multicolumn{1}{l}{$^{**}$Significant at the 5 percent level.} \\ 
  & \multicolumn{1}{l}{$^{*}$Significant at the 10 percent level.} \\ 
-\end{tabular} 
-\end{table}
-
-\begin{table}[!htbp] \centering 
-  \caption{} 
-  \label{tab:q1_a_ols} 
-\small 
-\begin{tabular}{@{\extracolsep{5pt}} c} 
-\\[-1.8ex]\hline 
-\hline \\[-1.8ex] 
-OLS regression for log-earnings on schooling, age and age squared. \\ 
-\hline \\[-1.8ex] 
+ & \multicolumn{1}{l}{OLS regression for log-earnings on schooling, age and age squared.} \\ 
 \end{tabular} 
 \end{table}
 
@@ -359,7 +348,7 @@ conducting a Hausman test:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{hoi \textless{}{-}}\StringTok{ }\KeywordTok{summary}\NormalTok{(}
+\NormalTok{hoi <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(}
 \NormalTok{    secondoption, }
         \DataTypeTok{diagnostics=}\OtherTok{TRUE}\NormalTok{)}
 
