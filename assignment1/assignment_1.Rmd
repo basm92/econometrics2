@@ -13,7 +13,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, size = 'small')
 
-options(digits=3, scipen=999) # Set rounding to 3 digitis
+options(digits=3) # Set rounding to 3 digitis
 
 library(tidyverse)
 library(stargazer)
@@ -44,7 +44,7 @@ stargazer(model_1, style = "AER",
           caption = 'OLS regression for log-earnings on schooling, age and age squared.')
 ```
 
-The results show that 1 additional year of schooling has an effect of `r coeffs_1[2]` on log(Wage), which means that 1 additional year of schooling has an estimated `r coeffs_1[2]*100`% effect on wages earned. This result is highly significant (p-value of `r pvals_1[2]`) Another result shown in figure \ref{tab:q1_a_ols} is that being 1 year older has an estimated effect of `r coeffs_1[3]` on log(wage). Thus, being 1 year older is estimated to have a `r coeffs_1[3]*100`% on wages. This resu
+The results show that 1 additional year of schooling has an effect of `r coeffs_1[2]` on log(Wage), which means that 1 additional year of schooling has an estimated `r coeffs_1[2]*100`% effect on wages earned. This result is highly significant (p-value is `r pvals_1[2]`) Another result shown in figure \ref{tab:q1_a_ols} is that being 1 year older has an estimated effect of `r coeffs_1[3]` on log(wage). Thus, being 1 year older is estimated to have a `r coeffs_1[3]*100`% on wages. This result is not significant at a common level (p-value is `r pvals_1[3]`).
 
 (b) Briefly discuss the sample selection problem that may arise in using these OLS estimates for the purpose of predicting the potential earnings of the non-employed. Formulate the sample selection model. In your answer, include an explanation why OLS may fail in this context.
 
