@@ -109,7 +109,11 @@ stargazer(sample_selection_2sls,
           font.size = "small",
           header = F, label = 'tab:q1_d_2sls',
           title = 'Sample selection regression for log-earnings on schooling, age
+<<<<<<< HEAD
           and age squared, using two stage approach')
+=======
+          and age squared, using two stage approach and maximum likelihood')
+>>>>>>> attempt_walter
 
 ```
 
