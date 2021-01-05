@@ -81,6 +81,13 @@ __(d) Estimate the sample selection model with the Heckman two-step estimator, b
 # step 1: construct I
 data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 
+probit <- glm(I ~ married, 
+              family = binomial(link = "probit"), 
+              data = data)
+Z_gamma <- cbind(1,data$married) %*% coef(probit) 
+
+inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
+
 ```
 
 
