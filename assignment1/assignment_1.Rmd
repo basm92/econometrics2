@@ -50,11 +50,29 @@ __(b) Briefly discuss the sample selection problem that may arise in using these
 
 An individual is only in this dataset if they earn wages, i.e. if they are employed. Being employed itself is not randomly allocated, but rather, a function of e.g. age, age^2, and schooling. Also, employment status follows from labor supply and demand forces. Hence, the estimates of schooling on earnings are conditional on having earnings to begin with, whereas unbiased estimates must also include those individuals. 
 
-Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})$. The given estimation only concerns $\mathbb{E[\text{Earnings}|\text{Having a job}]}$. 
+Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})$. The given estimation only concerns $\mathbb{E[\text{Earnings}|\text{Having a job}]}$.
+
+The sample selection model is given by the following two equations.
+
+<!-- Still need to add specific variables! As X variables we could do the variables from q1a, and then for the selection equation do the mariage status variable? Should we include the exclusion restriction variable in the second equation? I.e. is Z a subset of X? -->
+\begin{equation}
+Pr[I_i^*=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
+\label{eq:select}
+\end{equation}
+
+In equation \ref{eq:select}, $I_i^*$ denotes an indicator variable which is equal to 1 if we observe the wage of an individual, $\bf{\Phi}(\cdot)$ denotes a normal CDF, and $Z_i$ denotes a vector of explanatory variables for the probability of an individual being employed or not.
+
+The second equation is concerned with explaining the wage of an individual. It is given by the following equation.
+
+\begin{equation}
+Y_i^* = X_i'\beta + U_i
+\label{eq:effect}
+\end{equation}
+In equation \ref{eq:effect}, $Y_i^*$ denotes the observed log(Wage), $X_i$ are the explanatory regressors for explaining log(Wage).
 
 
 __(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?__
-For an exclusion restriction variable, we need a variable that is significantly away from zero in the selection equation and does not have an effect in the equation intended to explain the potential earnings of the non-employed. A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that mariage status could be a suitable candidate variable. This reason being that mariage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Mariage status is arguably a variable that does not provide a direct effect on the height of wages earned.
+For an exclusion restriction variable, we need a variable that is significantly away from zero in the selection equation and does not have an effect in the equation intended to explain the potential earnings of the non-employed. A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that mariage status could be a suitable candidate variable. The reason being that mariage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Mariage status is arguably a variable that does not provide a direct effect on the height of wages earned. Seeing as both criteria are met, we conclude that mariage status is a suitable candidate for an exclusion restriction.
 
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
