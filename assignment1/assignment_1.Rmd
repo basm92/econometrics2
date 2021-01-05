@@ -15,10 +15,15 @@ knitr::opts_chunk$set(echo = TRUE, size = 'small')
 
 options(digits=3) # Set rounding to 3 digitis
 
-library(tidyverse)
-library(stargazer)
-library(readr)
-library(ivreg)
+if (!require("pacman")) install.packages("pacman")
+
+pacman::p_load(tidyverse,
+               stargazer,
+               readr,
+               ivreg,
+               sampleSelection,
+               estimatr,
+               texreg)
 ```
 
 ## Question 1: The sample selection model. 
@@ -52,16 +57,18 @@ An individual is only in this dataset if they earn wages, i.e. if they are emplo
 
 Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})$. The given estimation only concerns $\mathbb{E[\text{Earnings}|\text{Having a job}]}$.
 
-The sample selection model is given by the following two equations.
+The sample selection model is given by the following two equations. In equation \ref{eq:select}, $I_i^*$ denotes an indicator variable which is equal to 1 if we observe the wage of an individual, and $Z_i$ denotes a vector of explanatory variables for the probability of an individual being employed or not.
 
-<!-- Still need to add specific variables! As X variables we could do the variables from q1a, and then for the selection equation do the mariage status variable? Should we include the exclusion restriction variable in the second equation? I.e. is Z a subset of X? -->
+<!-- Still need to add specific variables! As X variables we could do the variables from q1a, and then for the selection equation do the marriage status variable? Should we include the exclusion restriction variable in the second equation? I.e. is Z a subset of X? -->
+
+<!-- Bas: Z is never a subset of X! There should be at least 1 variable in Z that is not in X -->  
 
 \begin{equation}
 \mathbb{P}[I_i^*=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
 \label{eq:select}
 \end{equation}
 
-In equation \ref{eq:select}, $I_i^*$ denotes an indicator variable which is equal to 1 if we observe the wage of an individual, $\bf{\Phi}(\cdot)$ denotes a normal CDF, and $Z_i$ denotes a vector of explanatory variables for the probability of an individual being employed or not. Note that the model used in this situation concerns a probit model, which has the goal to estimate the probability that an indivual is employed.
+Under our distributional assumptions, $\bf{\Phi}(\cdot)$ denotes a normal CDF, and  Note that the model used in this situation concerns a probit model, which has the goal to estimate the probability that an indivual is employed.
 
 The second equation is concerned with explaining the wage of an individual. It is given by the following equation.
 
@@ -73,20 +80,46 @@ In equation \ref{eq:effect}, $Y_i^*$ denotes the observed log(Wage), $X_i$ are t
 
 
 __(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?__
-For an exclusion restriction variable, we need a variable that is significantly away from zero in the selection equation and does not have an effect in the equation intended to explain the potential earnings of the non-employed. A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that mariage status could be a suitable candidate variable. The reason being that mariage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Mariage status is arguably a variable that does not provide a direct effect on the height of wages earned. Seeing as both criteria are met, we conclude that mariage status is a suitable candidate for an exclusion restriction.
+
+For an exclusion restriction variable, we need a variable that is theoretically unrelated to earnings, but related to the probability of having a job. Empirically, we need a variable significantly different from zero in the selection equation and does not have an effect in the equation intended to explain the potential earnings of the non-employed. 
+
+A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that marriage status could be a suitable candidate variable. The reason being that marriage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Marriage status is arguably a variable that does not provide a direct effect on the height of wages earned. Seeing as both criteria are met, we conclude that mariage status is a suitable candidate for an exclusion restriction.
 
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
+
+First, we estimate the model with the exclusion restriction, that is to say, we have $Z$ include schooling, age, age^2, and married. Then, we have $X$ not include married. 
+
 ```{r estimate_two-step, results='asis'}
-# step 1: construct I
+# Construct I (I=1 for y_i^* != na, else 0)
 data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 
-probit <- glm(I ~ married, 
+## Two stage approach:
+# Stage 1:
+probit <- glm(I ~ schooling + age + age2 + married, 
               family = binomial(link = "probit"), 
               data = data)
-Z_gamma <- cbind(1,data$married) %*% coef(probit) 
 
+# Construct variable for stage 2:
+Z_gamma <- cbind(1,data$married) %*% coef(probit) 
 inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
+
+# Stage 2:
+sample_selection_2sls <- lm(logWage ~ schooling + age + age2 + inverse_mills_ratio,
+                                   data=data)
+
+## using package 'sampleSelection' to get maximum likelihood estimates:
+sample_selection_ml <- heckit(I ~ married, 
+                                logWage ~ schooling + age + age2, data=data, method='ml')
+
+# Obtain output:
+stargazer(sample_selection_2sls, 
+          se = starprep(sample_selection_2sls, se_type = "HC1"),
+          style = "AER",
+          font.size = "small",
+          header = F, label = 'tab:q1_d_2sls',
+          title = 'Sample selection regression for log-earnings on schooling, age
+          and age squared, using two stage approach')
 
 ```
 
@@ -98,6 +131,8 @@ __(e) Estimate the sample selection model with Maximum Likelihood, both with and
 __(f) On the basis of your results, how would you specify the distribution of potential earnings for the non-employed?__
 
 
+
+\clearpage
 
 ## Question 2: Earnings and Schooling
 
