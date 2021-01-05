@@ -140,12 +140,12 @@ and age squared. Present the results and comment on the estimates.}
 \KeywordTok{stargazer}\NormalTok{(model_}\DecValTok{1}\NormalTok{, }\DataTypeTok{style =} \StringTok{"AER"}\NormalTok{, }
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
           \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_a_ols'}\NormalTok{, }
-          \DataTypeTok{notes =} \StringTok{'OLS regression for log-earnings on schooling, age and age squared.'}\NormalTok{)}
+          \DataTypeTok{title =} \StringTok{'OLS regression for log-earnings on schooling, age and age squared.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{table}[!htbp] \centering 
-  \caption{} 
+  \caption{OLS regression for log-earnings on schooling, age and age squared.} 
   \label{tab:q1_a_ols} 
 \small 
 \begin{tabular}{@{\extracolsep{5pt}}lc} 
@@ -174,28 +174,27 @@ F Statistic & 604.000$^{***}$ (df = 3; 412) \\
 \textit{Notes:} & \multicolumn{1}{l}{$^{***}$Significant at the 1 percent level.} \\ 
  & \multicolumn{1}{l}{$^{**}$Significant at the 5 percent level.} \\ 
  & \multicolumn{1}{l}{$^{*}$Significant at the 10 percent level.} \\ 
- & \multicolumn{1}{l}{OLS regression for log-earnings on schooling, age and age squared.} \\ 
 \end{tabular} 
 \end{table}
 
-The results show that 1 additional year of schooling has an effect of
-0.216 on log(Wage), which means that 1 additional year of schooling has
-an estimated 21.6\% effect on wages earned. This result is highly
+The results show that one additional year of schooling has an effect of
+0.216 on log(Wage), which means that one additional year of schooling
+has an estimated 21.6\% effect on wages earned. This result is highly
 significant (p-value is \ensuremath{2.706\times 10^{-11}}) Another
-result shown in figure \ref{tab:q1_a_ols} is that being 1 year older has
-an estimated effect of -0.342 on log(Wage). Thus, being 1 year older is
-estimated to have a -34.189\% on wages. This result is not significant
-at a common level (p-value is 0.512). The third estimated coefficients
-is the one corresponding to the variable age squared. It has an
-estimated coefficient of -0.011, which represents the estimated effect
-of a one unit increase in age squared on log(Wage). This also means that
-a one unit increase in age squared is equal to an estimate effect of
--1.114\% on the linear representation of wage. This effect is not
-significant at common levels, because the p-value is 0.184. Finally, the
-estimated constant in the model is estimated at 26.409. This means that
-if all other coefficients are 0, then the log(Wage) will be equal to
-26.409. Thus, if all other variables are 0, then wage is estimated to be
-equal to exp(26.409)=\ensuremath{2.947\times 10^{11}}. This is an
+result, shown in figure \ref{tab:q1_a_ols} is that being one year older
+has an estimated effect of -0.342 on log(Wage). Thus, being one year
+older is estimated to have a -34.189\% on wages. This result is not
+significant at a common level (p-value is 0.512). The third estimated
+coefficients is the one corresponding to the variable age squared. It
+has an estimated coefficient of -0.011, which represents the estimated
+effect of a one unit increase in age squared on log(Wage). This also
+means that a one unit increase in age squared is equal to an estimate
+effect of -1.114\% on the linear representation of wage. This effect is
+not significant at common levels, because the p-value is 0.184. Finally,
+the estimated constant in the model is estimated at 26.409. This means
+that if all other variables are zero, then the log(Wage) will be equal
+to 26.409. Thus, if all other variables are zero, then wage is estimated
+to be equal to exp(26.409)=\ensuremath{2.947\times 10^{11}}. This is an
 extremely high number given the characteristics of the wage variable.
 However, this result is highly significant, because the p-value is
 0.001.
@@ -207,10 +206,11 @@ your answer, include an explanation why OLS may fail in this context.}
 
 An individual is only in this dataset if they earn wages, i.e.~if they
 are employed. Being employed itself is not randomly allocated, but
-rather, a function of e.g.~age, age\^{}2, and schooling. Hence, the
-estimates of schooling on earnings are conditional on having earnings to
-begin with, whereas unbiased estimates must also include those
-individuals
+rather, a function of e.g.~age, age\^{}2, and schooling. Also,
+employment status follows from labor supply and demand forces. Hence,
+the estimates of schooling on earnings are conditional on having
+earnings to begin with, whereas unbiased estimates must also include
+those individuals.
 
 Formally,
 \(\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})\).
@@ -218,7 +218,31 @@ The given estimation only concerns
 \(\mathbb{E[\text{Earnings}|\text{Having a job}]}\).
 
 \textbf{(c) Which variable in your data may be a suitable candidate as
-an exclusion restriction for the sample selection model?}
+an exclusion restriction for the sample selection model?} For an
+exclusion restriction variable, we need a variable that is significantly
+away from zero in the selection equation and does not have an effect in
+the equation intended to explain the potential earnings of the
+non-employed. A potential candidate is this a variable that matters for
+being employed or not, but does not influence the height of the wage. We
+believe that mariage status could be a suitable candidate variable. This
+reason being that mariage status could matter for being employed or not,
+because if one is not married, the person is more likely to be the only
+person that has to provide the necessary funds of living. If someone is
+married however, than it is more likely that this person is not
+employed, because it might be the case that the partner provides.
+Mariage status is arguably a variable that does not provide a direct
+effect on the height of wages earned.
+
+\textbf{(d) Estimate the sample selection model with the Heckman
+two-step estimator, both with and without the exclusion restriction and
+compare the outcomes.}
+
+\textbf{(e) Estimate the sample selection model with Maximum Likelihood,
+both with and without the exclusion restriction and compare the
+outcomes.}
+
+\textbf{(f) On the basis of your results, how would you specify the
+distribution of potential earnings for the non-employed?}
 
 \hypertarget{question-2-earnings-and-schooling}{%
 \subsection{Question 2: Earnings and
