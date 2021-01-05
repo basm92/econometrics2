@@ -55,12 +55,13 @@ Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having 
 The sample selection model is given by the following two equations.
 
 <!-- Still need to add specific variables! As X variables we could do the variables from q1a, and then for the selection equation do the mariage status variable? Should we include the exclusion restriction variable in the second equation? I.e. is Z a subset of X? -->
+
 \begin{equation}
-Pr[I_i^*=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
+\mathbb{P}[I_i^*=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
 \label{eq:select}
 \end{equation}
 
-In equation \ref{eq:select}, $I_i^*$ denotes an indicator variable which is equal to 1 if we observe the wage of an individual, $\bf{\Phi}(\cdot)$ denotes a normal CDF, and $Z_i$ denotes a vector of explanatory variables for the probability of an individual being employed or not.
+In equation \ref{eq:select}, $I_i^*$ denotes an indicator variable which is equal to 1 if we observe the wage of an individual, $\bf{\Phi}(\cdot)$ denotes a normal CDF, and $Z_i$ denotes a vector of explanatory variables for the probability of an individual being employed or not. Note that the model used in this situation concerns a probit model, which has the goal to estimate the probability that an indivual is employed.
 
 The second equation is concerned with explaining the wage of an individual. It is given by the following equation.
 
@@ -76,7 +77,11 @@ For an exclusion restriction variable, we need a variable that is significantly 
 
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
+```{r estimate_two-step, results='asis'}
+# step 1: construct I
+data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 
+```
 
 
 __(e) Estimate the sample selection model with Maximum Likelihood, both with and without the exclusion restriction and compare the outcomes.__
