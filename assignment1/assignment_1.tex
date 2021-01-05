@@ -220,7 +220,7 @@ The given estimation only concerns
 The sample selection model is given by the following two equations.
 
 \begin{equation}
-Pr[I_i^*=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
+\mathbb{P}[I_i^*=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
 \label{eq:select}
 \end{equation}
 
@@ -228,7 +228,9 @@ In equation \ref{eq:select}, \(I_i^*\) denotes an indicator variable
 which is equal to 1 if we observe the wage of an individual,
 \(\bf{\Phi}(\cdot)\) denotes a normal CDF, and \(Z_i\) denotes a vector
 of explanatory variables for the probability of an individual being
-employed or not.
+employed or not. Note that the model used in this situation concerns a
+probit model, which has the goal to estimate the probability that an
+indivual is employed.
 
 The second equation is concerned with explaining the wage of an
 individual. It is given by the following equation.
@@ -261,6 +263,77 @@ restriction.
 \textbf{(d) Estimate the sample selection model with the Heckman
 two-step estimator, both with and without the exclusion restriction and
 compare the outcomes.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Construct I (I=1 for y_i^* != na, else 0)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{I <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{# if na, then I is zero. Else 1.}
+
+\CommentTok{## Two stage approach:}
+\CommentTok{# Stage 1:}
+\NormalTok{probit <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{married, }
+              \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(}\DataTypeTok{link =} \StringTok{"probit"}\NormalTok{), }
+              \DataTypeTok{data =}\NormalTok{ data)}
+
+\CommentTok{# Construct variable for stage 2:}
+\NormalTok{Z_gamma <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{,data}\OperatorTok{$}\NormalTok{married) }\OperatorTok{%*%}\StringTok{ }\KeywordTok{coef}\NormalTok{(probit) }
+\NormalTok{inverse_mills_ratio <-}\StringTok{ }\KeywordTok{dnorm}\NormalTok{(Z_gamma, }\DataTypeTok{mean=}\DecValTok{0}\NormalTok{, }\DataTypeTok{sd=}\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(Z_gamma, }\DataTypeTok{mean=}\DecValTok{0}\NormalTok{, }\DataTypeTok{sd=}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{# Stage 2:}
+\NormalTok{sample_selection_2sls <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{inverse_mills_ratio,}
+                                   \DataTypeTok{data=}\NormalTok{data)}
+
+\CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
+\NormalTok{sample_selection_ml <-}\StringTok{ }\KeywordTok{heckit}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{married, }
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
+
+\CommentTok{# Obtain output:}
+\KeywordTok{stargazer}\NormalTok{(sample_selection_2sls, }
+          \DataTypeTok{se =} \KeywordTok{starprep}\NormalTok{(sample_selection_2sls, }\DataTypeTok{se_type =} \StringTok{"HC1"}\NormalTok{),}
+          \DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
+          \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
+          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_d_2sls'}\NormalTok{,}
+          \DataTypeTok{title =} \StringTok{'Sample selection regression for log-earnings on schooling, age}
+\StringTok{          and age squared, using two stage approach and maximum likelihood'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!htbp] \centering 
+  \caption{Sample selection regression for log-earnings on schooling, age
+          and age squared, using two stage approach and maximum likelihood} 
+  \label{tab:q1_d_2sls} 
+\small 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\\[-1.8ex] & logWage \\ 
+\hline \\[-1.8ex] 
+ schooling & 0.216$^{***}$ \\ 
+  & (0.031) \\ 
+  & \\ 
+ age & $-$0.352 \\ 
+  & (0.475) \\ 
+  & \\ 
+ age2 & $-$0.011 \\ 
+  & (0.008) \\ 
+  & \\ 
+ inverse\_mills\_ratio & $-$0.150 \\ 
+  & (0.609) \\ 
+  & \\ 
+ Constant & 26.600$^{***}$ \\ 
+  & (7.470) \\ 
+  & \\ 
+Observations & 416 \\ 
+R$^{2}$ & 0.815 \\ 
+Adjusted R$^{2}$ & 0.813 \\ 
+Residual Std. Error & 1.500 (df = 411) \\ 
+F Statistic & 452.000$^{***}$ (df = 4; 411) \\ 
+\hline \\[-1.8ex] 
+\textit{Notes:} & \multicolumn{1}{l}{$^{***}$Significant at the 1 percent level.} \\ 
+ & \multicolumn{1}{l}{$^{**}$Significant at the 5 percent level.} \\ 
+ & \multicolumn{1}{l}{$^{*}$Significant at the 10 percent level.} \\ 
+\end{tabular} 
+\end{table}
 
 \textbf{(e) Estimate the sample selection model with Maximum Likelihood,
 both with and without the exclusion restriction and compare the

@@ -19,6 +19,9 @@ library(tidyverse)
 library(stargazer)
 library(readr)
 library(ivreg)
+library(sampleSelection)
+library(estimatr)
+library(texreg)
 ```
 
 ## Question 1: The sample selection model. 
@@ -78,15 +81,35 @@ For an exclusion restriction variable, we need a variable that is significantly 
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
 ```{r estimate_two-step, results='asis'}
-# step 1: construct I
+# Construct I (I=1 for y_i^* != na, else 0)
 data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 
+## Two stage approach:
+# Stage 1:
 probit <- glm(I ~ married, 
               family = binomial(link = "probit"), 
               data = data)
-Z_gamma <- cbind(1,data$married) %*% coef(probit) 
 
+# Construct variable for stage 2:
+Z_gamma <- cbind(1,data$married) %*% coef(probit) 
 inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
+
+# Stage 2:
+sample_selection_2sls <- lm(logWage ~ schooling + age + age2 + inverse_mills_ratio,
+                                   data=data)
+
+## using package 'sampleSelection' to get maximum likelihood estimates:
+sample_selection_ml <- heckit(I ~ married, 
+                                logWage ~ schooling + age + age2, data=data, method='ml')
+
+# Obtain output:
+stargazer(sample_selection_2sls, 
+          se = starprep(sample_selection_2sls, se_type = "HC1"),
+          style = "AER",
+          font.size = "small",
+          header = F, label = 'tab:q1_d_2sls',
+          title = 'Sample selection regression for log-earnings on schooling, age
+          and age squared, using two stage approach and maximum likelihood')
 
 ```
 
