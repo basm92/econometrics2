@@ -109,11 +109,7 @@ sample_selection_2sls <- lm(logWage ~ schooling + age + age2 + inverse_mills_rat
                                    data=data)
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
-<<<<<<< HEAD
-sample_selection_ml <- selection(I ~ married, 
-=======
 sample_selection_ml <- selection(I ~ schooling + age + age2 + married, 
->>>>>>> attempt_walter
                                 logWage ~ schooling + age + age2, data=data, method='ml')
 
 # Obtain output:
@@ -123,12 +119,6 @@ stargazer(model_ols, sample_selection_2sls, sample_selection_ml,
           font.size = "small",
           header = F, label = 'tab:q1_ad',
           title = 'Earnings regression')
-
-stargazer(sample_selection_ml,
-          font.size = "small",
-          header = F, label = 'tab:q1_d_ml',
-          df = FALSE, title = 'Sample selection regression for log-earnings 
-          on schooling, age and age squared, using maximum likelihood')
 
 ```
 
