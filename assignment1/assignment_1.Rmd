@@ -37,16 +37,16 @@ data <- read_csv("./Data/logEarnings.csv")
 ```
     
 ```{r results='asis'}
-model_1 <- lm(data = data, formula = logWage ~ schooling + age + age2)
+model_ols <- lm(data = data, formula = logWage ~ schooling + age + age2)
 
-results_1 <- summary.lm(model_1)
+results_1 <- summary.lm(model_ols)
 coeffs_1 <- results_1$coefficients[,1]
 pvals_1 <- results_1$coefficients[,4]
 
-stargazer(model_1, style = "AER", 
-          font.size = "small",
-          header = F, label = 'tab:q1_a_ols', 
-          title = 'OLS regression for log-earnings on schooling, age and age squared.')
+# stargazer(model_1, style = "AER", 
+#           font.size = "small",
+#           header = F, label = 'tab:q1_a_ols', 
+#           title = 'OLS regression for log-earnings on schooling, age and age squared.')
 ```
 
 The results show that one additional year of schooling has an effect of `r coeffs_1[2]` on log(Wage), which means that one additional year of schooling has an estimated `r coeffs_1[2]*100`% effect on wages earned. This result is highly significant (p-value is `r pvals_1[2]`) Another result, shown in figure \ref{tab:q1_a_ols} is that being one year older has an estimated effect of `r coeffs_1[3]` on log(Wage). Thus, being one year older is estimated to have a `r coeffs_1[3]*100`% on wages. This result is not significant at a common level (p-value is `r pvals_1[3]`). The third estimated coefficients is the one corresponding to the variable age squared. It has an estimated coefficient of `r coeffs_1[4]`, which represents the estimated effect of a one unit increase in age squared on log(Wage). This also means that a one unit increase in age squared is equal to an estimate effect of `r coeffs_1[4]*100`% on the linear representation of wage. This effect is not significant at common levels, because the p-value is `r pvals_1[4]`. Finally, the estimated constant in the model is estimated at `r coeffs_1[1]`. This means that if all other variables are zero, then the log(Wage) will be equal to `r coeffs_1[1]`. Thus, if all other variables are zero, then wage is estimated to be equal to exp(`r coeffs_1[1]`)=`r exp(coeffs_1[1])`. This is an extremely high number given the characteristics of the wage variable. However, this result is highly significant, because the p-value is `r pvals_1[1]`.
@@ -109,17 +109,16 @@ sample_selection_2sls <- lm(logWage ~ schooling + age + age2 + inverse_mills_rat
                                    data=data)
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
-sample_selection_ml <- heckit(I ~ married, 
+sample_selection_ml <- selection(I ~ schooling + age + age2 + married, 
                                 logWage ~ schooling + age + age2, data=data, method='ml')
 
 # Obtain output:
-stargazer(sample_selection_2sls, 
-          se = starprep(sample_selection_2sls, se_type = "HC1"),
+stargazer(model_ols, sample_selection_2sls, sample_selection_ml,
+          se = list(NULL,starprep(sample_selection_2sls, se_type = "HC1"),NULL),
           style = "AER",
           font.size = "small",
-          header = F, label = 'tab:q1_d_2sls',
-          title = 'Sample selection regression for log-earnings on schooling, age
-          and age squared, using two stage approach')
+          header = F, label = 'tab:q1_ad',
+          title = 'Earnings regression')
 
 ```
 
