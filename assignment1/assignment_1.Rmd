@@ -99,7 +99,7 @@ sample_selection_2sls <- lm(logWage ~ schooling + age + age2 + inverse_mills_rat
                                    data=data)
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
-sample_selection_ml <- heckit(I ~ married, 
+sample_selection_ml <- selection(I ~ married, 
                                 logWage ~ schooling + age + age2, data=data, method='ml')
 
 # Obtain output:
@@ -110,6 +110,12 @@ stargazer(sample_selection_2sls,
           header = F, label = 'tab:q1_d_2sls',
           title = 'Sample selection regression for log-earnings on schooling, age
           and age squared, using two stage approach')
+
+stargazer(sample_selection_ml,
+          font.size = "small",
+          header = F, label = 'tab:q1_d_ml',
+          df = FALSE, title = 'Sample selection regression for log-earnings 
+          on schooling, age and age squared, using maximum likelihood')
 
 ```
 

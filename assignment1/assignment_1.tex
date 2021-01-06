@@ -284,7 +284,7 @@ compare the outcomes.}
                                    \DataTypeTok{data=}\NormalTok{data)}
 
 \CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
-\NormalTok{sample_selection_ml <-}\StringTok{ }\KeywordTok{heckit}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{married, }
+\NormalTok{sample_selection_ml <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{married, }
 \NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
 
 \CommentTok{# Obtain output:}
@@ -294,13 +294,13 @@ compare the outcomes.}
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
           \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_d_2sls'}\NormalTok{,}
           \DataTypeTok{title =} \StringTok{'Sample selection regression for log-earnings on schooling, age}
-\StringTok{          and age squared, using two stage approach and maximum likelihood'}\NormalTok{)}
+\StringTok{          and age squared, using two stage approach'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{table}[!htbp] \centering 
   \caption{Sample selection regression for log-earnings on schooling, age
-          and age squared, using two stage approach and maximum likelihood} 
+          and age squared, using two stage approach} 
   \label{tab:q1_d_2sls} 
 \small 
 \begin{tabular}{@{\extracolsep{5pt}}lc} 
@@ -332,6 +332,50 @@ F Statistic & 452.000$^{***}$ (df = 4; 411) \\
 \textit{Notes:} & \multicolumn{1}{l}{$^{***}$Significant at the 1 percent level.} \\ 
  & \multicolumn{1}{l}{$^{**}$Significant at the 5 percent level.} \\ 
  & \multicolumn{1}{l}{$^{*}$Significant at the 10 percent level.} \\ 
+\end{tabular} 
+\end{table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{stargazer}\NormalTok{(sample_selection_ml,}
+          \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
+          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_d_ml'}\NormalTok{,}
+          \DataTypeTok{df =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{title =} \StringTok{'Sample selection regression for log-earnings }
+\StringTok{          on schooling, age and age squared, using maximum likelihood'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!htbp] \centering 
+  \caption{Sample selection regression for log-earnings 
+          on schooling, age and age squared, using maximum likelihood} 
+  \label{tab:q1_d_ml} 
+\small 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-2} 
+\\[-1.8ex] & logWage \\ 
+\hline \\[-1.8ex] 
+ schooling & 0.216$^{***}$ \\ 
+  & (0.031) \\ 
+  & \\ 
+ age & $-$0.350 \\ 
+  & (0.520) \\ 
+  & \\ 
+ age2 & $-$0.011 \\ 
+  & (0.008) \\ 
+  & \\ 
+ Constant & 26.600$^{***}$ \\ 
+  & (8.060) \\ 
+  & \\ 
+\hline \\[-1.8ex] 
+Observations & 666 \\ 
+Log Likelihood & $-$1,188.000 \\ 
+$\rho$ & $-$0.089  (0.376) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
 \end{tabular} 
 \end{table}
 
