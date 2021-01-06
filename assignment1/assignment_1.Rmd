@@ -121,7 +121,7 @@ stargazer(model_ols, sample_selection_2sls, sample_selection_ml,
           se = list(NULL,starprep(sample_selection_2sls, se_type = "HC1"),NULL),
           style = "AER",
           font.size = "small",
-          header = F, label = 'tab:q1_d_2sls',
+          header = F, label = 'tab:q1_ad',
           title = 'Earnings regression')
 
 stargazer(sample_selection_ml,
