@@ -78,13 +78,11 @@ Y_i^* = X_i'\beta + U_i
 
 In equation \ref{eq:effect}, $Y_i^*$ denotes the observed log(Wage), $X_i$ are the explanatory regressors for explaining log(Wage).
 
-
 __(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?__
 
 For an exclusion restriction variable, we need a variable that is theoretically unrelated to earnings, but related to the probability of having a job. Empirically, we need a variable significantly different from zero in the selection equation and does not have an effect in the equation intended to explain the potential earnings of the non-employed. 
 
 A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that marriage status could be a suitable candidate variable. The reason being that marriage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Marriage status is arguably a variable that does not provide a direct effect on the height of wages earned. Seeing as both criteria are met, we conclude that mariage status is a suitable candidate for an exclusion restriction.
-
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
 
