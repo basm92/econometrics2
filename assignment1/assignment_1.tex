@@ -306,13 +306,15 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 \CommentTok{#                             se_type='HC1' ,data=data)}
 
 \NormalTok{sample_selection_2s_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
-\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
 \NormalTok{coeffs_sample_selection_2s_with <-}\StringTok{ }\NormalTok{sample_selection_2s_with}\OperatorTok{$}\NormalTok{coefficients}
 
 
 \CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
 \NormalTok{sample_selection_2s_without <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }
-\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -401,13 +403,15 @@ outcomes.}
 \begin{Highlighting}[]
 \CommentTok{# Construct I (I=1 for y_i^* != na, else 0)}
 \NormalTok{sample_selection_ml_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
-\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
 \NormalTok{coeffs_sample_selection_ml_with <-}\StringTok{ }\NormalTok{sample_selection_ml_with}\OperatorTok{$}\NormalTok{estimate[}\DecValTok{6}\OperatorTok{:}\DecValTok{9}\NormalTok{]}
 
 
 \CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
 \NormalTok{sample_selection_ml_without <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }
-\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
