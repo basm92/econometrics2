@@ -485,12 +485,12 @@ earning for the non-employed by using our model based on maximum
 likelihood and with marriage. The reason for the choice of maximum
 likelihood is that maximum likelihood is more efficient than the
 two-step approach, because we have hetereoskedastic errors for the
-two-step approach. The way we do this is as follows. First, take all the
-unemployed's observed characteristics that are relevant and estimated
-using the sample selection regression. Second, obtain the estimated
-coefficients. Third, per individual that is unemployed, fill in the
-characteristics of the model and compute the predicted value of the
-log(Wage).
+two-step approach. The way we characterise the distribution is by
+predicting the values of the log(Wage) of the unemployed individuals.
+This is done by simply filling in the observed data for the unemployed
+in the model and then predict via the estimated model parameters. The
+code that makes the prediction is shown below, as well as a kernel
+density plot of the predicted log(Wage) of the unemployed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -504,14 +504,24 @@ log(Wage).
 \NormalTok{\}}
 
 \CommentTok{# Dummy that is 1 for being unemployed:}
-\NormalTok{data}\OperatorTok{$}\NormalTok{d_unem <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{1}\NormalTok{, }\OtherTok{NaN}\NormalTok{) }\CommentTok{# if na, then d_unem is 1 Else NaN.}
+\NormalTok{data}\OperatorTok{$}\NormalTok{d_unem <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{1}\NormalTok{, }\OtherTok{NaN}\NormalTok{) }\CommentTok{# if na, then d_unem is 1. Else NaN.}
+
+\CommentTok{# Construct vector of unemployed log(Wage) predictions:}
 \NormalTok{log_wage_unemployed <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(data}\OperatorTok{$}\NormalTok{d_unem }\OperatorTok{*}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{est_log_wage)}
-\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(log_wage_unemployed), }\DataTypeTok{main=}\StringTok{'log(Wage) distribution of the unemployed'}\NormalTok{,}
-     \DataTypeTok{xlab=}\StringTok{'log(Wage)'}\NormalTok{)}
+
+\CommentTok{# Kernel density plot of log(Wage) predictions of the unemployed:}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(log_wage_unemployed), }\DataTypeTok{xlab=}\StringTok{'log(Wage)'}\NormalTok{, }\DataTypeTok{main=}\StringTok{''}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{assignment_1_files/figure-latex/predict_unemployed_log_Wage-1.pdf}
+\begin{figure}
+
+{\centering \includegraphics{assignment_1_files/figure-latex/fig_density_log_wage-1} 
+
+}
+
+\caption{\label{fig:figs}Kernel density plot of predicted $log(Wage)$ of the unemployed.}\label{fig:fig_density_log_wage}
+\end{figure}
 
 \clearpage
 

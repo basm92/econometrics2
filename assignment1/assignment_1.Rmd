@@ -158,9 +158,9 @@ In tabel \ref{tab:q1_e} we have displayed our estimation results using maximum l
 
 __(f) On the basis of your results, how would you specify the distribution of potential earnings for the non-employed?__
 
-For this question we can characterise the distribution of potential earning for the non-employed by using our model based on maximum likelihood and with marriage. The reason for the choice of maximum likelihood is that maximum likelihood is more efficient than the two-step approach, because we have hetereoskedastic errors for the two-step approach. The way we do this is as follows. First, take all the unemployed's observed characteristics that are relevant and estimated using the sample selection regression. Second, obtain the estimated coefficients. Third, per individual that is unemployed, fill in the characteristics of the model and compute the predicted value of the log(Wage).
+For this question we can characterise the distribution of potential earning for the non-employed by using our model based on maximum likelihood and with marriage. The reason for the choice of maximum likelihood is that maximum likelihood is more efficient than the two-step approach, because we have hetereoskedastic errors for the two-step approach. The way we characterise the distribution is by predicting the values of the log(Wage) of the unemployed individuals. This is done by simply filling in the observed data for the unemployed in the model and then predict via the estimated model parameters. The code that makes the prediction is shown below, as well as a kernel density plot of the predicted log(Wage) of the unemployed.
 
-```{r predict_unemployed_log_Wage, result='asis'}
+```{r fig_density_log_wage, result='asis', fig.cap="\\label{fig:figs}Kernel density plot of predicted $log(Wage)$ of the unemployed.", fig.align="center"}
 # Predict log(Wage):
 data$est_log_wage<-NaN
 for (i in c(1:nrow(data))){
@@ -171,13 +171,14 @@ for (i in c(1:nrow(data))){
 }
 
 # Dummy that is 1 for being unemployed:
-data$d_unem <- ifelse(is.na(data$logWage) , 1, NaN) # if na, then d_unem is 1 Else NaN.
+data$d_unem <- ifelse(is.na(data$logWage) , 1, NaN) # if na, then d_unem is 1. Else NaN.
+
+# Construct vector of unemployed log(Wage) predictions:
 log_wage_unemployed <- na.omit(data$d_unem * data$est_log_wage)
-plot(density(log_wage_unemployed), main='Predicted log(Wage) distribution of the unemployed',
-     xlab='log(Wage)')
 
+# Kernel density plot of log(Wage) predictions of the unemployed:
+plot(density(log_wage_unemployed), xlab='log(Wage)', main='')
 ```
-
 
 \clearpage
 
