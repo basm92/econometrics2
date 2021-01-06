@@ -204,7 +204,7 @@ in using these OLS estimates for the purpose of predicting the potential
 earnings of the non-employed. Formulate the sample selection model. In
 your answer, include an explanation why OLS may fail in this context.}
 
-An individual is only in this dataset if they earn wages, i.e.~if they
+An individual is only in this data set if they earn wages, i.e.~if they
 are employed. Being employed itself is not randomly allocated, but
 rather, a function of e.g.~age, age\^{}2, and schooling. Also,
 employment status follows from labor supply and demand forces. Hence,
@@ -263,7 +263,7 @@ however, than it is more likely that this person is not employed,
 because it might be the case that the partner provides. Marriage status
 is arguably a variable that does not provide a direct effect on the
 height of wages earned. Seeing as both criteria are met, we conclude
-that mariage status is a suitable candidate for an exclusion
+that marriage status is a suitable candidate for an exclusion
 restriction.
 
 \textbf{(d) Estimate the sample selection model with the Heckman
@@ -293,12 +293,12 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 
 \CommentTok{## Two stage approach without package:}
 \CommentTok{# Stage 1:}
-\CommentTok{# probit <- glm(I ~ schooling + age + age2 + married, }
-\CommentTok{#               family = binomial(link = "probit"), }
+\CommentTok{# probit <- glm(I ~ schooling + age + age2 + married,}
+\CommentTok{#               family = binomial(link = "probit"),}
 \CommentTok{#               data = data)}
 \CommentTok{# }
 \CommentTok{# # Construct variable for stage 2:}
-\CommentTok{# Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit) }
+\CommentTok{# Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit)}
 \CommentTok{# inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)}
 \CommentTok{# }
 \CommentTok{# # Stage 2:}
@@ -307,6 +307,7 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 
 \NormalTok{sample_selection_2s_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
 \NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
+\NormalTok{coeffs_sample_selection_2s_with <-}\StringTok{ }\NormalTok{sample_selection_2s_with}\OperatorTok{$}\NormalTok{coefficients}
 
 
 \CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
@@ -323,19 +324,22 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{coeffs_sample_selection_2s_without <-}\StringTok{ }\NormalTok{sample_selection_2s_without}\OperatorTok{$}\NormalTok{coefficients}
+
+
 \CommentTok{# Obtain output:}
 \KeywordTok{stargazer}\NormalTok{(sample_selection_2s_with, sample_selection_2s_without,}
           \DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
           \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_d'}\NormalTok{,}
-          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Two-step with exclusion"}\NormalTok{, }\StringTok{"Two-step without exclusion"}\NormalTok{),}
-          \DataTypeTok{title =} \StringTok{'Log earnings regression with two-step approach, }
+          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Two-step with married"}\NormalTok{, }\StringTok{"Two-step without married"}\NormalTok{),}
+          \DataTypeTok{title =} \StringTok{'Log earnings sample selection regression with two-step approach, }
 \StringTok{          with and without the exclusion variable.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{table}[!htbp] \centering 
-  \caption{Log earnings regression with two-step approach, 
+  \caption{Log earnings sample selection regression with two-step approach, 
           with and without the exclusion variable.} 
   \label{tab:q1_d} 
 \small 
@@ -343,7 +347,7 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
 \\[-1.8ex] & \multicolumn{2}{c}{logWage} \\ 
- & Two-step with exclusion & Two-step without exclusion \\ 
+ & Two-step with married & Two-step without married \\ 
 \\[-1.8ex] & (1) & (2)\\ 
 \hline \\[-1.8ex] 
  schooling & 0.215$^{***}$ & 0.303 \\ 
@@ -368,6 +372,27 @@ Inverse Mills Ratio & $-$0.174  (0.615) & 7.340  (61.100) \\
 \end{tabular} 
 \end{table}
 
+For our results we first note an important difference between the two
+choices of independent variable selections. The inverse Mills ratio of
+the model that does not include marriage in the selection stage is
+perfectly co linear with the rest of the explanatory variables. The
+result of this is that our standard errors are much larger for the model
+that is estimated without marriage than for the model that is estimated
+with marriage. From this we can conclude that excluding marriage leads
+to a large loss of estimation efficiency. Another observation that can
+be made is the change in the point estimates of the coefficients. For
+example, the constant changes from 27.209 with marriage, to -6.436
+without marriage. Something else that can be observed is that \(\rho>1\)
+for the model without marriage included in the selection equation. This
+is not possible given the fact that \(\rho\) represents a correlation
+coefficient and thus should be between 0 and 1 in absolute value. A
+final observation that can be made is the large difference in the
+inverse Mill's ratio coefficients and standard error. That is the
+coefficient for the model with marriage is smaller and negative, in
+comparison to the model without marriage. For the standard errors, the
+model with marriage appears to be more efficient than the model without
+marriage.
+
 \textbf{(e) Estimate the sample selection model with Maximum Likelihood,
 both with and without the exclusion restriction and compare the
 outcomes.}
@@ -377,6 +402,7 @@ outcomes.}
 \CommentTok{# Construct I (I=1 for y_i^* != na, else 0)}
 \NormalTok{sample_selection_ml_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
 \NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
+\NormalTok{coeffs_sample_selection_ml_with <-}\StringTok{ }\NormalTok{sample_selection_ml_with}\OperatorTok{$}\NormalTok{coefficients}
 
 
 \CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
@@ -393,19 +419,21 @@ outcomes.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\NormalTok{coeffs_sample_selection_ml_without <-}\StringTok{ }\NormalTok{sample_selection_ml_without}\OperatorTok{$}\NormalTok{coefficients}
+
 \CommentTok{# Obtain output:}
 \KeywordTok{stargazer}\NormalTok{(sample_selection_ml_with, sample_selection_ml_without,}
           \DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
-          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_e'}\NormalTok{,}
-          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"ML with exclusion"}\NormalTok{, }\StringTok{"ML without exclusion"}\NormalTok{),}
-          \DataTypeTok{title =} \StringTok{'Log earnings regression with maximum likelihood, }
+          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_e'}\NormalTok{, }\DataTypeTok{digits=}\DecValTok{3}\NormalTok{,}
+          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"ML with married"}\NormalTok{, }\StringTok{"ML without married"}\NormalTok{),}
+          \DataTypeTok{title =} \StringTok{'Log earnings sample selection regression with maximum likelihood, }
 \StringTok{          with and without the exclusion variable.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{table}[!htbp] \centering 
-  \caption{Log earnings regression with maximum likelihood, 
+  \caption{Log earnings sample selection regression with maximum likelihood, 
           with and without the exclusion variable.} 
   \label{tab:q1_e} 
 \small 
@@ -413,7 +441,7 @@ outcomes.}
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
 \\[-1.8ex] & \multicolumn{2}{c}{logWage} \\ 
- & ML with exclusion & ML without exclusion \\ 
+ & ML with married & ML without married \\ 
 \\[-1.8ex] & (1) & (2)\\ 
 \hline \\[-1.8ex] 
  schooling & 0.215$^{***}$ & 0.274 \\ 
@@ -437,6 +465,17 @@ $\rho$ & $-$0.099  (0.374) & 1.000  (Inf.000) \\
  & \multicolumn{2}{l}{$^{*}$Significant at the 10 percent level.} \\ 
 \end{tabular} 
 \end{table}
+
+In tabel \ref{tab:q1_e} we have displayed our estimation results using
+maximum likelihood, for the model with and without the exclusion
+restrictions. Again we observe a change in the point estimates as a
+result of the change in variable selection. An interesting observation
+to be made is that we are unable to retrieve standard errors for the
+model where we have excluded marriage. For the estimate of the
+correlation coefficient \(\rho\) we notice a similar result for the
+models where we used the two-stage approach. We observe that the
+correlation coefficient moves from being negative under the model with
+marriage to 1.000 under the model without marriage.
 
 \textbf{(f) On the basis of your results, how would you specify the
 distribution of potential earnings for the non-employed?}

@@ -53,7 +53,7 @@ The results show that one additional year of schooling has an effect of `r coeff
 
 __(b) Briefly discuss the sample selection problem that may arise in using these OLS estimates for the purpose of predicting the potential earnings of the non-employed. Formulate the sample selection model. In your answer, include an explanation why OLS may fail in this context.__
 
-An individual is only in this dataset if they earn wages, i.e. if they are employed. Being employed itself is not randomly allocated, but rather, a function of e.g. age, age^2, and schooling. Also, employment status follows from labor supply and demand forces. Hence, the estimates of schooling on earnings are conditional on having earnings to begin with, whereas unbiased estimates must also include those individuals. 
+An individual is only in this data set if they earn wages, i.e. if they are employed. Being employed itself is not randomly allocated, but rather, a function of e.g. age, age^2, and schooling. Also, employment status follows from labor supply and demand forces. Hence, the estimates of schooling on earnings are conditional on having earnings to begin with, whereas unbiased estimates must also include those individuals. 
 Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having a job}]} \cdot \mathbb{P}[\text{Having a job}] + \mathbb{E[\text{Earnings}|\text{Not having a job}]} \cdot (1-\mathbb{P[\text{Having a job}]})$. The given estimation only concerns $\mathbb{E[\text{Earnings}|\text{Having a job}]}$.
 
 The sample selection model is given by the following two equations. In equation \ref{eq:select}, $I_i$ denotes an indicator variable which is equal to 1 if we observe the wage of an individual, and $Z_i$ denotes a vector of explanatory variables for the probability of an individual being employed or not.
@@ -82,7 +82,7 @@ __(c) Which variable in your data may be a suitable candidate as an exclusion re
 
 For an exclusion restriction variable, we need a variable that is theoretically unrelated to earnings, but related to the probability of having a job. Empirically, we need a variable significantly different from zero in the selection equation and does not have an effect in the equation intended to explain the potential earnings of the non-employed. 
 
-A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that marriage status could be a suitable candidate variable. The reason being that marriage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Marriage status is arguably a variable that does not provide a direct effect on the height of wages earned. Seeing as both criteria are met, we conclude that mariage status is a suitable candidate for an exclusion restriction.
+A potential candidate is this a variable that matters for being employed or not, but does not influence the height of the wage. We believe that marriage status could be a suitable candidate variable. The reason being that marriage status could matter for being employed or not, because if one is not married, the person is more likely to be the only person that has to provide the necessary funds of living. If someone is married however, than it is more likely that this person is not employed, because it might be the case that the partner provides. Marriage status is arguably a variable that does not provide a direct effect on the height of wages earned. Seeing as both criteria are met, we conclude that marriage status is a suitable candidate for an exclusion restriction.
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
 
@@ -94,12 +94,12 @@ data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 
 ## Two stage approach without package:
 # Stage 1:
-# probit <- glm(I ~ schooling + age + age2 + married, 
-#               family = binomial(link = "probit"), 
+# probit <- glm(I ~ schooling + age + age2 + married,
+#               family = binomial(link = "probit"),
 #               data = data)
 # 
 # # Construct variable for stage 2:
-# Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit) 
+# Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit)
 # inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
 # 
 # # Stage 2:
@@ -108,11 +108,14 @@ data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 
 sample_selection_2s_with <- selection(I ~ schooling + age + age2 + married, 
                                 logWage ~ schooling + age + age2, data=data, method='2step')
+coeffs_sample_selection_2s_with <- sample_selection_2s_with$coefficients
 
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
 sample_selection_2s_without <- selection(I ~ schooling + age + age2, 
                                 logWage ~ schooling + age + age2, data=data, method='2step')
+coeffs_sample_selection_2s_without <- sample_selection_2s_without$coefficients
+
 
 # Obtain output:
 stargazer(sample_selection_2s_with, sample_selection_2s_without,
@@ -120,10 +123,11 @@ stargazer(sample_selection_2s_with, sample_selection_2s_without,
           font.size = "small",
           header = F, label = 'tab:q1_d',
           column.labels = c("Two-step with married", "Two-step without married"),
-          title = 'Log earnings regression with two-step approach, 
+          title = 'Log earnings sample selection regression with two-step approach, 
           with and without the exclusion variable.')
 ```
 
+For our results we first note an important difference between the two choices of independent variable selections. The inverse Mills ratio of the model that does not include marriage in the selection stage is perfectly co linear with the rest of the explanatory variables. The result of this is that our standard errors are much larger for the model that is estimated without marriage than for the model that is estimated with marriage. From this we can conclude that excluding marriage leads to a large loss of estimation efficiency. Another observation that can be made is the change in the point estimates of the coefficients. For example, the constant changes from `r coeffs_sample_selection_2s_with[6]` with marriage, to `r coeffs_sample_selection_2s_without[5]` without marriage. Something else that can be observed is that $\rho>1$ for the model without marriage included in the selection equation. This is not possible given the fact that $\rho$ represents a correlation coefficient and thus should be between 0 and 1 in absolute value. A final observation that can be made is the large difference in the inverse Mill's ratio coefficients and standard error. That is the coefficient for the model with marriage is smaller and negative, in comparison to the model without marriage. For the standard errors, the model with marriage appears to be more efficient than the model without marriage.
 
 __(e) Estimate the sample selection model with Maximum Likelihood, both with and without the exclusion restriction and compare the outcomes.__
 
@@ -131,25 +135,30 @@ __(e) Estimate the sample selection model with Maximum Likelihood, both with and
 # Construct I (I=1 for y_i^* != na, else 0)
 sample_selection_ml_with <- selection(I ~ schooling + age + age2 + married, 
                                 logWage ~ schooling + age + age2, data=data, method='ml')
+coeffs_sample_selection_ml_with <- sample_selection_ml_with$coefficients
 
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
 sample_selection_ml_without <- selection(I ~ schooling + age + age2, 
                                 logWage ~ schooling + age + age2, data=data, method='ml')
+coeffs_sample_selection_ml_without <- sample_selection_ml_without$coefficients
 
 # Obtain output:
 stargazer(sample_selection_ml_with, sample_selection_ml_without,
           style = "AER",
           font.size = "small",
-          header = F, label = 'tab:q1_e',
+          header = F, label = 'tab:q1_e', digits=3,
           column.labels = c("ML with married", "ML without married"),
-          title = 'Log earnings regression with maximum likelihood, 
+          title = 'Log earnings sample selection regression with maximum likelihood, 
           with and without the exclusion variable.')
 ```
+
+In tabel \ref{tab:q1_e} we have displayed our estimation results using maximum likelihood, for the model with and without the exclusion restrictions. Again we observe a change in the point estimates as a result of the change in variable selection. An interesting observation to be made is that we are unable to retrieve standard errors for the model where we have excluded marriage. For the estimate of the correlation coefficient $\rho$ we notice a similar result for the models where we used the two-stage approach. We observe that the correlation coefficient moves from being negative under the model with marriage to 1.000 under the model without marriage.
 
 
 __(f) On the basis of your results, how would you specify the distribution of potential earnings for the non-employed?__
 
+For this question we can characterise the distribution of potential earning for the non-employed by using our model based on maximum likelihood and with marriage. The reason for the choice of maximum likelihood is that maximum likelihood is more efficient than the two-step approach, because we have hetereoskedastic errors for the two-step approach. 
 
 
 \clearpage
