@@ -402,7 +402,7 @@ outcomes.}
 \CommentTok{# Construct I (I=1 for y_i^* != na, else 0)}
 \NormalTok{sample_selection_ml_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
 \NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }\DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
-\NormalTok{coeffs_sample_selection_ml_with <-}\StringTok{ }\NormalTok{sample_selection_ml_with}\OperatorTok{$}\NormalTok{coefficients}
+\NormalTok{coeffs_sample_selection_ml_with <-}\StringTok{ }\NormalTok{sample_selection_ml_with}\OperatorTok{$}\NormalTok{estimate[}\DecValTok{6}\OperatorTok{:}\DecValTok{9}\NormalTok{]}
 
 
 \CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
@@ -479,6 +479,39 @@ marriage to 1.000 under the model without marriage.
 
 \textbf{(f) On the basis of your results, how would you specify the
 distribution of potential earnings for the non-employed?}
+
+For this question we can characterise the distribution of potential
+earning for the non-employed by using our model based on maximum
+likelihood and with marriage. The reason for the choice of maximum
+likelihood is that maximum likelihood is more efficient than the
+two-step approach, because we have hetereoskedastic errors for the
+two-step approach. The way we do this is as follows. First, take all the
+unemployed's observed characteristics that are relevant and estimated
+using the sample selection regression. Second, obtain the estimated
+coefficients. Third, per individual that is unemployed, fill in the
+characteristics of the model and compute the predicted value of the
+log(Wage).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Predict log(Wage):}
+\NormalTok{data}\OperatorTok{$}\NormalTok{est_log_wage<-}\OtherTok{NaN}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(data)))\{}
+\NormalTok{  data}\OperatorTok{$}\NormalTok{est_log_wage[i] <-}\StringTok{ }\NormalTok{coeffs_sample_selection_ml_with }\OperatorTok{%*%}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, }
+\NormalTok{                                                                    data}\OperatorTok{$}\NormalTok{schooling,}
+\NormalTok{                                                                    data}\OperatorTok{$}\NormalTok{age, }
+\NormalTok{                                                                    data}\OperatorTok{$}\NormalTok{age2)[i,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\NormalTok{\}}
+
+\CommentTok{# Dummy that is 1 for being unemployed:}
+\NormalTok{data}\OperatorTok{$}\NormalTok{d_unem <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{1}\NormalTok{, }\OtherTok{NaN}\NormalTok{) }\CommentTok{# if na, then d_unem is 1 Else NaN.}
+\NormalTok{log_wage_unemployed <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(data}\OperatorTok{$}\NormalTok{d_unem }\OperatorTok{*}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{est_log_wage)}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(log_wage_unemployed), }\DataTypeTok{main=}\StringTok{'log(Wage) distribution of the unemployed'}\NormalTok{,}
+     \DataTypeTok{xlab=}\StringTok{'log(Wage)'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment_1_files/figure-latex/predict_unemployed_log_Wage-1.pdf}
 
 \clearpage
 
