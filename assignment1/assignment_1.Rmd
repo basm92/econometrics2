@@ -86,7 +86,7 @@ A potential candidate is this a variable that matters for being employed or not,
 
 __(d) Estimate the sample selection model with the Heckman two-step estimator, both with and without the exclusion restriction and compare the outcomes.__
 
-First, we estimate the model with the exclusion restriction, that is to say, we have $Z$ include schooling, age, age^2, and married. Then, we have $X$ not include married. 
+For this question we are asked to estimate the Heckman two-step estimator, both with and without the exclusion variable. We have argued that married would be a suitable candidate for this variable. In the code below we have done the following. First we have estimated the sample selection model with the two-step approach, _including_ the exclusion variable in the selection regression, and _excluding_ it in the estimating regression. This is in a way as it should be done. The second thing we did was estimating the selection regression _without_ the exclusion variable married and in the second stage using the exact same collection of independent variables in the estimation regression. One thing to note about our code is that we have used our own code to produce the two-step estimator as well as a package. Our own code produced the exact same results as the package. Seeing as the package provides us with more detailed results, we show it's results in our output table, displayed in table \ref{tab:q1_d}.
 
 ```{r estimate_two-step, results='asis'}
 # Construct I (I=1 for y_i^* != na, else 0)
@@ -119,15 +119,13 @@ stargazer(sample_selection_2s_with, sample_selection_2s_without,
           style = "AER",
           font.size = "small",
           header = F, label = 'tab:q1_d',
-          column.labels = c("Two-step with exclusion", "Two-step without exclusion"),
+          column.labels = c("Two-step with married", "Two-step without married"),
           title = 'Log earnings regression with two-step approach, 
           with and without the exclusion variable.')
 ```
 
-# Construct variable for stage 2:
-Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit) 
-inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
 
+__(e) Estimate the sample selection model with Maximum Likelihood, both with and without the exclusion restriction and compare the outcomes.__
 
 ```{r estimate_ml, results='asis'}
 # Construct I (I=1 for y_i^* != na, else 0)
@@ -144,14 +142,10 @@ stargazer(sample_selection_ml_with, sample_selection_ml_without,
           style = "AER",
           font.size = "small",
           header = F, label = 'tab:q1_e',
-          column.labels = c("ML with exclusion", "ML without exclusion"),
+          column.labels = c("ML with married", "ML without married"),
           title = 'Log earnings regression with maximum likelihood, 
           with and without the exclusion variable.')
 ```
-
-
-__(e) Estimate the sample selection model with Maximum Likelihood, both with and without the exclusion restriction and compare the outcomes.__
-
 
 
 __(f) On the basis of your results, how would you specify the distribution of potential earnings for the non-employed?__
