@@ -107,13 +107,15 @@ data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
 #                             se_type='HC1' ,data=data)
 
 sample_selection_2s_with <- selection(I ~ schooling + age + age2 + married, 
-                                logWage ~ schooling + age + age2, data=data, method='2step')
+                                logWage ~ schooling + age + age2, data=data, 
+                                method='2step')
 coeffs_sample_selection_2s_with <- sample_selection_2s_with$coefficients
 
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
 sample_selection_2s_without <- selection(I ~ schooling + age + age2, 
-                                logWage ~ schooling + age + age2, data=data, method='2step')
+                                logWage ~ schooling + age + age2, data=data, 
+                                method='2step')
 coeffs_sample_selection_2s_without <- sample_selection_2s_without$coefficients
 
 
@@ -134,13 +136,15 @@ __(e) Estimate the sample selection model with Maximum Likelihood, both with and
 ```{r estimate_ml, results='asis'}
 # Construct I (I=1 for y_i^* != na, else 0)
 sample_selection_ml_with <- selection(I ~ schooling + age + age2 + married, 
-                                logWage ~ schooling + age + age2, data=data, method='ml')
+                                logWage ~ schooling + age + age2, data=data, 
+                                method='ml')
 coeffs_sample_selection_ml_with <- sample_selection_ml_with$estimate[6:9]
 
 
 ## using package 'sampleSelection' to get maximum likelihood estimates:
 sample_selection_ml_without <- selection(I ~ schooling + age + age2, 
-                                logWage ~ schooling + age + age2, data=data, method='ml')
+                                logWage ~ schooling + age + age2, data=data, 
+                                method='ml')
 coeffs_sample_selection_ml_without <- sample_selection_ml_without$coefficients
 
 # Obtain output:
