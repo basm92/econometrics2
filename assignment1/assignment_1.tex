@@ -162,14 +162,14 @@ and age squared. Present the results and comment on the estimates.}
  age2 & $-$0.011 \\ 
   & (0.008) \\ 
   & \\ 
- Constant & 26.400$^{***}$ \\ 
-  & (8.060) \\ 
+ Constant & 26.409$^{***}$ \\ 
+  & (8.057) \\ 
   & \\ 
 Observations & 416 \\ 
 R$^{2}$ & 0.815 \\ 
 Adjusted R$^{2}$ & 0.813 \\ 
-Residual Std. Error & 1.500 (df = 412) \\ 
-F Statistic & 604.000$^{***}$ (df = 3; 412) \\ 
+Residual Std. Error & 1.499 (df = 412) \\ 
+F Statistic & 604.261$^{***}$ (df = 3; 412) \\ 
 \hline \\[-1.8ex] 
 \textit{Notes:} & \multicolumn{1}{l}{$^{***}$Significant at the 1 percent level.} \\ 
  & \multicolumn{1}{l}{$^{**}$Significant at the 5 percent level.} \\ 
@@ -179,25 +179,26 @@ F Statistic & 604.000$^{***}$ (df = 3; 412) \\
 
 The results show that one additional year of schooling has an effect of
 0.216 on log(Wage), which means that one additional year of schooling
-has an estimated 21.6\% effect on wages earned. This result is highly
-significant (p-value is \ensuremath{2.706\times 10^{-11}}) Another
-result, shown in figure \ref{tab:q1_a_ols} is that being one year older
-has an estimated effect of -0.342 on log(Wage). Thus, being one year
-older is estimated to have a -34.189\% on wages. This result is not
-significant at a common level (p-value is 0.512). The third estimated
-coefficients is the one corresponding to the variable age squared. It
-has an estimated coefficient of -0.011, which represents the estimated
-effect of a one unit increase in age squared on log(Wage). This also
-means that a one unit increase in age squared is equal to an estimate
-effect of -1.114\% on the linear representation of wage. This effect is
-not significant at common levels, because the p-value is 0.184. Finally,
-the estimated constant in the model is estimated at 26.409. This means
-that if all other variables are zero, then the log(Wage) will be equal
-to 26.409. Thus, if all other variables are zero, then wage is estimated
-to be equal to exp(26.409)=\ensuremath{2.947\times 10^{11}}. This is an
-extremely high number given the characteristics of the wage variable.
-However, this result is highly significant, because the p-value is
-0.001.
+has an estimated 21.600\% effect on wages earned. This result is highly
+significant (p-value is 0.000) Another result, shown in figure
+\ref{tab:q1_a_ols} is that being one year older has an estimated effect
+of -0.342 on log(Wage). Thus, being one year older is estimated to have
+a -34.189\% on wages. This result is not significant at a common level
+(p-value is 0.512). The third estimated coefficients is the one
+corresponding to the variable age squared. It has an estimated
+coefficient of -0.011, which represents the estimated effect of a one
+unit increase in age squared on log(Wage). This also means that a one
+unit increase in age squared is equal to an estimate effect of -1.114\%
+on the linear representation of wage. This effect is not significant at
+common levels, because the p-value is 0.184. Finally, the estimated
+constant in the model is estimated at 26.409. This means that if all
+other variables are zero, then the log(Wage) will be equal to 26.409.
+Thus, if all other variables are zero, then wage is estimated to be
+equal to exp(26.409)=294716462317.194. This is an extremely high number
+given the characteristics of the wage variable. However, this result is
+highly significant, because the p-value is 0.001. Of course it is also
+not realistic, because for example it can not be the case that someone
+has earnings and has a zero age.
 
 \textbf{(b) Briefly discuss the sample selection problem that may arise
 in using these OLS estimates for the purpose of predicting the potential
@@ -355,18 +356,18 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
  schooling & 0.215$^{***}$ & 0.303 \\ 
   & (0.032) & (0.735) \\ 
   & & \\ 
- age & $-$0.385 & 1.420 \\ 
-  & (0.542) & (14.900) \\ 
+ age & $-$0.385 & 1.423 \\ 
+  & (0.542) & (14.875) \\ 
   & & \\ 
  age2 & $-$0.010 & $-$0.039 \\ 
   & (0.009) & (0.234) \\ 
   & & \\ 
- Constant & 27.200$^{***}$ & $-$6.440 \\ 
-  & (8.520) & (276.000) \\ 
+ Constant & 27.209$^{***}$ & $-$6.436 \\ 
+  & (8.518) & (276.123) \\ 
   & & \\ 
 Observations & 666 & 666 \\ 
 $\rho$ & $-$0.116 & 1.290 \\ 
-Inverse Mills Ratio & $-$0.174  (0.615) & 7.340  (61.100) \\ 
+Inverse Mills Ratio & $-$0.174  (0.615) & 7.341  (61.129) \\ 
 \hline \\[-1.8ex] 
 \textit{Notes:} & \multicolumn{2}{l}{$^{***}$Significant at the 1 percent level.} \\ 
  & \multicolumn{2}{l}{$^{**}$Significant at the 5 percent level.} \\ 
@@ -451,17 +452,17 @@ outcomes.}
  schooling & 0.215$^{***}$ & 0.274 \\ 
   & (0.032) & (Inf.000) \\ 
   & & \\ 
- age & $-$0.379 & 1.590 \\ 
+ age & $-$0.379 & 1.594 \\ 
   & (0.538) & (Inf.000) \\ 
   & & \\ 
  age2 & $-$0.011 & $-$0.042 \\ 
   & (0.009) & (Inf.000) \\ 
   & & \\ 
- Constant & 27.100$^{***}$ & $-$6.420 \\ 
+ Constant & 27.091$^{***}$ & $-$6.423 \\ 
   & (8.430) & (Inf.000) \\ 
   & & \\ 
 Observations & 666 & 666 \\ 
-Log Likelihood & $-$1,187.000 & $-$1,282.000 \\ 
+Log Likelihood & $-$1,186.617 & $-$1,281.546 \\ 
 $\rho$ & $-$0.099  (0.374) & 1.000  (Inf.000) \\ 
 \hline \\[-1.8ex] 
 \textit{Notes:} & \multicolumn{2}{l}{$^{***}$Significant at the 1 percent level.} \\ 
@@ -608,13 +609,13 @@ on which you base your choice.
  schooling & 0.470 & 0.401$^{***}$ & 0.408$^{***}$ \\ 
   & (0.299) & (0.106) & (0.102) \\ 
   & & & \\ 
- Constant & 22.700$^{**}$ & 23.700$^{***}$ & 23.600$^{***}$ \\ 
-  & (9.700) & (8.520) & (8.530) \\ 
+ Constant & 22.681$^{**}$ & 23.694$^{***}$ & 23.589$^{***}$ \\ 
+  & (9.704) & (8.517) & (8.530) \\ 
   & & & \\ 
 Observations & 416 & 416 & 416 \\ 
 R$^{2}$ & 0.786 & 0.799 & 0.798 \\ 
 Adjusted R$^{2}$ & 0.784 & 0.798 & 0.797 \\ 
-Residual Std. Error (df = 412) & 1.610 & 1.560 & 1.560 \\ 
+Residual Std. Error (df = 412) & 1.613 & 1.560 & 1.565 \\ 
 \hline \\[-1.8ex] 
 \textit{Notes:} & \multicolumn{3}{l}{$^{***}$Significant at the 1 percent level.} \\ 
  & \multicolumn{3}{l}{$^{**}$Significant at the 5 percent level.} \\ 
@@ -666,10 +667,10 @@ conducting a Hausman test:
 \end{Shaded}
 
 \begin{verbatim}
-##                  df1 df2 statistic  p-value
-## Weak instruments   1 412     43.32 1.42e-10
-## Wu-Hausman         1 411      3.63 5.73e-02
-## Sargan             0  NA        NA       NA
+##                  df1 df2 statistic      p-value
+## Weak instruments   1 412 43.319777 1.416463e-10
+## Wu-Hausman         1 411  3.634148 5.730274e-02
+## Sargan             0  NA        NA           NA
 \end{verbatim}
 
 The null hypothesis in the Hausman test is exogeneity of the
