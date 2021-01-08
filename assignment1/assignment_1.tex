@@ -190,15 +190,18 @@ coefficient of -0.011, which represents the estimated effect of a one
 unit increase in age squared on log(Wage). This also means that a one
 unit increase in age squared is equal to an estimate effect of -1.114\%
 on the linear representation of wage. This effect is not significant at
-common levels, because the p-value is 0.184. Finally, the estimated
-constant in the model is estimated at 26.409. This means that if all
-other variables are zero, then the log(Wage) will be equal to 26.409.
-Thus, if all other variables are zero, then wage is estimated to be
-equal to exp(26.409)=294716462317.194. This is an extremely high number
-given the characteristics of the wage variable. However, this result is
-highly significant, because the p-value is 0.001. Of course it is also
-not realistic, because for example it can not be the case that someone
-has earnings and has a zero age.
+common levels, because the p-value is 0.184. A note about both age and
+age squared is that even though both are not significant, their
+estimated sign is negative. This is against expectations, because it is
+normally the case that a more senior individual earns a higher wage.
+Finally, the estimated constant in the model is estimated at 26.409.
+This means that if all other variables are zero, then the log(Wage) will
+be equal to 26.409. Thus, if all other variables are zero, then wage is
+estimated to be equal to exp(26.409)=294716462317.194. This is an
+extremely high number given the characteristics of the wage variable.
+However, this result is highly significant, because the p-value is
+0.001. Of course it is also not realistic, because for example it can
+not be the case that someone has earnings and has a zero age.
 
 \textbf{(b) Briefly discuss the sample selection problem that may arise
 in using these OLS estimates for the purpose of predicting the potential
@@ -207,7 +210,7 @@ your answer, include an explanation why OLS may fail in this context.}
 
 An individual is only in this data set if they earn wages, i.e.~if they
 are employed. Being employed itself is not randomly allocated, but
-rather, a function of e.g.~age, age\^{}2, and schooling. Also,
+rather, a function of e.g.~age, age squared, and schooling. Also,
 employment status follows from labor supply and demand forces. Hence,
 the estimates of schooling on earnings are conditional on having
 earnings to begin with, whereas unbiased estimates must also include
@@ -216,23 +219,24 @@ those individuals. Formally,
 The given estimation only concerns
 \(\mathbb{E[\text{Earnings}|\text{Having a job}]}\).
 
-The sample selection model is given by the following two equations. In
-equation \ref{eq:select}, \(I_i\) denotes an indicator variable which is
-equal to 1 if we observe the wage of an individual, and \(Z_i\) denotes
-a vector of explanatory variables for the probability of an individual
-being employed or not.
+The sample selection model is given by the following two equations.
 
 \begin{equation}
 \mathbb{P}[I_i=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
 \label{eq:select}
 \end{equation}
 
+In equation \ref{eq:select}, \(I_i\) denotes an indicator variable which
+is equal to 1 if we observe the wage of an individual, and \(Z_i\)
+denotes a vector of explanatory variables for the probability of an
+individual being employed or not.
+
 Under our distributional assumptions, in the selection model
 \(v_i \sim N(0,1)\), and therefore
-\(P(I_i=1) = P(I_i^* > 0) = \bf{\Phi}(Z_i^{'} \gamma)\), where \(\Phi\)
-denotes a normal CDF. Note that the model used in this situation
-concerns a probit model, which has the goal to estimate the probability
-that an individual is employed.
+\(P(I_i=1) = P(I_i^* > 0) = \mathbf{\Phi}(Z_i^{'} \gamma)\), where
+\(\mathbf{\Phi}\) denotes a normal CDF. Note that the model used in this
+situation concerns a probit model, which has the goal to estimate the
+probability that an individual is employed.
 
 The second equation is concerned with explaining the wage of an
 individual. It is given by the following equation.
@@ -251,21 +255,26 @@ an exclusion restriction for the sample selection model?}
 For an exclusion restriction variable, we need a variable that is
 theoretically unrelated to earnings, but related to the probability of
 having a job. Empirically, we need a variable significantly different
-from zero in the selection equation and does not have an effect in the
-equation intended to explain the potential earnings of the non-employed.
+from zero in the selection equation and that it does not have an effect
+in the equation intended to explain the potential earnings of the
+non-employed.
 
-A potential candidate is this a variable that matters for being employed
-or not, but does not influence the height of the wage. We believe that
-marriage status could be a suitable candidate variable. The reason being
-that marriage status could matter for being employed or not, because if
-one is not married, the person is more likely to be the only person that
-has to provide the necessary funds of living. If someone is married
-however, than it is more likely that this person is not employed,
-because it might be the case that the partner provides. Marriage status
-is arguably a variable that does not provide a direct effect on the
-height of wages earned. Seeing as both criteria are met, we conclude
-that marriage status is a suitable candidate for an exclusion
-restriction.
+A potential candidate for this is a variable that matters for being
+employed or not, but does not influence the height of the wage. We
+believe that marriage status could be a suitable candidate variable. The
+reason being that marriage status could matter for being employed or
+not, because if one is not married, the person is more likely to be the
+only person that has to provide the necessary funds of living. If
+someone is married however, than it is more likely that this person is
+not employed, because it might be the case that the partner provides.
+Marriage status is arguably a variable that does not provide a direct
+effect on the height of wages earned. This holds if we assume that wages
+only reflect an individual's marginal productivity of labor and that
+this is not influenced by marriage status. This is however doubtful if
+for example married individuals are happier and happiness influences
+one's productivity. Seeing as both criteria are met (given our
+assumption), we conclude that marriage status is a suitable candidate
+for an exclusion restriction.
 
 \textbf{(d) Estimate the sample selection model with the Heckman
 two-step estimator, both with and without the exclusion restriction and
@@ -277,7 +286,7 @@ that married would be a suitable candidate for this variable. In the
 code below we have done the following. First we have estimated the
 sample selection model with the two-step approach, \emph{including} the
 exclusion variable in the selection regression, and \emph{excluding} it
-in the estimating regression. This is in a way as it should be done. The
+in the estimation regression. This is in a way as it should be done. The
 second thing we did was estimating the selection regression
 \emph{without} the exclusion variable married and in the second stage
 using the exact same collection of independent variables in the
@@ -378,19 +387,25 @@ Inverse Mills Ratio & $-$0.174  (0.615) & 7.341  (61.129) \\
 For our results we first note an important difference between the two
 choices of independent variable selections. The inverse Mills ratio of
 the model that does not include marriage in the selection stage is
-perfectly co linear with the rest of the explanatory variables. The
+perfectly collinear with the rest of the explanatory variables. The
 result of this is that our standard errors are much larger for the model
 that is estimated without marriage than for the model that is estimated
 with marriage. From this we can conclude that excluding marriage leads
-to a large loss of estimation efficiency. Another observation that can
-be made is the change in the point estimates of the coefficients. For
-example, the constant changes from 27.209 with marriage, to -6.436
-without marriage. Something else that can be observed is that \(\rho>1\)
-for the model without marriage included in the selection equation. This
-is not possible given the fact that \(\rho\) represents a correlation
+to a large loss of estimation efficiency. This is also to be expected,
+because multicollinearity causes the variance of the estimator to be
+inflated. Another observation that can be made is the change in the
+point estimates of the coefficients. For example, the constant changes
+from 27.209 with marriage, to -6.436 without marriage. Interestingly, we
+do find a positive coefficient for the age variable and a negative
+coefficient for age squared (albeit both are not significant). These
+findings hint towards there being a diminishing marginal effect of age
+on log(Wage). This finding is in-line with what one would expect to find
+in reality. Something else that can be observed is that \(\rho>1\) for
+the model without marriage included in the selection equation. This is
+not possible given the fact that \(\rho\) represents a correlation
 coefficient and thus should be between 0 and 1 in absolute value. A
 final observation that can be made is the large difference in the
-inverse Mill's ratio coefficients and standard error. That is the
+inverse Mills ratio coefficients and standard error. That is the
 coefficient for the model with marriage is smaller and negative, in
 comparison to the model without marriage. For the standard errors, the
 model with marriage appears to be more efficient than the model without
@@ -471,31 +486,46 @@ $\rho$ & $-$0.099  (0.374) & 1.000  (Inf.000) \\
 \end{tabular} 
 \end{table}
 
-In tabel \ref{tab:q1_e} we have displayed our estimation results using
+In table \ref{tab:q1_e} we have displayed our estimation results using
 maximum likelihood, for the model with and without the exclusion
 restrictions. Again we observe a change in the point estimates as a
-result of the change in variable selection. An interesting observation
-to be made is that we are unable to retrieve standard errors for the
-model where we have excluded marriage. For the estimate of the
-correlation coefficient \(\rho\) we notice a similar result for the
-models where we used the two-stage approach. We observe that the
-correlation coefficient moves from being negative under the model with
-marriage to 1.000 under the model without marriage.
+result of the change in variable selection. The estimates are rather
+comparable to the estimates obtained for the two-step Heckman estimator
+without using marriage as an exclusion variable. An interesting
+observation to be made is that we are unable to retrieve standard errors
+for the model where we have excluded marriage. This is likely due to the
+fact that the perfect multicollinearity causes the optimizer used for
+maximum likelihood to converge to zero for the standard errors, or there
+are problems with invertibility of the inner product of the dependent
+variables. For the estimate of the correlation coefficient \(\rho\) we
+notice a similar result for the models where we used the two-stage
+approach. We observe that the correlation coefficient moves from being
+negative under the model with marriage to 1.000 under the model without
+marriage.
 
 \textbf{(f) On the basis of your results, how would you specify the
 distribution of potential earnings for the non-employed?}
 
-For this question we can characterise the distribution of potential
+For this question we can characterize the distribution of potential
 earning for the non-employed by using our model based on maximum
-likelihood and with marriage. The reason for the choice of maximum
-likelihood is that maximum likelihood is more efficient than the
-two-step approach, because we have hetereoskedastic errors for the
-two-step approach. The way we characterise the distribution is by
-predicting the values of the log(Wage) of the unemployed individuals.
-This is done by simply filling in the observed data for the unemployed
-in the model and then predict via the estimated model parameters. The
-code that makes the prediction is shown below, as well as a kernel
-density plot of the predicted log(Wage) of the unemployed.
+likelihood and with marriage. The reason for the choice of the maximum
+likelihood model is that it is more efficient than the two-step
+approach, because we have hetereoskedastic errors for the two-step
+approach. However, we could have possibly chosen to estimate the model
+with the simple OLS model. There are two reasons for this. First, the
+estimates of the models do not differ much. Second, and perhaps more
+informative, in the two-step Heckman estimator, the inverse Mills ratio
+appears the have an insignificant coefficient, which hints towards the
+absence of a sample selection bias. In the end we do choose for the
+sample selection model based on maximum likelihood, we believe that the
+theoretical argument for a selection bias is strong in this case.
+
+The way we characterize the distribution is by predicting the values of
+the log(Wage) of the unemployed individuals. This is done by simply
+filling in the observed data for the unemployed in the model and then
+predict via the estimated model parameters. The code that makes the
+prediction is shown below, as well as a kernel density plot of the
+predicted log(Wage) of the unemployed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -514,8 +544,18 @@ density plot of the predicted log(Wage) of the unemployed.
 \CommentTok{# Construct vector of unemployed log(Wage) predictions:}
 \NormalTok{log_wage_unemployed <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(data}\OperatorTok{$}\NormalTok{d_unem }\OperatorTok{*}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{est_log_wage)}
 
-\CommentTok{# Kernel density plot of log(Wage) predictions of the unemployed:}
-\KeywordTok{plot}\NormalTok{(}\KeywordTok{density}\NormalTok{(log_wage_unemployed), }\DataTypeTok{xlab=}\StringTok{'log(Wage)'}\NormalTok{, }\DataTypeTok{main=}\StringTok{''}\NormalTok{)}
+\CommentTok{# Histogram + kernel density plot of log(Wage) predictions of the unemployed:}
+\KeywordTok{hist}\NormalTok{(log_wage_unemployed, }\CommentTok{# histogram}
+ \DataTypeTok{col=}\StringTok{"gray"}\NormalTok{, }\CommentTok{# column color}
+ \DataTypeTok{border=}\StringTok{"black"}\NormalTok{,}
+ \DataTypeTok{prob =} \OtherTok{TRUE}\NormalTok{, }\CommentTok{# show densities instead of frequencies}
+ \DataTypeTok{xlab =} \StringTok{"log(Wage)"}\NormalTok{,}
+ \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{14}\NormalTok{),}
+ \DataTypeTok{main =} \StringTok{""}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(}\KeywordTok{density}\NormalTok{(log_wage_unemployed), }\CommentTok{# density plot}
+ \DataTypeTok{lwd =} \DecValTok{2}\NormalTok{, }\CommentTok{# thickness of line}
+ \DataTypeTok{col =} \StringTok{"black"}\NormalTok{,}
+ \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{14}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -525,7 +565,7 @@ density plot of the predicted log(Wage) of the unemployed.
 
 }
 
-\caption{\label{fig:figs}Kernel density plot of predicted $log(Wage)$ of the unemployed.}\label{fig:fig_density_log_wage}
+\caption{\label{fig:figs}Historgram and kernel density plot of predicted $log(Wage)$ of the unemployed.}\label{fig:fig_density_log_wage}
 \end{figure}
 
 \clearpage
@@ -636,16 +676,10 @@ very small. Conditional on subsidy being a good instrument, then, the
 potential endogeneity does not substantially changes the estimates of
 schooling on earnings.
 
-\begin{enumerate}
-\def\labelenumi{(\alph{enumi})}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  Compare the IV estimates with the OLS outcomes. Under which conditions
-  would you prefer OLS over IV? Perform a test and use the outcome of
-  the test to support your choice between OLS and IV. Motivate your
-  choice.
-\end{enumerate}
+\textbf{(c) Compare the IV estimates with the OLS outcomes. Under which
+conditions would you prefer OLS over IV? Perform a test and use the
+outcome of the test to support your choice between OLS and IV. Motivate
+your choice.}
 
 We first observe that the OLS estimate \(\beta =\) 0.216 is about half
 the magnitude of the IV-estimate. This means that the bias generated by
