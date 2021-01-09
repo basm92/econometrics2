@@ -12,7 +12,7 @@ echo $downdir
 echo How many files do you want to copy?
 read nofiles
 
-echo "What is your econometrics2 repository directory (e.g. C:/Users/Bas/Documents/econometrics2/, /Documents/git/econometrics2)"
+echo "What is your econometrics2 repository directory (e.g. Documents/econometrics2 (Windows), /Documents/git/econometrics2 (Mac) )"
 read destdir
 
 if [ ${destdir:0:1} != "/" ]
