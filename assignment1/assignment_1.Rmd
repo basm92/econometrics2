@@ -62,10 +62,6 @@ Formally, $\mathbb{E}[\text{Earnings}] = \mathbb{E[\text{Earnings}|\text{Having 
 
 The sample selection model is given by the following two equations.
 
-<!-- Still need to add specific variables! As X variables we could do the variables from q1a, and then for the selection equation do the marriage status variable? Should we include the exclusion restriction variable in the second equation? I.e. is Z a subset of X? -->
-
-<!-- Bas: Z is never a subset of X! There should be at least 1 variable in Z that is not in X -->  
-
 \begin{equation}
 \mathbb{P}[I_i=1|Z]=\mathbf{\Phi} (Z_i'\gamma)
 \label{eq:select}
@@ -75,14 +71,17 @@ In equation \ref{eq:select}, $I_i$ denotes an indicator variable which is equal 
 
 Under our distributional assumptions, in the selection model $v_i \sim N(0,1)$, and therefore $P(I_i=1) = P(I_i^* > 0) = \mathbf{\Phi}(Z_i^{'} \gamma)$, where $\mathbf{\Phi}$ denotes a normal CDF. Note that the model used in this situation concerns a probit model, which has the goal to estimate the probability that an individual is employed.
 
-The second equation is concerned with explaining the wage of an individual. It is given by the following equation.
+The second equation is concerned with explaining the (latent) wage of an individual. It is given by the following equation.
 
 \begin{equation}
 Y_i^* = X_i'\beta + U_i
 \label{eq:effect}
 \end{equation}
 
-In equation \ref{eq:effect}, $Y_i^*$ denotes the observed log(Wage), $X_i$ are the explanatory regressors for explaining log(Wage).
+In equation \ref{eq:effect}, $Y_i^*$ denotes the observed log(Wage), $X_i$ are the explanatory regressors for explaining log(Wage). We find that the OLS estimates are unbiased if one of the two following conditions are satisfied:
+
+- $Cov(u_i, v_i) = 0$. In words, this means that the selection is completely unrelated to explanatory variables, i.e. we have random sampling. 
+- $X \perp Z$: If this occurs, $\mathbb{E}[X_i|U_i] = 0$, and the expected value of the distribution of $Y_i|X_i = X_i^{'} \beta$. 
 
 __(c) Which variable in your data may be a suitable candidate as an exclusion restriction for the sample selection model?__
 
@@ -97,20 +96,6 @@ For this question we are asked to estimate the Heckman two-step estimator, both 
 ```{r estimate_two-step, results='asis'}
 # Construct I (I=1 for y_i^* != na, else 0)
 data$I <- ifelse(is.na(data$logWage) , 0, 1) # if na, then I is zero. Else 1.
-
-## Two stage approach without package:
-# Stage 1:
-# probit <- glm(I ~ schooling + age + age2 + married,
-#               family = binomial(link = "probit"),
-#               data = data)
-# 
-# # Construct variable for stage 2:
-# Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit)
-# inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
-# 
-# # Stage 2:
-# sample_selection_2s <- lm_robust(logWage ~ schooling + age + age2 + inverse_mills_ratio,
-#                             se_type='HC1' ,data=data)
 
 sample_selection_2s_with <- selection(I ~ schooling + age + age2 + married, 
                                 logWage ~ schooling + age + age2, data=data, 
@@ -135,7 +120,25 @@ stargazer(sample_selection_2s_with, sample_selection_2s_without,
           with and without the exclusion variable.')
 ```
 
-For our results we first note an important difference between the two choices of independent variable selections. The inverse Mills ratio of the model that does not include marriage in the selection stage is perfectly collinear with the rest of the explanatory variables. The result of this is that our standard errors are much larger for the model that is estimated without marriage than for the model that is estimated with marriage. From this we can conclude that excluding marriage leads to a large loss of estimation efficiency. This is also to be expected, because multicollinearity causes the variance of the estimator to be inflated. Another observation that can be made is the change in the point estimates of the coefficients. For example, the constant changes from `r coeffs_sample_selection_2s_with[6]` with marriage, to `r coeffs_sample_selection_2s_without[5]` without marriage. Interestingly, we do find a positive coefficient for the age variable and a negative coefficient for age squared (albeit both are not significant). These findings hint towards there being a diminishing marginal effect of age on log(Wage). This finding is in-line with what one would expect to find in reality. Something else that can be observed is that $\rho>1$ for the model without marriage included in the selection equation. This is not possible given the fact that $\rho$ represents a correlation coefficient and thus should be between 0 and 1 in absolute value. A final observation that can be made is the large difference in the inverse Mills ratio coefficients and standard error. That is the coefficient for the model with marriage is smaller and negative, in comparison to the model without marriage. For the standard errors, the model with marriage appears to be more efficient than the model without marriage.
+```{r include=FALSE}
+## Two stage approach without package:
+# Stage 1:
+# probit <- glm(I ~ schooling + age + age2 + married,
+#               family = binomial(link = "probit"),
+#               data = data)
+# 
+# # Construct variable for stage 2:
+# Z_gamma <- cbind(1,data$schooling, data$age, data$age2, data$married) %*% coef(probit)
+# inverse_mills_ratio <- dnorm(Z_gamma, mean=0, sd=1) / pnorm(Z_gamma, mean=0, sd=1)
+# 
+# # Stage 2:
+# sample_selection_2s <- lm_robust(logWage ~ schooling + age + age2 + inverse_mills_ratio,
+#                             se_type='HC1' ,data=data)
+```
+
+For our results we first note an important difference between the two choices of independent variable selections. The inverse Mills ratio of the model that does not include marriage in the selection stage is perfectly collinear with the rest of the explanatory variables. The result of this is that our standard errors are much larger for the model that is estimated without marriage than for the model that is estimated with marriage. From this we can conclude that excluding marriage leads to a large loss of estimation efficiency. This is also to be expected, because multicollinearity causes the variance of the estimator to be inflated. Another observation that can be made is the change in the point estimates of the coefficients. For example, the constant changes from `r coeffs_sample_selection_2s_with[6]` with marriage, to `r coeffs_sample_selection_2s_without[5]` without marriage. 
+
+Interestingly, we do find a positive coefficient for the age variable and a negative coefficient for age squared (albeit both are not significant). These findings hint towards there being a diminishing marginal effect of age on log(Wage). This finding is in-line with what one would expect to find in reality. Something else that can be observed is that $\rho>1$ for the model without marriage included in the selection equation. This is not possible given the fact that $\rho$ represents a correlation coefficient and thus should be between 0 and 1 in absolute value. A final observation that can be made is the large difference in the inverse Mills ratio coefficients and standard error. That is the coefficient for the model with marriage is smaller and negative, in comparison to the model without marriage. For the standard errors, the model with marriage appears to be more efficient than the model without marriage.
 
 __(e) Estimate the sample selection model with Maximum Likelihood, both with and without the exclusion restriction and compare the outcomes.__
 
@@ -170,7 +173,9 @@ __(f) On the basis of your results, how would you specify the distribution of po
 
 <!-- @ Bas: Wat denk je van het argument dat we het OLS model ook zouden kunnen gebruiken? -->
 
-For this question we can characterize the distribution of potential earning for the non-employed by using our model based on maximum likelihood and with marriage. The reason for the choice of the maximum likelihood model is that it is more efficient than the two-step approach, because we have hetereoskedastic errors for the two-step approach. However, we could have possibly chosen to estimate the model with the simple OLS model. There are two reasons for this. First, the estimates of the models do not differ much. Second, and perhaps more informative, in the two-step Heckman estimator, the inverse Mills ratio appears the have an insignificant coefficient, which hints towards the absence of a sample selection bias. In the end we do choose for the sample selection model based on maximum likelihood, we believe that the theoretical argument for a selection bias is strong in this case.
+<!-- Klopt inderdaad volgens mij! -->
+
+For this question we can characterize the distribution of potential earning for the non-employed by using our model based on maximum likelihood and with marriage. The reason for the choice of the maximum likelihood model is that it is more efficient than the two-step approach, because we have heteroskedastic errors for the two-step approach. However, we could have possibly chosen to estimate the model with the simple OLS model. There are two reasons for this. First, the estimates of the models do not differ much. Second, and perhaps more informative, in the two-step Heckman estimator, the inverse Mills ratio appears the have an insignificant coefficient, which hints towards the absence of a sample selection bias. In the end we do choose for the sample selection model based on maximum likelihood, we believe that the theoretical argument for a selection bias is strong in this case.
 
 The way we characterize the distribution is by predicting the values of the log(Wage) of the unemployed individuals. This is done by simply filling in the observed data for the unemployed in the model and then predict via the estimated model parameters. The code that makes the prediction is shown below, as well as a kernel density plot of the predicted log(Wage) of the unemployed.
 
@@ -189,7 +194,9 @@ data$d_unem <- ifelse(is.na(data$logWage) , 1, NaN) # if na, then d_unem is 1. E
 
 # Construct vector of unemployed log(Wage) predictions:
 log_wage_unemployed <- na.omit(data$d_unem * data$est_log_wage)
+```
 
+```{r echo=FALSE}
 # Histogram + kernel density plot of log(Wage) predictions of the unemployed:
 hist(log_wage_unemployed, # histogram
  col="gray", # column color
