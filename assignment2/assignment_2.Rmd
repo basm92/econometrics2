@@ -1,0 +1,31 @@
+---
+title: "Assignment 2"
+author: "Walter Verwer & Bas Machielsen"
+date: "1/11/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, python.reticulate=FALSE)
+library(reticulate)
+```
+
+## Question 1
+
+```{python, results='asis'}
+import statsmodels.formula.api as smf
+from statsmodels.iolib.summary2 import summary_col
+import pandas as pd
+
+data = pd.read_csv("./data/NLSY2000RC_V2.csv")
+
+mod1 = )smf.ols('EARNINGS ~ S + AGE + AGESQ + ASVABC + 
+            ETHBLACK + URBAN + REGNE + REGNC + REGW + REGS', data=data.fit()
+            )
+
+mod2 = (smf.ols('EARNINGS ~ S + AGE + AGESQ + 
+    ETHBLACK + URBAN + REGNE + REGNC + REGW + REGS', data=data).fit()
+    )
+
+output = summary_col([mod1, mod2], stars=True).as_latex()
+```
