@@ -17,15 +17,11 @@ import statsmodels.formula.api as smf
 from statsmodels.iolib.summary2 import summary_col
 import pandas as pd
 
-data = pd.read_csv("./data/NLSY2000RC_V2.csv")
+data = pd.read_csv("./assignment2/data/NLSY2000RC_V2.csv")
 
-mod1 = )smf.ols('EARNINGS ~ S + AGE + AGESQ + ASVABC + 
-            ETHBLACK + URBAN + REGNE + REGNC + REGW + REGS', data=data.fit()
-            )
+mod1 = (smf.ols('EARNINGS ~ S + AGE + AGESQ + ASVABC + ETHBLACK + URBAN + REGNE + REGNC + REGW + REGS', data=data.fit())
 
-mod2 = (smf.ols('EARNINGS ~ S + AGE + AGESQ + 
-    ETHBLACK + URBAN + REGNE + REGNC + REGW + REGS', data=data).fit()
-    )
+mod2 = (smf.ols('EARNINGS ~ S + AGE + AGESQ + ETHBLACK + URBAN + REGNE + REGNC + REGW + REGS', data=data).fit())
 
 output = summary_col([mod1, mod2], stars=True).as_latex()
 ```

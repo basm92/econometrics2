@@ -82,7 +82,7 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{graphicx}
+\usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -121,16 +121,16 @@ and age squared. Present the results and comment on the estimates.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =}\NormalTok{ logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2)}
+\NormalTok{model_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =}\NormalTok{ logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2)}
 
-\NormalTok{results\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{ }\KeywordTok{summary.lm}\NormalTok{(model\_}\DecValTok{1}\NormalTok{)}
-\NormalTok{coeffs\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{results\_}\DecValTok{1}\OperatorTok{$}\NormalTok{coefficients[,}\DecValTok{1}\NormalTok{]}
-\NormalTok{pvals\_}\DecValTok{1}\NormalTok{ \textless{}{-}}\StringTok{ }\NormalTok{results\_}\DecValTok{1}\OperatorTok{$}\NormalTok{coefficients[,}\DecValTok{4}\NormalTok{]}
+\NormalTok{results_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{summary.lm}\NormalTok{(model_}\DecValTok{1}\NormalTok{)}
+\NormalTok{coeffs_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\NormalTok{results_}\DecValTok{1}\OperatorTok{$}\NormalTok{coefficients[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{pvals_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\NormalTok{results_}\DecValTok{1}\OperatorTok{$}\NormalTok{coefficients[,}\DecValTok{4}\NormalTok{]}
 
-\KeywordTok{stargazer}\NormalTok{(model\_}\DecValTok{1}\NormalTok{, }\DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
+\KeywordTok{stargazer}\NormalTok{(model_}\DecValTok{1}\NormalTok{, }\DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
-          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{\textquotesingle{}tab:q1\_a\_ols\textquotesingle{}}\NormalTok{,}
-          \DataTypeTok{title =} \StringTok{\textquotesingle{}OLS regression for log{-}earnings on schooling, age and age squared.\textquotesingle{}}\NormalTok{)}
+          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_a_ols'}\NormalTok{,}
+          \DataTypeTok{title =} \StringTok{'OLS regression for log-earnings on schooling, age and age squared.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -301,19 +301,19 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Construct I (I=1 for y\_i\^{}* != na, else 0)}
-\NormalTok{data}\OperatorTok{$}\NormalTok{I \textless{}{-}}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{\# if na, then I is zero. Else 1.}
+\CommentTok{# Construct I (I=1 for y_i^* != na, else 0)}
+\NormalTok{data}\OperatorTok{$}\NormalTok{I <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{) }\CommentTok{# if na, then I is zero. Else 1.}
 
-\NormalTok{sample\_selection\_2s\_with \textless{}{-}}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
-\NormalTok{                                logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
-                                \DataTypeTok{method=}\StringTok{\textquotesingle{}2step\textquotesingle{}}\NormalTok{)}
-\NormalTok{coeffs\_sample\_selection\_2s\_with \textless{}{-}}\StringTok{ }\NormalTok{sample\_selection\_2s\_with}\OperatorTok{$}\NormalTok{coefficients}
+\NormalTok{sample_selection_2s_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
+\NormalTok{coeffs_sample_selection_2s_with <-}\StringTok{ }\NormalTok{sample_selection_2s_with}\OperatorTok{$}\NormalTok{coefficients}
 
 
-\CommentTok{\#\# using package \textquotesingle{}sampleSelection\textquotesingle{} to get maximum likelihood estimates:}
-\NormalTok{sample\_selection\_2s\_without \textless{}{-}}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }
-\NormalTok{                                logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
-                                \DataTypeTok{method=}\StringTok{\textquotesingle{}2step\textquotesingle{}}\NormalTok{)}
+\CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
+\NormalTok{sample_selection_2s_without <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'2step'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -325,17 +325,17 @@ it's results in our output table, displayed in table \ref{tab:q1_d}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coeffs\_sample\_selection\_2s\_without \textless{}{-}}\StringTok{ }\NormalTok{sample\_selection\_2s\_without}\OperatorTok{$}\NormalTok{coefficients}
+\NormalTok{coeffs_sample_selection_2s_without <-}\StringTok{ }\NormalTok{sample_selection_2s_without}\OperatorTok{$}\NormalTok{coefficients}
 
 
-\CommentTok{\# Obtain output:}
-\KeywordTok{stargazer}\NormalTok{(sample\_selection\_2s\_with, sample\_selection\_2s\_without,}
+\CommentTok{# Obtain output:}
+\KeywordTok{stargazer}\NormalTok{(sample_selection_2s_with, sample_selection_2s_without,}
           \DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
-          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{\textquotesingle{}tab:q1\_d\textquotesingle{}}\NormalTok{,}
-          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Two{-}step with married"}\NormalTok{, }\StringTok{"Two{-}step without married"}\NormalTok{),}
-          \DataTypeTok{title =} \StringTok{\textquotesingle{}Log earnings sample selection regression with two{-}step approach, }
-\StringTok{          with and without the exclusion variable.\textquotesingle{}}\NormalTok{)}
+          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_d'}\NormalTok{,}
+          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"Two-step with married"}\NormalTok{, }\StringTok{"Two-step without married"}\NormalTok{),}
+          \DataTypeTok{title =} \StringTok{'Log earnings sample selection regression with two-step approach, }
+\StringTok{          with and without the exclusion variable.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -407,17 +407,17 @@ outcomes.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Construct I (I=1 for y\_i\^{}* != na, else 0)}
-\NormalTok{sample\_selection\_ml\_with \textless{}{-}}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
-\NormalTok{                                logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
-                                \DataTypeTok{method=}\StringTok{\textquotesingle{}ml\textquotesingle{}}\NormalTok{)}
-\NormalTok{coeffs\_sample\_selection\_ml\_with \textless{}{-}}\StringTok{ }\NormalTok{sample\_selection\_ml\_with}\OperatorTok{$}\NormalTok{estimate[}\DecValTok{6}\OperatorTok{:}\DecValTok{9}\NormalTok{]}
+\CommentTok{# Construct I (I=1 for y_i^* != na, else 0)}
+\NormalTok{sample_selection_ml_with <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{married, }
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
+\NormalTok{coeffs_sample_selection_ml_with <-}\StringTok{ }\NormalTok{sample_selection_ml_with}\OperatorTok{$}\NormalTok{estimate[}\DecValTok{6}\OperatorTok{:}\DecValTok{9}\NormalTok{]}
 
 
-\CommentTok{\#\# using package \textquotesingle{}sampleSelection\textquotesingle{} to get maximum likelihood estimates:}
-\NormalTok{sample\_selection\_ml\_without \textless{}{-}}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }
-\NormalTok{                                logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
-                                \DataTypeTok{method=}\StringTok{\textquotesingle{}ml\textquotesingle{}}\NormalTok{)}
+\CommentTok{## using package 'sampleSelection' to get maximum likelihood estimates:}
+\NormalTok{sample_selection_ml_without <-}\StringTok{ }\KeywordTok{selection}\NormalTok{(I }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }
+\NormalTok{                                logWage }\OperatorTok{~}\StringTok{ }\NormalTok{schooling }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2, }\DataTypeTok{data=}\NormalTok{data, }
+                                \DataTypeTok{method=}\StringTok{'ml'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -429,16 +429,16 @@ outcomes.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{coeffs\_sample\_selection\_ml\_without \textless{}{-}}\StringTok{ }\NormalTok{sample\_selection\_ml\_without}\OperatorTok{$}\NormalTok{coefficients}
+\NormalTok{coeffs_sample_selection_ml_without <-}\StringTok{ }\NormalTok{sample_selection_ml_without}\OperatorTok{$}\NormalTok{coefficients}
 
-\CommentTok{\# Obtain output:}
-\KeywordTok{stargazer}\NormalTok{(sample\_selection\_ml\_with, sample\_selection\_ml\_without,}
+\CommentTok{# Obtain output:}
+\KeywordTok{stargazer}\NormalTok{(sample_selection_ml_with, sample_selection_ml_without,}
           \DataTypeTok{style =} \StringTok{"AER"}\NormalTok{,}
           \DataTypeTok{font.size =} \StringTok{"small"}\NormalTok{,}
-          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{\textquotesingle{}tab:q1\_e\textquotesingle{}}\NormalTok{, }\DataTypeTok{digits=}\DecValTok{3}\NormalTok{,}
+          \DataTypeTok{header =}\NormalTok{ F, }\DataTypeTok{label =} \StringTok{'tab:q1_e'}\NormalTok{, }\DataTypeTok{digits=}\DecValTok{3}\NormalTok{,}
           \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"ML with married"}\NormalTok{, }\StringTok{"ML without married"}\NormalTok{),}
-          \DataTypeTok{title =} \StringTok{\textquotesingle{}Log earnings sample selection regression with maximum likelihood, }
-\StringTok{          with and without the exclusion variable.\textquotesingle{}}\NormalTok{)}
+          \DataTypeTok{title =} \StringTok{'Log earnings sample selection regression with maximum likelihood, }
+\StringTok{          with and without the exclusion variable.'}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -519,20 +519,20 @@ predicted log(Wage) of the unemployed.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Predict log(Wage):}
-\NormalTok{data}\OperatorTok{$}\NormalTok{est\_log\_wage\textless{}{-}}\OtherTok{NaN}
+\CommentTok{# Predict log(Wage):}
+\NormalTok{data}\OperatorTok{$}\NormalTok{est_log_wage<-}\OtherTok{NaN}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(data)))\{}
-\NormalTok{  data}\OperatorTok{$}\NormalTok{est\_log\_wage[i] \textless{}{-}}\StringTok{ }\NormalTok{coeffs\_sample\_selection\_ml\_with }\OperatorTok{\%*\%}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, }
+\NormalTok{  data}\OperatorTok{$}\NormalTok{est_log_wage[i] <-}\StringTok{ }\NormalTok{coeffs_sample_selection_ml_with }\OperatorTok{%*%}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\DecValTok{1}\NormalTok{, }
 \NormalTok{                                                                    data}\OperatorTok{$}\NormalTok{schooling,}
 \NormalTok{                                                                    data}\OperatorTok{$}\NormalTok{age, }
 \NormalTok{                                                                    data}\OperatorTok{$}\NormalTok{age2)[i,}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
 \NormalTok{\}}
 
-\CommentTok{\# Dummy that is 1 for being unemployed:}
-\NormalTok{data}\OperatorTok{$}\NormalTok{d\_unem \textless{}{-}}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{1}\NormalTok{, }\OtherTok{NaN}\NormalTok{) }\CommentTok{\# if na, then d\_unem is 1. Else NaN.}
+\CommentTok{# Dummy that is 1 for being unemployed:}
+\NormalTok{data}\OperatorTok{$}\NormalTok{d_unem <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(data}\OperatorTok{$}\NormalTok{logWage) , }\DecValTok{1}\NormalTok{, }\OtherTok{NaN}\NormalTok{) }\CommentTok{# if na, then d_unem is 1. Else NaN.}
 
-\CommentTok{\# Construct vector of unemployed log(Wage) predictions:}
-\NormalTok{log\_wage\_unemployed \textless{}{-}}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(data}\OperatorTok{$}\NormalTok{d\_unem }\OperatorTok{*}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{est\_log\_wage)}
+\CommentTok{# Construct vector of unemployed log(Wage) predictions:}
+\NormalTok{log_wage_unemployed <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(data}\OperatorTok{$}\NormalTok{d_unem }\OperatorTok{*}\StringTok{ }\NormalTok{data}\OperatorTok{$}\NormalTok{est_log_wage)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -580,14 +580,14 @@ on which you base your choice.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{firstoption \textless{}{-}}\StringTok{ }\KeywordTok{ivreg}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =} 
-\NormalTok{                         logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{schooling }\OperatorTok{|}\StringTok{ }\NormalTok{distance }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2)}
+\NormalTok{firstoption <-}\StringTok{ }\KeywordTok{ivreg}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =} 
+\NormalTok{                         logWage }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{schooling }\OperatorTok{|}\StringTok{ }\NormalTok{distance }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2)}
 
-\NormalTok{secondoption \textless{}{-}}\StringTok{ }\KeywordTok{ivreg}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =}
-\NormalTok{                          logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{schooling }\OperatorTok{|}\StringTok{ }\NormalTok{subsidy }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2)}
+\NormalTok{secondoption <-}\StringTok{ }\KeywordTok{ivreg}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =}
+\NormalTok{                          logWage }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{schooling }\OperatorTok{|}\StringTok{ }\NormalTok{subsidy }\OperatorTok{+}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2)}
 
-\NormalTok{thirdoption \textless{}{-}}\StringTok{ }\KeywordTok{ivreg}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =}
-\NormalTok{                          logWage }\OperatorTok{\textasciitilde{}}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{schooling }\OperatorTok{|}\StringTok{ }\NormalTok{subsidy }\OperatorTok{+}\StringTok{ }\NormalTok{distance }\OperatorTok{+}\StringTok{ }\NormalTok{age }
+\NormalTok{thirdoption <-}\StringTok{ }\KeywordTok{ivreg}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ data, }\DataTypeTok{formula =}
+\NormalTok{                          logWage }\OperatorTok{~}\StringTok{ }\NormalTok{age }\OperatorTok{+}\StringTok{ }\NormalTok{age2 }\OperatorTok{+}\StringTok{ }\NormalTok{schooling }\OperatorTok{|}\StringTok{ }\NormalTok{subsidy }\OperatorTok{+}\StringTok{ }\NormalTok{distance }\OperatorTok{+}\StringTok{ }\NormalTok{age }
                      \OperatorTok{+}\StringTok{ }\NormalTok{age2)}
 \end{Highlighting}
 \end{Shaded}
@@ -662,7 +662,7 @@ conducting a Hausman test:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{hoi \textless{}{-}}\StringTok{ }\KeywordTok{summary}\NormalTok{(}
+\NormalTok{hoi <-}\StringTok{ }\KeywordTok{summary}\NormalTok{(}
 \NormalTok{    secondoption, }
         \DataTypeTok{diagnostics=}\OtherTok{TRUE}\NormalTok{)}
 
