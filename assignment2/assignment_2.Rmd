@@ -31,7 +31,7 @@ if(Sys.info()["user"] == "bas"){ # Mijn Linux
     Sys.setenv(RETICULATE_PYTHON = "C:\\Users\\walte\\anaconda3")
     library(reticulate)
     reticulate::use_python("C:\\Users\\walte\\anaconda3")
-    py_available(TRUE) 
+    py_available(TRUE)
 }
 
 # Hier kunnen we zien of alles is goed gegaan 
@@ -44,6 +44,8 @@ First use pooled OLS to check the impact of including and excluding ASVABC on th
 
 ```{python load packages, echo=FALSE}
 import pandas as pd
+import getpass
+
 
 import statsmodels.api as sm
 from statsmodels.iolib.summary2 import summary_col
@@ -55,7 +57,14 @@ import numpy as np
 
 
 ```{python read data, echo=FALSE}
-earnings = pd.read_csv("~/Documents/git/econometrics2/assignment2/data/NLSY2000RC_V2.csv")
+path_walter = ("D:\\Files\\Git Projects\\ti_git_projects\\year_1\\block_3\\") \
+                + ("econometrics2\\assignment2\\data\\NLSY2000RC_V2.csv")
+
+if getpass.getuser()=='walte':
+    earnings = pd.read_csv(path_walter)
+    
+else:
+    earnings = pd.read_csv("~/Documents/git/econometrics2/assignment2/data/NLSY2000RC_V2.csv")
 
 ivs = ['ASVABC','AGE', 'AGESQ','S','ETHBLACK','URBAN','REGNE','REGNC','REGW','REGS']
 y = ['EARNINGS']
