@@ -267,7 +267,7 @@ For this question we first need to estimate the time mean of the regressor varia
 
 Our results are shown below. In the wald test output, one can see that the time meaned regressors are highly jointly significant away from zero. This indicates that it is better to use the fixed effects model instead of the random effects model.
 
-```{r mundlak, include=TRUE}
+```{r mundlak, include=TRUE, warning=FALSE}
 # 1. Estimate time means per individual and variable:
     # We moeten mergen, de mundlak part moet constant erbij toegevoegd worden, for elke t.
     # Dus voor elke individu neem de mean over de tijd en maak de dimensies gelijk aan Y_it
@@ -306,7 +306,7 @@ mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN +
 summary(mundlak)
 stargazer(mundlak, header=FALSE)
 
-wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
+wald.test(vcov(mundlak), b=coef(mundlak), Terms = 12:19)
 
 ```
 
