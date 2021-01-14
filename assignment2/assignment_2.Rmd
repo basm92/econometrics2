@@ -246,10 +246,11 @@ stargazer(fixed_effects,
 ```
 
 Because of multicollinearity, one coefficient from the dummies is dropped. 
-\clearpage
-## Question 6
 
-Fixed effects estimation may not be as efficient as random effects estimation, but is robust to correlation between regressors and the random effect. Can we perform a Hausman test in this context? Perform the test you propose.
+\clearpage
+
+## Question 6
+__Fixed effects estimation may not be as effcient as random effcient estimation, but is robust to correlation between regressors and the random effcient. Can we perform a Hausman test in this context? Perform the test you propose. Fixed effects estimation may not be as efficient as random effects estimation, but is robust to correlation between regressors and the random effect. Can we perform a Hausman test in this context? Perform the test you propose.__
 
 The test tests the null hypothesis that the unique errors are not correlated with the regressors. 
 
@@ -260,8 +261,11 @@ phtest(fixed_effects, random_effects)
 The null hypothesis is rejected, implying that the unique parts are correlated with the regressors, and hence, random effects is an inconsistent estimator. 
 
 ## Question 7
+__Perform Mundlak estimation of the model. Present the results of estimation and test for the joint sigificance of the within-group means.__
 
-For this question we first need to estimate the time mean of the regressor variables, for every individual.
+For this question we first need to estimate the time mean of the regressor variables, for every individual. Then we include those estimates in a random effects model and apply a wald test on the coefficients of the time meaned regressors.
+
+Our results are shown below. In the wald test output, one can see that the time meaned regressors are highly jointly significant away from zero. This indicates that it is better to use the fixed effects model instead of the random effects model.
 
 ```{r mundlak, include=TRUE}
 # 1. Estimate time means per individual and variable:
@@ -278,15 +282,11 @@ For this question we first need to estimate the time mean of the regressor varia
 library(aod)
 
 # get average over time per worker
-X_hat <- py$earnings %>%
+earnings <- py$earnings 
+
+X_hat <- earnings %>%
   group_by(ID) %>%
-  summarise(across(c(AGE, AGESQ, ETHBLACK, 
-                     URBAN, ASVABC, REGNE, 
-                     REGNC, REGW, 
-                     REGS, BLACKxS),
-                   ~ mean(.)
-                   )
-            )
+  summarise(across(everything(), mean))
 
 colnames(X_hat)[c(-1)] <- paste(colnames(X_hat)[c(-1)], "MEAN", sep = "_")
 
@@ -294,10 +294,10 @@ colnames(X_hat)[c(-1)] <- paste(colnames(X_hat)[c(-1)], "MEAN", sep = "_")
 earnings_with_mean <- merge(py$earnings, X_hat, by = "ID")
 
 mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN +
-                   REGNE + REGNC + REGW  + ASVABC +
+                   REGNE + REGNC + REGW  + ASVABC + BLACKxS +
                    S_MEAN + AGE_MEAN + AGESQ_MEAN + ETHBLACK_MEAN +
                    URBAN_MEAN + REGNE_MEAN + REGNC_MEAN +
-                   REGW_MEAN  + ASVABC_MEAN,
+                   REGW_MEAN  + ASVABC_MEAN + BLACKxS_MEAN,
                  data=earnings_with_mean,
                  model="random",
                  index = c("ID")
@@ -311,7 +311,14 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 ```
 
 
+## Question 8
+__What are your overall conclusions from the analysis of heterogeneity in returns to schooling by ethnicity?__
+
+
 ## Question 9
+__To gain insight in the impact of nonresponse and attrition, the researcher applies a variant of the Verbeek and Nijman-test (see lecture slides). He defines the dummy variable $d_i$ which is 1 if the individual is in the panel for more than 5 waves, and is zero otherwise. Apply the Verbeek and Nijman test with this definition of $d_i$ (otherwise equal to the definition at the lecture slides). Draw conclusions and address practical problems you possibly met in implementing the test.__
+
+We have simply applied a fixed effects panel data regression on both the full data set, as well as on the data set where we only take the individuals into account that are 5 or more times observed in the data set. We have done this by applying a filter by counting how many times a specific individual is in the data set, if the individual is counted 5 or more times, then it is included in the fixed effects regression. Our conclusion based on a Haussman test between the two estimated coefficient vectors for both data sets is that there is a significant difference. This tells us that there is attrition bias present in the data. However, we do have to note that this specification of the Verbeek and Nijman test does not compare a fully balanced model with our original unbalanced model. It actually compares two unbalanced models with each other. Even though this is the case we still obtain evidence of attrition bias due to an unobserved variable that is causing the attrition. The reason is, as stated before, that the two estimated coefficient vectors are different from each other. A practical problem that can arise (we did not have this problem) is that the sample size of the fully balanced model becomes simply too small to infere meaningful results. By taking out individuals that left before being in there for the 5$^{th}$, this prevents small sample size problems. A practical problem we did have was that we had to programme this filter ourselves, because it is a deviation from the standard Verbeek and Nijman methodology. But still this was a minor challenge to overcome, given the ease that this is programmed in R.
 
 ```{r verbeek_neijman, include=TRUE}
 earnings <- py$earnings %>%
@@ -331,19 +338,18 @@ unbalanced_fixed_effects <- plm(formula = unbalanced_formula,
                       model = "within")
 
 # Balanced model:
-balanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
+partial_unbalanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
 
-balanced_fixed_effects <- plm(formula = balanced_formula, 
-                      data = py$earnings, 
-                      index = c("Freq","TIME"),
+partial_unbalanced_fixed_effects <- plm(formula = partial_unbalanced_formula, 
                       data = earnings %>%
                         filter(n >= 5), 
                       index = c("ID","TIME"),
                       model = "within")
 
-summary(balanced_fixed_effects)
+summary(unbalanced_fixed_effects)
+summary(partial_unbalanced_fixed_effects)
 
-phtest(unbalanced_fixed_effects, balanced_fixed_effects)
+phtest(unbalanced_fixed_effects, partial_unbalanced_fixed_effects)
 
 ```
 
