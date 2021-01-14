@@ -121,11 +121,29 @@ black <- lm(formula, data = black_data)
 summary(black, 
         cluster="ID")
 
+nonblack_data <- earnings %>%
+  as_tibble() %>%
+  filter(ETHBLACK == 0)
 
+nonblack <- lm(formula, data = nonblack_data)
+
+summary(nonblack, cluster="ID")
+```
+
+```{r, results='asis', include=TRUE, echo=FALSE}
+stargazer(crosseff, black, nonblack,
+          se=list(
+            coef(summary(crosseff, cluster=c("ID")))[, 2], 
+            coef(summary(black,cluster = c("ID")))[, 2],
+            coef(summary(nonblack, cluster=c("ID")))[, 2]
+                ),
+          omit.stat=c("f", "ser"),
+          header = FALSE
+          ) 
 
 ```
 
-```{python results='hide'}
+```{python, include = FALSE, results='hide'}
 # including a cross effect of schooling and ethnicity
 earnings['BLACKxS'] = earnings['ETHBLACK'] * earnings['S']
 
@@ -163,7 +181,7 @@ with open("table2.tex", "w") as f:
 
 ```
 
-\input{table2.tex}
+<!-- \input{table2.tex} -->
 
 For the pooled models, we cluster the standard errors on the individual level, allowing for correlation in the error-term between observations belonging to the same individual. We can see that the interaction effect is significant: that is to say, there is a significant difference between blacks and non-black in the influence of schooling on earnings. When we split up the sample into blacks and non-black, we get a similar view: the point estimate for the effect of schooling seems to be slightly lower for black people than for non-black people. As seen in the pooled regression with interaction effect, the differential impact is statistically significant. This follows from the fact that the change is roughly 0.015 and if we take the highest standard error for the two (0.003), we would obtain a t-statistic of about 5. Which means that the observed difference is very likely to be because of ethnicity. Interestingly, the interaction approach results a very similar estimate and standard error as the difference between the two models. This implies that both methods give similar results. To conclude, we observe that there is a racial difference in the influence of schooling on earnings for blacks and non-blacks. It appears that blacks benefit more from schooling than whites, in terms of earnings.
 
@@ -220,8 +238,6 @@ __A priori, would you plead for using fixed effects estimation or random effects
 
 A priori, it would make more sense to use fixed-effects rather than random effects, because it is very likely that the unobservable individual components $\eta_i$ are correlated to the predictor variables $X$ rather than being random. For example, $\eta_i$ can be interpreted as being some measure of ability or innate willingness to exert effort, and that is likely related to age, schooling and test score. A possible correlation would violate the randomness of $\eta_i$ required by random effects, and hence, fixed effects would be preferred. 
 
-\clearpage
-
 ## Question 5
 
 __Apply the fixed effects estimator to analyze the heterogenous schooling effect. Interpret the outcomes.__
@@ -244,11 +260,12 @@ stargazer(fixed_effects,
           header=FALSE)
 ```
 
-Because of multicollinearity, one coefficient from the dummies is dropped. 
+Because of multicollinearity, one coefficient from the dummies is dropped. It appears to remain constant over time. 
 
 \clearpage
 
 ## Question 6
+
 __Fixed effects estimation may not be as effcient as random effcient estimation, but is robust to correlation between regressors and the random effcient. Can we perform a Hausman test in this context? Perform the test you propose. Fixed effects estimation may not be as efficient as random effects estimation, but is robust to correlation between regressors and the random effect. Can we perform a Hausman test in this context? Perform the test you propose.__
 
 The test tests the null hypothesis that the unique errors are not correlated with the regressors. 
@@ -259,14 +276,17 @@ phtest(fixed_effects, random_effects)
 
 The null hypothesis is rejected, implying that the unique parts are correlated with the regressors, and hence, random effects is an inconsistent estimator. 
 
+\clearpage 
+
 ## Question 7
+
 __Perform Mundlak estimation of the model. Present the results of estimation and test for the joint sigificance of the within-group means.__
 
-For this question we first need to estimate the time mean of the regressor variables, for every individual. Then we include those estimates in a random effects model and apply a wald test on the coefficients of the time meaned regressors.
+For this question we first need to estimate the time mean of the regressor variables, for every individual. Then we include those estimates in a random effects model and apply a Wald test on the coefficients of the time-meaned regressors.
 
-Our results are shown below. In the wald test output, one can see that the time meaned regressors are highly jointly significant away from zero. This indicates that it is better to use the fixed effects model instead of the random effects model.
+Our results are shown below. In the Wald test output, one can see that the time-meaned regressors are highly jointly significant away from zero. This indicates that it is better to use the fixed effects model instead of the random effects model.
 
-```{r mundlak, include=TRUE, warning=FALSE}
+```{r mundlak, results='asis', warning=FALSE}
 # 1. Estimate time means per individual and variable:
     # We moeten mergen, de mundlak part moet constant erbij toegevoegd worden, for elke t.
     # Dus voor elke individu neem de mean over de tijd en maak de dimensies gelijk aan Y_it
@@ -281,32 +301,36 @@ Our results are shown below. In the wald test output, one can see that the time 
 library(aod)
 
 # get average over time per worker
-earnings <- py$earnings 
+earnings <- py$earnings %>%
+  mutate(BLACKxS = ETHBLACK * S)
 
 X_hat <- earnings %>%
   group_by(ID) %>%
-  summarise(across(everything(), mean))
+  summarise(across(everything(), mean)) %>%
+  select(-TIME) # Drop TIME because unnecessary
 
 colnames(X_hat)[c(-1)] <- paste(colnames(X_hat)[c(-1)], "MEAN", sep = "_")
 
 # add to individual variables
-earnings_with_mean <- merge(py$earnings, X_hat, by = "ID")
+earnings_with_mean <- left_join(earnings, X_hat, by = c("ID"))
 
 mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN +
                    REGNE + REGNC + REGW  + ASVABC + BLACKxS +
                    S_MEAN + AGE_MEAN + AGESQ_MEAN + ETHBLACK_MEAN +
-                   URBAN_MEAN + + ASVABC_MEAN + REGNE_MEAN + REGNC_MEAN +
+                   URBAN_MEAN + ASVABC_MEAN + REGNE_MEAN + REGNC_MEAN +
                    REGW_MEAN  + BLACKxS_MEAN,
                  data=earnings_with_mean,
                  model="random",
                index = c("ID")
                  )
+```
 
+```{r include = TRUE}
 summary(mundlak)
-stargazer(mundlak, header=FALSE)
+```
 
+```{r include = TRUE}
 wald.test(vcov(mundlak), b=coef(mundlak), Terms = 12:19)
-
 ```
 
 
@@ -321,7 +345,7 @@ We have simply applied a fixed effects panel data regression on both the full da
 
 It actually compares two unbalanced models with each other. Even though this is the case we still obtain evidence of attrition bias due to an unobserved variable that is causing the attrition. The reason is, as stated before, that the two estimated coefficient vectors are different from each other. A practical problem that can arise (we did not have this problem) is that the sample size of the fully balanced model becomes simply too small to infere meaningful results. By taking out individuals that left before being in there for the 5$^{th}$, this prevents small sample size problems. A practical problem we did have was that we had to programme this filter ourselves, because it is a deviation from the standard Verbeek and Nijman methodology. But still this was a minor challenge to overcome, given the ease that this is programmed in R.
 
-```{r verbeek_neijman, include=TRUE}
+```{r verbeek_neijman, include=TRUE, echo=FALSE, results='asis'}
 earnings <- py$earnings %>%
   mutate(BLACKxS = ETHBLACK * S)
 
@@ -347,11 +371,17 @@ partial_unbalanced_fixed_effects <- plm(formula = partial_unbalanced_formula,
                       index = c("ID","TIME"),
                       model = "within")
 
-summary(unbalanced_fixed_effects)
-summary(partial_unbalanced_fixed_effects)
 
+stargazer(unbalanced_fixed_effects, 
+          partial_unbalanced_fixed_effects, 
+          column.labels = c("Unbalanced",
+                            "Balanced"),
+          hedaer=FALSE
+          )
+```
+
+```{r include=TRUE}
 phtest(unbalanced_fixed_effects, partial_unbalanced_fixed_effects)
-
 ```
 
 

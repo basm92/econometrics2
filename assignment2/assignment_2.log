@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 16:57
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 17:20
->>>>>>> f0702b83dc8b55285701bc5810d439c8d3792eaf
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 18:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -381,6 +377,12 @@ File: l3backend-pdftex.def 2021-01-09 L3 backend support: PDF output (pdfTeX)
 
 LaTeX Warning: Label `' multiply defined.
 
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
 )
 \openout1 = `assignment_2.aux'.
 
@@ -512,34 +514,33 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 114.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 114.
-(./table1.tex) [1
+(./table1.tex)
+Underfull \hbox (badness 10000) in paragraph at lines 118--132
+
+ []
+
+[1
 
 {/Users/basmachielsen/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.
-map}] [2] (./table2.tex) [3
+map}] [2] [3
 
-] [4
+] [4] [5
 
-] [5] [6
-
-] [7
+] [6] [7
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-32.
+81.
 (/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 333.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 382.
 [8
 
-]
-Overfull \hbox (18.49356pt too wide) in paragraph at lines 416--416
-[]\T1/lmtt/m/n/10 ## Warning: for argument 'model' to pggls(), the value 'rando
-m' has been renamed as 'pooling'[] 
- []
+] [9
 
-[9] [10] [11] [12] (./assignment_2.aux)
+] [10] [11] (./assignment_2.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -547,14 +548,13 @@ Package rerunfilecheck Info: File `assignment_2.out' has not changed.
 (rerunfilecheck)             Checksum: 142A191B95984C17587CB45C3AA9E6D5;873.
  ) 
 Here is how much of TeX's memory you used:
-<<<<<<< HEAD
- 10947 strings out of 481252
- 157580 string characters out of 5914302
- 458475 words of memory out of 5000000
- 27671 multiletter control sequences out of 15000+600000
- 447937 words of font info for 67 fonts, out of 8000000 for 9000
+ 10942 strings out of 481252
+ 157524 string characters out of 5914302
+ 460476 words of memory out of 5000000
+ 27669 multiletter control sequences out of 15000+600000
+ 447618 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,10n,74p,415b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,10n,74p,256b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 }{/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.
 enc}{/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.e
@@ -573,45 +573,11 @@ ts/type1/public/lm/lmsy10.pfb></Users/basmachielsen/Library/TinyTeX/texmf-dist/
 fonts/type1/public/lm/lmsy7.pfb></Users/basmachielsen/Library/TinyTeX/texmf-dis
 t/fonts/type1/public/lm/lmtk10.pfb></Users/basmachielsen/Library/TinyTeX/texmf-
 dist/fonts/type1/public/lm/lmtt10.pfb></Users/basmachielsen/Library/TinyTeX/tex
-mf-dist/fonts/type1/public/lm/lmtti10.pfb></Users/basmachielsen/Library/TinyTeX
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on assignment_2.pdf (12 pages, 286794 bytes).
+mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on assignment_2.pdf (11 pages, 261687 bytes).
 PDF statistics:
- 180 PDF objects out of 1000 (max. 8388607)
- 149 compressed objects within 2 object streams
-=======
- 10944 strings out of 481252
- 157875 string characters out of 5914123
- 457469 words of memory out of 5000000
- 27669 multiletter control sequences out of 15000+600000
- 447619 words of font info for 66 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 71i,10n,74p,416b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.e
-nc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mat
-hsy.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/l
-m-mathit.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips
-/lm/lm-rm.enc}<c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pu
-blic/lm/lmbx10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/lm/lmbx12.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/font
-s/type1/public/lm/lmmi10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/lm/lmmi7.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-
-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/te
-xmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/walte/AppData/Roaming/TinyTe
-X/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/walte/AppData/Roaming/Ti
-nyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/walte/AppData/Roaming
-/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/walte/AppData/Ro
-aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/walte/AppDa
-ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/walte/A
-ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/wa
-lte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb><c:/Us
-ers/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbol
-s/msbm10.pfb>
-Output written on assignment_2.pdf (12 pages, 259107 bytes).
-PDF statistics:
- 176 PDF objects out of 1000 (max. 8388607)
- 146 compressed objects within 2 object streams
->>>>>>> f0702b83dc8b55285701bc5810d439c8d3792eaf
- 33 named destinations out of 1000 (max. 500000)
+ 174 PDF objects out of 1000 (max. 8388607)
+ 145 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
  73 words of extra memory for PDF output out of 10000 (max. 10000000)
 
