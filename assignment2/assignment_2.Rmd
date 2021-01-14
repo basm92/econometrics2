@@ -275,7 +275,10 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 # 
 # earnings$dummy <- ifelse(freq>=5 , 1, nan) # if frequancy >=, then d_unem is 1. Else nan.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> attempt_walter
 ```
 
 
