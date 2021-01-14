@@ -278,15 +278,11 @@ For this question we first need to estimate the time mean of the regressor varia
 library(aod)
 
 # get average over time per worker
-X_hat <- py$earnings %>%
+earnings <- py$earnings 
+
+X_hat <- earnings %>%
   group_by(ID) %>%
-  summarize(across(c(AGE, AGESQ, ETHBLACK, 
-                     URBAN, ASVABC, REGNE, 
-                     REGNC, REGW, 
-                     REGS, BLACKxS),
-                   ~ mean(.)
-                   )
-            )
+  summarise(across(S:BLACKxS, mean))
 
 colnames(X_hat)[c(-1)] <- paste(colnames(X_hat)[c(-1)], "MEAN", sep = "_")
 
