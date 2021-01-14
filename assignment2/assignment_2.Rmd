@@ -237,14 +237,14 @@ For this question we first need to estimate the time mean of the regressor varia
     # We moeten mergen, de mundlak part moet constant erbij toegevoegd worden, for elke t.
     # Dus voor elke individu neem de mean over de tijd en maak de dimensies gelijk aan Y_it
 
-# 2. Use pggls() to estimate the feasible GLS of the model, use method = pooled:
+# 2. Use pggls() to estimate the feasible GLS of the model, use method = random:
     # Idem
 
 # 3. Apply Wald test 
 
 # wald.test(vcov(ppgls(model)), b=coeffs(ppgls(models)), Terms = 10:17, df = earnings)
 
-library('aod')
+library(aod)
 
 # get average over time per worker
 X_hat <- data.frame(aggregate(. ~ ID, py$earnings, mean))
@@ -256,22 +256,26 @@ earnings_with_mean <- merge(py$earnings, X_hat, by = "ID")
 mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN + REGNE + REGNC + REGW  + ASVABC + S_MEAN + AGE_MEAN + AGESQ_MEAN + ETHBLACK_MEAN + URBAN_MEAN + REGNE_MEAN + REGNC_MEAN + REGW_MEAN  + ASVABC_MEAN, data=earnings_with_mean, model="random",index = c("ID"))
 
 summary(mundlak)
+stargazer(mundlak, header=FALSE)
 
 wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 
 ```
 
 
+## Question 9
 ```{r verbeek_neijman, include=TRUE}
 # 1. construct d_i (1 if in there for 5 waves):
 
-library(plyr)
-# count number of times an id occurs
-freq <- count(py$earnings,c('ID'))
+# library(plyr)
+# # count number of times an id occurs
+# freq <- count(py$earnings,c('ID'))
+# 
+# earnings <- py$earnings
+# 
+# earnings$dummy <- ifelse(freq>=5 , 1, nan) # if frequancy >=, then d_unem is 1. Else nan.
 
-earnings <- py$earnings
 
-earnings$dummy <- ifelse(freq>=5 , 1, 0) # if frequancy >=, then d_unem is 1. Else 0.
 ```
 
 
