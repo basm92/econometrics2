@@ -6,14 +6,6 @@ output:
   pdf_document: default
 ---
 
-<style type="text/css">
-code{
-  font-size: 8px;
-}
-
-</style>
-
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(include = FALSE)
 
@@ -230,6 +222,7 @@ phtest(fixed_effects, random_effects)
 The null hypothesis is rejected, implying that the unique parts are correlated with the regressors, and hence, random effects is an inconsistent estimator. 
 
 ## Question 7
+
 For this question we first need to estimate the time mean of the regressor variables, for every individual.
 
 ```{r mundlak, include=TRUE}
@@ -247,7 +240,16 @@ For this question we first need to estimate the time mean of the regressor varia
 library('aod')
 
 # get average over time per worker
-X_hat <- data.frame(aggregate(. ~ ID, py$earnings, mean))
+X_hat <- py$earnings %>%
+  group_by(ID) %>%
+  summarize(across(c(AGE, AGESQ, ETHBLACK, 
+                     URBAN, ASVABC, REGNE, 
+                     REGNC, REGW, 
+                     REGS, BLACKxS),
+                   ~ mean(.)
+                   )
+            )
+
 colnames(X_hat)[c(-1)] <- paste(colnames(X_hat)[c(-1)], "MEAN", sep = "_")
 
 # add to individual variables
@@ -267,11 +269,11 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 
 library(plyr)
 # count number of times an id occurs
-freq <- count(py$earnings,c('ID'))
+#freq <- count(py$earnings,c('ID'))
 
-earnings <- py$earnings
+#earnings <- py$earnings
 
-earnings$dummy <- ifelse(freq>=5 , 1, 0) # if frequancy >=, then d_unem is 1. Else 0.
+#earnings$dummy <- ifelse(freq>=5 , 1, 0) # if frequancy >=, then d_unem is 1. Else 0.
 ```
 
 
