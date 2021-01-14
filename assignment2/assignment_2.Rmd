@@ -296,11 +296,11 @@ earnings_with_mean <- merge(py$earnings, X_hat, by = "ID")
 mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN +
                    REGNE + REGNC + REGW  + ASVABC + BLACKxS +
                    S_MEAN + AGE_MEAN + AGESQ_MEAN + ETHBLACK_MEAN +
-                   URBAN_MEAN + REGNE_MEAN + REGNC_MEAN +
-                   REGW_MEAN  + ASVABC_MEAN + BLACKxS_MEAN,
+                   URBAN_MEAN + + ASVABC_MEAN + REGNE_MEAN + REGNC_MEAN +
+                   REGW_MEAN  + BLACKxS_MEAN,
                  data=earnings_with_mean,
                  model="random",
-                 index = c("ID")
+               index = c("ID")
                  )
 
 summary(mundlak)
