@@ -303,6 +303,7 @@ balanced_fixed_effects <- plm(formula = balanced_formula,
                       model = "within")
 
 summary(balanced_fixed_effects)
+
 ```
 
 

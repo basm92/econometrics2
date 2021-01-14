@@ -2,7 +2,11 @@
 This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 10:57
 =======
 This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 11:27
+<<<<<<< HEAD
 >>>>>>> a295de6af5b689b93eb7b8807ba1feda72ea78e0
+=======
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
+>>>>>>> 3e9f25c944f98f089dc75f8ae386e61c43b2403e
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -437,7 +441,11 @@ LaTeX Info: Redefining \nameref on input line 107.
 LaTeX Info: Redefining \ref on input line 110.
 LaTeX Info: Redefining \pageref on input line 110.
 LaTeX Info: Redefining \nameref on input line 110.
+<<<<<<< HEAD
 >>>>>>> a295de6af5b689b93eb7b8807ba1feda72ea78e0
+=======
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
+>>>>>>> 3e9f25c944f98f089dc75f8ae386e61c43b2403e
 (./assignment_2.out) (./assignment_2.out)
 \@outlinefile=\write4
 \openout4 = `assignment_2.out'.
@@ -584,7 +592,11 @@ n and Summary Statistics Tables.[]
  []
 
 [4
+<<<<<<< HEAD
 >>>>>>> a295de6af5b689b93eb7b8807ba1feda72ea78e0
+=======
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
+>>>>>>> 3e9f25c944f98f089dc75f8ae386e61c43b2403e
 
 ] [5] [6
 
@@ -621,7 +633,11 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 (c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [10] (./assignment_2.aux)
+<<<<<<< HEAD
 >>>>>>> a295de6af5b689b93eb7b8807ba1feda72ea78e0
+=======
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
+>>>>>>> 3e9f25c944f98f089dc75f8ae386e61c43b2403e
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -699,5 +715,9 @@ PDF statistics:
  132 compressed objects within 2 object streams
  29 named destinations out of 1000 (max. 500000)
  65 words of extra memory for PDF output out of 10000 (max. 10000000)
+<<<<<<< HEAD
 >>>>>>> a295de6af5b689b93eb7b8807ba1feda72ea78e0
+=======
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
+>>>>>>> 3e9f25c944f98f089dc75f8ae386e61c43b2403e
 
