@@ -38,7 +38,6 @@ First use pooled OLS to check the impact of including and excluding ASVABC on th
 import pandas as pd
 import getpass
 
-
 import statsmodels.api as sm
 from statsmodels.iolib.summary2 import summary_col
 from stargazer.stargazer import Stargazer
@@ -89,6 +88,44 @@ The inclusion of the proxy for ability decreases the estimate for the coefficien
 
 Perform a pooled OLS analysis to obtain insight in the heterogeneity of returns to schooling by ethnicity. Present the results and comment on the outcomes: what are the conclusions based on this?
 
+```{r results='hide'}
+library(lfe)
+library(tidyverse)
+library(stargazer)
+
+earnings <- py$earnings %>%
+  mutate(BLACKxS = ETHBLACK*S)
+
+formula <- paste0(py$y, 
+                  " ~ ",
+                  "BLACKxS + ", 
+                  paste(py$ivs, 
+                        collapse = " +"), 
+                  "+ 0")
+
+# including a cross effect of schooling and ethnicity
+crosseff <- lm(formula, 
+               data = earnings)
+
+summary(crosseff, 
+        cluster="ID") 
+
+# estimating separate equations by ethnicity
+black_data <- earnings %>%
+  as_tibble() %>%
+  filter(ETHBLACK == 1)
+
+formula <- "EARNINGS ~ ASVABC +AGE +AGESQ +S +URBAN +REGNE +REGNC +REGW +REGS + 0"
+
+black <- lm(formula, data = black_data)
+
+summary(black, 
+        cluster="ID")
+
+
+
+```
+
 ```{python results='hide'}
 # including a cross effect of schooling and ethnicity
 earnings['BLACKxS'] = earnings['ETHBLACK'] * earnings['S']
@@ -129,7 +166,7 @@ with open("table2.tex", "w") as f:
 
 \input{table2.tex}
 
-We can see that the interaction effect is significant: that is to say, there is a significant difference between blacks and non-black in the influence of schooling on earnings. When we split up the sample into blacks and non-black, we get a similar view: the point estimate for the effect of schooling seems to be slightly lower for black people than for non-black people. As seen in the pooled regression with interaction effect, the differential impact is statistically significant. This follows from the fact that the change is roughly 0.015 and if we take the highest standard error for the two (0.003), we would obtain a t-statistic of about 5. Which means that the observed difference is very likely to be because of ethnicity. Interestingly, the interaction approach results a very similar estimate and standard error as the difference between the two models. This implies that both methods give similar results. To conclude, we observe that there is a racial difference in the influence of schooling on earnings for blacks and non-blacks. It appears that blacks benefit more from schooling than whites, in terms of earnings.
+For the pooled models, we cluster the standard errors on the individual level, allowing for correlation in the error-term between observations belonging to the same individual. We can see that the interaction effect is significant: that is to say, there is a significant difference between blacks and non-black in the influence of schooling on earnings. When we split up the sample into blacks and non-black, we get a similar view: the point estimate for the effect of schooling seems to be slightly lower for black people than for non-black people. As seen in the pooled regression with interaction effect, the differential impact is statistically significant. This follows from the fact that the change is roughly 0.015 and if we take the highest standard error for the two (0.003), we would obtain a t-statistic of about 5. Which means that the observed difference is very likely to be because of ethnicity. Interestingly, the interaction approach results a very similar estimate and standard error as the difference between the two models. This implies that both methods give similar results. To conclude, we observe that there is a racial difference in the influence of schooling on earnings for blacks and non-blacks. It appears that blacks benefit more from schooling than whites, in terms of earnings.
 
 \clearpage
 
@@ -174,9 +211,7 @@ re_model = RandomEffects(dep, hoi).fit()
 print(re_model.summary)
 ```
 
-The point estimate for schooling is now close to the point estimate for schooling in the pooled OLS regression including the proxy for ability. Hence, the random effects estimator looks a lot like the pooled estimator, indicating that the contribution from the within group estimator is marginal. This can also be observed when looking at the decomposition of the explained variance: the between R-squared is larger than the within R-squared, indicating the model does a better job explaining the changes between individuals rather than individuals over time. 
-
-(Still need to explain: black ethnicity $\cdot$ schooling is significant)
+The random effects model assumes that $\mathbb{E}[\eta_i | X_1, \dots, X_n] = 0$, in words, that the individual-specific effects are uncorrelated to the predictor variables. In this model, the point estimate for schooling is now close to the point estimate for schooling in the pooled OLS regression including the proxy for ability. Hence, the random effects estimator looks a lot like the pooled estimator, indicating that the contribution from the within group estimator is marginal. This can also be observed when looking at the decomposition of the explained variance: the between R-squared is larger than the within R-squared, indicating the model does a better job explaining the changes between individuals rather than individuals over time. There seems to be no differences in returns to education between individuals of different ethnicity: the interaction coefficient is insignificant. 
 
 \clearpage
 
@@ -196,10 +231,13 @@ __Apply the fixed effects estimator to analyze the heterogenous schooling effect
 library(plm)
 library(stargazer)
 
+earnings <- py$earnings %>%
+  mutate(BLACKxS = ETHBLACK * S)
+
 formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
 
 fixed_effects <- plm(formula = formula, 
-                      data = py$earnings, 
+                      data = earnings, 
                       index = c("ID","TIME"),
                       model = "within")
 
@@ -207,6 +245,7 @@ stargazer(fixed_effects,
           header=FALSE)
 ```
 
+Because of multicollinearity, one coefficient from the dummies is dropped. 
 \clearpage
 ## Question 6
 
@@ -254,7 +293,15 @@ colnames(X_hat)[c(-1)] <- paste(colnames(X_hat)[c(-1)], "MEAN", sep = "_")
 # add to individual variables
 earnings_with_mean <- merge(py$earnings, X_hat, by = "ID")
 
-mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN + REGNE + REGNC + REGW  + ASVABC + S_MEAN + AGE_MEAN + AGESQ_MEAN + ETHBLACK_MEAN + URBAN_MEAN + REGNE_MEAN + REGNC_MEAN + REGW_MEAN  + ASVABC_MEAN, data=earnings_with_mean, model="random",index = c("ID"))
+mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN + 
+                   REGNE + REGNC + REGW  + ASVABC + 
+                   S_MEAN + AGE_MEAN + AGESQ_MEAN + ETHBLACK_MEAN +
+                   URBAN_MEAN + REGNE_MEAN + REGNC_MEAN + 
+                   REGW_MEAN  + ASVABC_MEAN, 
+                 data=earnings_with_mean, 
+                 model="random", 
+                 index = c("ID")
+                 )
 
 summary(mundlak)
 stargazer(mundlak, header=FALSE)
@@ -267,30 +314,19 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 ## Question 9
 
 ```{r verbeek_neijman, include=TRUE}
-# 1. construct d_i (1 if in there for 5 waves):
+earnings <- py$earnings %>%
+  mutate(BLACKxS = ETHBLACK * S)
 
-# library(plyr)
-# # count number of times an id occurs
-# freq <- count(py$earnings,c('ID'))
-# 
-# earnings <- py$earnings
-# 
-# earnings$dummy <- ifelse(freq>=5 , 1, nan) # if frequancy >=, then d_unem is 1. Else nan.
+frequencies <- earnings %>%
+  count(ID)
 
-earnings <- py$earnings
-# freq is a data frame for the modified verbeek neijman:
-freq <- table(earnings$ID) 
-freq <- as.data.frame(freq)
-  
-freq$Freq <- ifelse(freq$Freq >= 5, freq$Freq, NA)
-freq <- na.omit(freq)
-
+earnings <- dplyr::left_join(earnings, frequencies, by = "ID")
 
 # Unbalanced model:
 unbalanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
 
 unbalanced_fixed_effects <- plm(formula = unbalanced_formula, 
-                      data = py$earnings, 
+                      data = earnings, 
                       index = c("ID","TIME"),
                       model = "within")
 
@@ -298,11 +334,14 @@ unbalanced_fixed_effects <- plm(formula = unbalanced_formula,
 balanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
 
 balanced_fixed_effects <- plm(formula = balanced_formula, 
-                      data = freq, 
+                      data = earnings %>%
+                        filter(n >= 5), 
                       index = c("ID","TIME"),
                       model = "within")
 
 summary(balanced_fixed_effects)
+
+phtest(unbalanced_fixed_effects, balanced_fixed_effects)
 
 ```
 
