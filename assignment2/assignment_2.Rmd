@@ -267,7 +267,7 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 ```{r verbeek_neijman, include=TRUE}
 # 1. construct d_i (1 if in there for 5 waves):
 
-# library(plyr)
+library(plyr)
 # # count number of times an id occurs
 # freq <- count(py$earnings,c('ID'))
 # 
@@ -275,10 +275,33 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 # 
 # earnings$dummy <- ifelse(freq>=5 , 1, nan) # if frequancy >=, then d_unem is 1. Else nan.
 
-<<<<<<< HEAD
 
-=======
->>>>>>> attempt_walter
+earnings <- py$earnings
+# freq is a data frame for the modified verbeek neijman:
+freq <- table(earnings$ID) 
+freq <- as.data.frame(freq)
+  
+freq$Freq <- ifelse(freq$Freq >= 5, freq$Freq, NA)
+freq <- na.omit(freq)
+
+
+# Unbalanced model:
+unbalanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
+
+unbalanced_fixed_effects <- plm(formula = unbalanced_formula, 
+                      data = py$earnings, 
+                      index = c("ID","TIME"),
+                      model = "within")
+
+# Balanced model:
+balanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
+
+balanced_fixed_effects <- plm(formula = balanced_formula, 
+                      data = freq, 
+                      index = c("ID","TIME"),
+                      model = "within")
+
+summary(balanced_fixed_effects)
 ```
 
 
