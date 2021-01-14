@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 10:57
+=======
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 11:27
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -425,9 +429,15 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count280
 )
+<<<<<<< HEAD
 LaTeX Info: Redefining \ref on input line 107.
 LaTeX Info: Redefining \pageref on input line 107.
 LaTeX Info: Redefining \nameref on input line 107.
+=======
+LaTeX Info: Redefining \ref on input line 110.
+LaTeX Info: Redefining \pageref on input line 110.
+LaTeX Info: Redefining \nameref on input line 110.
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
 (./assignment_2.out) (./assignment_2.out)
 \@outlinefile=\write4
 \openout4 = `assignment_2.out'.
@@ -467,6 +477,7 @@ LaTeX Info: Redefining \nameref on input line 107.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+<<<<<<< HEAD
 09.
 (/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -514,11 +525,72 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 map}] [2] (./table2.tex) [3
 
 ] [4
+=======
+12.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+12.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+112.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+112.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 112.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 112.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 112.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 112
+.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 112
+.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 117.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 117.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 117.
+(./table1.tex) [1
+
+{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
+x.map}] [2] (./table2.tex) [3
+
+]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
+74.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Overfull \hbox (18.49356pt too wide) in paragraph at lines 181--181
+[]\T1/lmtt/m/n/10 ##  Hlavac, Marek (2018). stargazer: Well-Formatted Regressio
+n and Summary Statistics Tables.[] 
+ []
+
+[4
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
 
 ] [5] [6
 
 ] [7
 
+<<<<<<< HEAD
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
 22.
@@ -540,10 +612,21 @@ m' has been renamed as 'pooling'[]
 [8
 
 ] [9] [10] (./assignment_2.aux)
+=======
+] [8
+
+] [9]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+475.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [10] (./assignment_2.aux)
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `assignment_2.out' has not changed.
+<<<<<<< HEAD
 (rerunfilecheck)             Checksum: 226199BF53CA3F34DF799D8D82A36EB4;679.
  ) 
 Here is how much of TeX's memory you used:
@@ -580,4 +663,41 @@ PDF statistics:
  132 compressed objects within 2 object streams
  27 named destinations out of 1000 (max. 500000)
  57 words of extra memory for PDF output out of 10000 (max. 10000000)
+=======
+(rerunfilecheck)             Checksum: E02E7FF4822A22ED5690F3580856D18B;776.
+ ) 
+Here is how much of TeX's memory you used:
+ 10975 strings out of 481252
+ 158478 string characters out of 5914123
+ 457435 words of memory out of 5000000
+ 27700 multiletter control sequences out of 15000+600000
+ 447926 words of font info for 67 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 71i,10n,74p,1047b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.
+enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
+.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-m
+athit.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm
+/lm-mathsy.enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvi
+ps/lm/lm-rm.enc}<c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
+public/lm/lmbx10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/t
+ype1/public/lm/lmbx12.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fo
+nts/type1/public/lm/lmmi10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-di
+st/fonts/type1/public/lm/lmmi7.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texm
+f-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/
+texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/walte/AppData/Roaming/Tiny
+TeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/walte/AppData/Roaming/
+TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/walte/AppData/Roami
+ng/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/walte/AppData/
+Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/walte/App
+Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/walte
+/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/
+walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
+Output written on assignment_2.pdf (10 pages, 245491 bytes).
+PDF statistics:
+ 159 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
+>>>>>>> 680d8d454a98ad0a5d45b375bbe81fcc17028c96
 
