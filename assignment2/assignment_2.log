@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 10:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 11:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -553,26 +553,26 @@ n and Summary Statistics Tables.[]
 
 ] [7
 
-]
+] [8
+
+] [9]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-375.
+475.
 (c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [8
-
-] [9] [10] (./assignment_2.aux)
+) [10] (./assignment_2.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `assignment_2.out' has not changed.
-(rerunfilecheck)             Checksum: 226199BF53CA3F34DF799D8D82A36EB4;679.
+(rerunfilecheck)             Checksum: E02E7FF4822A22ED5690F3580856D18B;776.
  ) 
 Here is how much of TeX's memory you used:
- 10973 strings out of 481252
- 158459 string characters out of 5914123
- 457401 words of memory out of 5000000
- 27699 multiletter control sequences out of 15000+600000
- 448231 words of font info for 68 fonts, out of 8000000 for 9000
+ 10975 strings out of 481252
+ 158478 string characters out of 5914123
+ 457435 words of memory out of 5000000
+ 27700 multiletter control sequences out of 15000+600000
+ 447926 words of font info for 67 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  71i,10n,74p,1047b,466s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.
@@ -594,10 +594,10 @@ Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/walte/App
 Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/walte
 /AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/
 walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on assignment_2.pdf (10 pages, 245051 bytes).
+Output written on assignment_2.pdf (10 pages, 245491 bytes).
 PDF statistics:
- 156 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
- 27 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 159 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
+ 29 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -267,14 +267,13 @@ wald.test(vcov(mundlak), b=coef(mundlak), Terms = 10:17)
 ```{r verbeek_neijman, include=TRUE}
 # 1. construct d_i (1 if in there for 5 waves):
 
-library(plyr)
-# count number of times an id occurs
-freq <- count(py$earnings,c('ID'))
-
-earnings <- py$earnings
-
-earnings$dummy <- ifelse(freq>=5 , 1, nan) # if frequancy >=, then d_unem is 1. Else nan.
-
+# library(plyr)
+# # count number of times an id occurs
+# freq <- count(py$earnings,c('ID'))
+# 
+# earnings <- py$earnings
+# 
+# earnings$dummy <- ifelse(freq>=5 , 1, nan) # if frequancy >=, then d_unem is 1. Else nan.
 
 ```
 
