@@ -297,8 +297,8 @@ unbalanced_fixed_effects <- plm(formula = unbalanced_formula,
 balanced_formula <- paste0(py$y, " ~ ", paste(py$ivs2, collapse = " + "))
 
 balanced_fixed_effects <- plm(formula = balanced_formula, 
-                      data = freq, 
-                      index = c("ID","TIME"),
+                      data = py$earnings, 
+                      index = c("Freq","TIME"),
                       model = "within")
 
 summary(balanced_fixed_effects)
