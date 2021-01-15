@@ -32,7 +32,7 @@ py_config()
 
 ## Question 1
 
-First use pooled OLS to check the impact of including and excluding ASVABC on the estimate of $\alpha_1$. Present and explain the result.
+__First use pooled OLS to check the impact of including and excluding ASVABC on the estimate of $\alpha_1$. Present and explain the result.__
 
 ```{python load packages, echo=FALSE}
 import pandas as pd
@@ -86,7 +86,7 @@ The inclusion of the proxy for ability decreases the estimate for the coefficien
 
 ## Question 2
 
-Perform a pooled OLS analysis to obtain insight in the heterogeneity of returns to schooling by ethnicity. Present the results and comment on the outcomes: what are the conclusions based on this?
+__Perform a pooled OLS analysis to obtain insight in the heterogeneity of returns to schooling by ethnicity. Present the results and comment on the outcomes: what are the conclusions based on this?__
 
 ```{r results='hide'}
 library(lfe)
@@ -172,7 +172,7 @@ For the pooled models, we cluster the standard errors on the individual level, a
 
 ## Question 3
 
-Perform the analysis for heterogenous schooling effects using the random effects model. Present the results and compare the outcomes with the pooled OLS results obtained before. Interpret the outcomes.
+__Perform the analysis for heterogenous schooling effects using the random effects model. Present the results and compare the outcomes with the pooled OLS results obtained before. Interpret the outcomes.__
 
 <!-- Ik schat hier Random effects zonder intercept, zodat alle 4 de regio dummies erin kunnen. Ik heb dit ook in Python gedaan, en de resultaten zijn 100% identiek. Het probleem is alleen dat het super moeilijk is om van python linearmodels te exporteren naar .tex... echt een drama. Daarom heb ik maar plm en R gebruikt. 
 
@@ -250,7 +250,7 @@ Because of multicollinearity, one coefficient from the dummies is dropped.
 \clearpage
 
 ## Question 6
-__Fixed effects estimation may not be as effcient as random effcient estimation, but is robust to correlation between regressors and the random effcient. Can we perform a Hausman test in this context? Perform the test you propose. Fixed effects estimation may not be as efficient as random effects estimation, but is robust to correlation between regressors and the random effect. Can we perform a Hausman test in this context? Perform the test you propose.__
+__Fixed effects estimation may not be as effcient as random effcient estimation, but is robust to correlation between regressors and the random effcient. Can we perform a Hausman test in this context? Perform the test you propose.__
 
 The test tests the null hypothesis that the unique errors are not correlated with the regressors. 
 

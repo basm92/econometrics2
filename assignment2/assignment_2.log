@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  14 JAN 2021 17:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  15 JAN 2021 12:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -526,11 +526,11 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 112
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 117.
+(Font)              <10> on input line 118.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 117.
+(Font)              <7> on input line 118.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 117.
+(Font)              <5> on input line 118.
 (./table1.tex) [1
 
 {c:/Users/walte/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
@@ -538,7 +538,7 @@ x.map}] [2] (./table2.tex) [3
 
 ]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-76.
+77.
 (c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [4
@@ -559,7 +559,7 @@ Package rerunfilecheck Info: File `assignment_2.out' has not changed.
 Here is how much of TeX's memory you used:
  10944 strings out of 481252
  157875 string characters out of 5914123
- 457469 words of memory out of 5000000
+ 458469 words of memory out of 5000000
  27669 multiletter control sequences out of 15000+600000
  447619 words of font info for 66 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -584,7 +584,7 @@ ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/wa
 lte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb><c:/Us
 ers/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbol
 s/msbm10.pfb>
-Output written on assignment_2.pdf (12 pages, 259107 bytes).
+Output written on assignment_2.pdf (12 pages, 259251 bytes).
 PDF statistics:
  176 PDF objects out of 1000 (max. 8388607)
  146 compressed objects within 2 object streams
