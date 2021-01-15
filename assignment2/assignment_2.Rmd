@@ -32,7 +32,7 @@ py_config()
 
 ## Question 1
 
-First use pooled OLS to check the impact of including and excluding ASVABC on the estimate of $\alpha_1$. Present and explain the result.
+__First use pooled OLS to check the impact of including and excluding ASVABC on the estimate of $\alpha_1$. Present and explain the result.__
 
 ```{python load packages, echo=FALSE}
 import pandas as pd
@@ -45,7 +45,6 @@ from stargazer.stargazer import Stargazer
 from IPython.core.display import HTML
 import numpy as np
 ```
-
 
 ```{python read data, echo=FALSE}
 path_walter = ("D:\\Files\\Git Projects\\ti_git_projects\\year_1\\block_3\\") \
@@ -80,12 +79,13 @@ with open("table1.tex", "w") as f:
 
 \input{table1.tex}
 
-The inclusion of the proxy for ability decreases the estimate for the coefficient of schooling. Hence, given all other standard assumptions, ability and schooling are positively correlated, and the omission of a proxy for ability overestimates the impact of schooling. Something else that we are able to observe is that because of the inclusion of the test scores, the adjusted-$R^2$ increases by approximately 0.2 points. This implies that including test scores add about 2% to the model's ability to explain the observed variation. Finally, we could do a very rough t-test to compare both estimates of schooling. We observe a standard-error of about 0.001, and we observe a change in the coefficients of roughly 0.022. This implies that the t-value of the corresponding t-test is roughly 22. What this implies is that the observed difference in the estimate of the coefficient is significantly different.  
+The inclusion of the proxy for ability decreases the estimate for the coefficient of schooling. Hence, given all other standard assumptions, ability and schooling are positively correlated, and the omission of a proxy for ability overestimates the impact of schooling. Something else that we are able to observe is that because of the inclusion of the test scores, the adjusted-$R^2$ increases by approximately 0.2 points. This implies that including test scores add about 2% to the model's ability to explain the observed variation. Finally, we could do a very rough t-test to compare both estimates of schooling. We observe a standard-error of about 0.001, and we observe a change in the coefficients of roughly 0.022. This implies that the t-value of the corresponding t-test is roughly 22. What this implies is that the observed difference in the estimate of the coefficient is significantly different.
+
 \clearpage
 
 ## Question 2
 
-Perform a pooled OLS analysis to obtain insight in the heterogeneity of returns to schooling by ethnicity. Present the results and comment on the outcomes: what are the conclusions based on this?
+__Perform a pooled OLS analysis to obtain insight in the heterogeneity of returns to schooling by ethnicity. Present the results and comment on the outcomes: what are the conclusions based on this?__
 
 ```{r results='hide'}
 library(lfe)
@@ -189,7 +189,7 @@ For the pooled models, we cluster the standard errors on the individual level, a
 
 ## Question 3
 
-Perform the analysis for heterogenous schooling effects using the random effects model. Present the results and compare the outcomes with the pooled OLS results obtained before. Interpret the outcomes.
+__Perform the analysis for heterogenous schooling effects using the random effects model. Present the results and compare the outcomes with the pooled OLS results obtained before. Interpret the outcomes.__
 
 <!-- Ik schat hier Random effects zonder intercept, zodat alle 4 de regio dummies erin kunnen. Ik heb dit ook in Python gedaan, en de resultaten zijn 100% identiek. Het probleem is alleen dat het super moeilijk is om van python linearmodels te exporteren naar .tex... echt een drama. Daarom heb ik maar plm en R gebruikt. 
 
@@ -260,7 +260,7 @@ stargazer(fixed_effects,
           header=FALSE)
 ```
 
-Because of multicollinearity, one coefficient from the dummies is dropped. It appears to remain constant over time. 
+Because of multicollinearity, one coefficient from the regional dummies is dropped. It appears to remain constant over time. Also, because test score and ethnicity are time-invariant, they are omitted from the data set. 
 
 We now observe that the influence of schooling is significantly positive: one additional year of schooling increases log earnings by 0.053. However, when we look at the interaction between Ethnicity and Schooling, we observe that the coefficient is negative and larger in magnitude than the aforementioned coefficient, indicating that there are negative returns to schooling for black individuals. Age, age_sq and schooling are very close to the point estimates in the RE-regressions. The point estimate for living in an urban area decreases 0.044 to 0.028 in this estimations. 
 
@@ -378,7 +378,7 @@ stargazer(unbalanced_fixed_effects,
           partial_unbalanced_fixed_effects, 
           column.labels = c("Unbalanced",
                             "Balanced"),
-          hedaer=FALSE
+          header = FALSE
           )
 ```
 
