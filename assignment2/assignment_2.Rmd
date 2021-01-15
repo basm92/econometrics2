@@ -138,7 +138,8 @@ stargazer(crosseff, black, nonblack,
             coef(summary(nonblack, cluster=c("ID")))[, 2]
                 ),
           omit.stat=c("f", "ser"),
-          header = FALSE
+          header = FALSE,
+          column.labels = c("Interaction", "Black", "Non-Black")
           ) 
 
 ```
@@ -183,7 +184,9 @@ with open("table2.tex", "w") as f:
 
 <!-- \input{table2.tex} -->
 
-For the pooled models, we cluster the standard errors on the individual level, allowing for correlation in the error-term between observations belonging to the same individual. We can see that the interaction effect is significant: that is to say, there is a significant difference between blacks and non-black in the influence of schooling on earnings. When we split up the sample into blacks and non-black, we get a similar view: the point estimate for the effect of schooling seems to be slightly lower for black people than for non-black people. As seen in the pooled regression with interaction effect, the differential impact is statistically significant. This follows from the fact that the change is roughly 0.015 and if we take the highest standard error for the two (0.003), we would obtain a t-statistic of about 5. Which means that the observed difference is very likely to be because of ethnicity. Interestingly, the interaction approach results a very similar estimate and standard error as the difference between the two models. This implies that both methods give similar results. To conclude, we observe that there is a racial difference in the influence of schooling on earnings for blacks and non-blacks. It appears that blacks benefit more from schooling than whites, in terms of earnings.
+For the pooled models, we cluster the standard errors on the individual level, allowing for correlation in the error-term between observations belonging to the same individual. We can see that the interaction effect is significant: that is to say, there is a significant difference between blacks and non-black in the influence of schooling on earnings. When we split up the sample into blacks and non-black, we get a similar view: the point estimate for the effect of schooling seems to be slightly lower for black people than for non-black people. 
+
+As seen in the pooled regression with interaction effect, the differential impact is statistically significant. This follows from the fact that the change is roughly 0.015 and if we take the highest standard error for the two (0.003), we would obtain a t-statistic of about 5. Which means that the observed difference is very likely to be because of ethnicity. Interestingly, the interaction approach results a very similar estimate and standard error as the difference between the two models. This implies that both methods give similar results. To conclude, we observe that there is a racial difference in the influence of schooling on earnings for blacks and non-blacks. It appears that blacks benefit more from schooling than whites, in terms of earnings.
 
 \clearpage
 
@@ -286,7 +289,7 @@ __Perform Mundlak estimation of the model. Present the results of estimation and
 
 For this question we first need to estimate the time mean of the regressor variables, for every individual. Then we include those estimates in a random effects model and apply a Wald test on the coefficients of the time-meaned regressors.
 
-Our results are shown below. In the Wald test output, one can see that the time-meaned regressors are highly jointly significant away from zero. This indicates that it is better to use the fixed effects model instead of the random effects model.
+Our results are shown below. In the Wald test output, one can see that the time-meaned regressors are highly jointly significant away from zero. This indicates that the regressors are correlated with the individual-specific effects, and therefore, that the assumptions of RE are violated. Hence, it is better to use the fixed effects model instead of the random effects model.
 
 ```{r mundlak, results='asis', warning=FALSE}
 # 1. Estimate time means per individual and variable:
@@ -301,6 +304,8 @@ Our results are shown below. In the Wald test output, one can see that the time-
 # wald.test(vcov(ppgls(model)), b=coeffs(ppgls(models)), Terms = 10:17, df = earnings)
 
 library(aod)
+library(plm)
+library(texreg)
 
 # get average over time per worker
 earnings <- py$earnings %>%
@@ -327,18 +332,26 @@ mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN +
                  )
 ```
 
-```{r include = TRUE}
-summary(mundlak)
+```{r include = TRUE, results='asis'}
+# create latex code for pggls: thanks Floris!
+source("https://raw.githubusercontent.com/fholstege/Econometrics-II/main/Helpers.R")
+
+Latex_pggls <- extract.pggls(mundlak, include.adjrs = TRUE)
+texreg(Latex_pggls,caption = "Mundlak Model")
 ```
 
 ```{r include = TRUE}
 wald.test(vcov(mundlak), b=coef(mundlak), Terms = 12:19)
 ```
 
+\clearpage
 
 ## Question 8
 __What are your overall conclusions from the analysis of heterogeneity in returns to schooling by ethnicity?__
 
+We conclude there is a large heterogeneity in returns to schooling by ethnicity. The correlation between the regressors and individual fixed effects makes random effects estimation unreliable, and the pooled estimations are biased precisely because there are individual fixed effects. The FE results show that returns to schooling for black individuals are much lower than for individual of other ethnicities. 
+
+\clearpage 
 
 ## Question 9
 __To gain insight in the impact of nonresponse and attrition, the researcher applies a variant of the Verbeek and Nijman-test (see lecture slides). He defines the dummy variable $d_i$ which is 1 if the individual is in the panel for more than 5 waves, and is zero otherwise. Apply the Verbeek and Nijman test with this definition of $d_i$ (otherwise equal to the definition at the lecture slides). Draw conclusions and address practical problems you possibly met in implementing the test.__
