@@ -46,7 +46,6 @@ from IPython.core.display import HTML
 import numpy as np
 ```
 
-
 ```{python read data, echo=FALSE}
 path_walter = ("D:\\Files\\Git Projects\\ti_git_projects\\year_1\\block_3\\") \
                 + ("econometrics2\\assignment2\\data\\NLSY2000RC_V2.csv")
@@ -80,7 +79,8 @@ with open("table1.tex", "w") as f:
 
 \input{table1.tex}
 
-The inclusion of the proxy for ability decreases the estimate for the coefficient of schooling. Hence, given all other standard assumptions, ability and schooling are positively correlated, and the omission of a proxy for ability overestimates the impact of schooling. Something else that we are able to observe is that because of the inclusion of the test scores, the adjusted-$R^2$ increases by approximately 0.2 points. This implies that including test scores add about 2% to the model's ability to explain the observed variation. Finally, we could do a very rough t-test to compare both estimates of schooling. We observe a standard-error of about 0.001, and we observe a change in the coefficients of roughly 0.022. This implies that the t-value of the corresponding t-test is roughly 22. What this implies is that the observed difference in the estimate of the coefficient is significantly different.  
+The inclusion of the proxy for ability decreases the estimate for the coefficient of schooling. Hence, given all other standard assumptions, ability and schooling are positively correlated, and the omission of a proxy for ability overestimates the impact of schooling. Something else that we are able to observe is that because of the inclusion of the test scores, the adjusted-$R^2$ increases by approximately 0.2 points. This implies that including test scores add about 2% to the model's ability to explain the observed variation. Finally, we could do a very rough t-test to compare both estimates of schooling. We observe a standard-error of about 0.001, and we observe a change in the coefficients of roughly 0.022. This implies that the t-value of the corresponding t-test is roughly 22. What this implies is that the observed difference in the estimate of the coefficient is significantly different.
+
 \clearpage
 
 ## Question 2
@@ -260,7 +260,7 @@ stargazer(fixed_effects,
           header=FALSE)
 ```
 
-Because of multicollinearity, one coefficient from the dummies is dropped. It appears to remain constant over time. 
+Because of multicollinearity, one coefficient from the regional dummies is dropped. It appears to remain constant over time. Also, because test score and ethnicity are time-invariant, they are omitted from the data set. 
 
 \clearpage
 
@@ -375,7 +375,7 @@ stargazer(unbalanced_fixed_effects,
           partial_unbalanced_fixed_effects, 
           column.labels = c("Unbalanced",
                             "Balanced"),
-          hedaer=FALSE
+          header = FALSE
           )
 ```
 
