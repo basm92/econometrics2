@@ -198,7 +198,7 @@ __Perform the analysis for heterogenous schooling effects using the random effec
 
 W: Dit vind ik ook netter :)-->
 
-```{r, include = TRUE, echo = FALSE, results='asis', warning=FALSE}
+```{r, include = TRUE, echo = FALSE, results='asis', warning=FALSE, message=FALSE}
 library(plm)
 library(stargazer)
 
@@ -214,7 +214,7 @@ stargazer(random_effects,
           title='Random effects model')
 ```
 
-```{python, eval = FALSE, include=FALSE, warning=FALSE}
+```{python, eval = FALSE, include=FALSE, warning=FALSE, message=FALSE}
 # Hier is dus de Python code, run maar, en je kunt zien dat er hetzelfde uitkomt
 from linearmodels import RandomEffects
 import texression

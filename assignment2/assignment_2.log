@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  15 JAN 2021 16:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  15 JAN 2021 17:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -542,16 +542,16 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 {c:/Users/walte/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}] [2] [3
 
-] [4]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
-31.
-(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [5
+] [4] [5
 
 ] [6] [7
 
-] [8] [9
+] [8]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
+97.
+(c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [9
 
 ] [10
 
@@ -595,7 +595,7 @@ te/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/User
 s/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb><c
 :/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/sy
 mbols/msbm10.pfb>
-Output written on assignment_2.pdf (14 pages, 254485 bytes).
+Output written on assignment_2.pdf (14 pages, 254096 bytes).
 PDF statistics:
  197 PDF objects out of 1000 (max. 8388607)
  164 compressed objects within 2 object streams
