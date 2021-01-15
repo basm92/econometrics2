@@ -327,8 +327,8 @@ mundlak <- pggls(EARNINGS ~  S + AGE + AGESQ + ETHBLACK + URBAN +
 ```{r include = TRUE}
 summary(mundlak)
 ```
-
-```{r include = TRUE}
+]
+```{r waldo_test, include = TRUE}
 wald.test(vcov(mundlak), b=coef(mundlak), Terms = 12:19)
 ```
 
