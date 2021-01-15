@@ -262,11 +262,13 @@ stargazer(fixed_effects,
 
 Because of multicollinearity, one coefficient from the dummies is dropped. It appears to remain constant over time. 
 
+We now observe that the influence of schooling is significantly positive: one additional year of schooling increases log earnings by 0.053. However, when we look at the interaction between Ethnicity and Schooling, we observe that the coefficient is negative and larger in magnitude than the aforementioned coefficient, indicating that there are negative returns to schooling for black individuals. Age, age_sq and schooling are very close to the point estimates in the RE-regressions. The point estimate for living in an urban area decreases 0.044 to 0.028 in this estimations. 
+
 \clearpage
 
 ## Question 6
 
-__Fixed effects estimation may not be as effcient as random effcient estimation, but is robust to correlation between regressors and the random effcient. Can we perform a Hausman test in this context? Perform the test you propose. Fixed effects estimation may not be as efficient as random effects estimation, but is robust to correlation between regressors and the random effect. Can we perform a Hausman test in this context? Perform the test you propose.__
+__Fixed effects estimation may not be as effcient as random effcient estimation, but is robust to correlation between regressors and the random effcient. Can we perform a Hausman test in this context? Perform the test you propose.__
 
 The test tests the null hypothesis that the unique errors are not correlated with the regressors. 
 
