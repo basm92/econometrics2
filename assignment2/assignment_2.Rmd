@@ -265,7 +265,7 @@ stargazer(fixed_effects,
 
 Because of multicollinearity, one coefficient from the regional dummies is dropped. It appears to remain constant over time. Also, because test score and ethnicity are time-invariant, they are omitted from the data set. 
 
-We now observe that the influence of schooling is significantly positive: one additional year of schooling increases log earnings by 0.053. However, when we look at the interaction between Ethnicity and Schooling, we observe that the coefficient is negative and larger in magnitude than the aforementioned coefficient, indicating that there are negative returns to schooling for black individuals. Age, age_sq and schooling are very close to the point estimates in the RE-regressions. The point estimate for living in an urban area decreases 0.044 to 0.028 in this estimations. 
+We now observe that the influence of schooling is significantly positive: one additional year of schooling increases log earnings by 0.053. However, when we look at the interaction between Ethnicity and Schooling, we observe that the coefficient is negative and larger in magnitude than the aforementioned coefficient, indicating that there are negative returns to schooling for black individuals. Age, age squared and schooling are very close to the point estimates in the RE-regression. The point estimate for living in an urban area decreases from 0.044 to 0.028 in this estimations. 
 
 \clearpage
 
@@ -339,7 +339,7 @@ source("https://raw.githubusercontent.com/fholstege/Econometrics-II/main/Helpers
 Latex_pggls <- extract.pggls(mundlak, include.adjrs = TRUE)
 texreg(Latex_pggls,caption = "Mundlak Model")
 ```
-]
+
 ```{r waldo_test, include = TRUE}
 wald.test(vcov(mundlak), b=coef(mundlak), Terms = 12:19)
 ```
