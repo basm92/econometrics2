@@ -1,0 +1,25 @@
+---
+title: "Assignment 3"
+author: "Walter Verwer & Bas Machielsen"
+date: "1/17/2021"
+output:
+  pdf_document:
+    includes:
+      in_header: "preamble.tex"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(stargazer)
+library(tidyverse)
+```
+
+## Question 1
+
+This will be our very extensive answer to question 1. (I just wanted to test the font). 
+
+```{r, results='asis'}
+lm(mpg ~ cyl + wt + disp, data = mtcars) %>%
+    stargazer(header = F)
+```
