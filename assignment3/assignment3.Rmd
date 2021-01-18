@@ -13,13 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(stargazer)
 library(tidyverse)
+library(haven)
+
+# Import Stata dataset
+bonus <- haven::read_dta("./data/bonus.data")
 ```
 
 ## Question 1
 
-This will be our very extensive answer to question 1. (I just wanted to test the font). 
-
-```{r, results='asis'}
-lm(mpg ~ cyl + wt + disp, data = mtcars) %>%
-    stargazer(header = F)
-```
