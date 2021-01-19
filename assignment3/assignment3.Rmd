@@ -11,6 +11,12 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+# Register an inline hook (set rounding to 3 digitis):
+knitr::knit_hooks$set(inline = function(x) {
+  x <- sprintf("%1.3f", x)
+  paste(x, collapse = ", ")
+})
+
 library(stargazer)
 library(tidyverse)
 library(haven)
@@ -73,7 +79,7 @@ So the $ATE = ATT$ (because of randomization).
 
 ### 2.1
 
-Compute the fraction of students in all three groups (control, low-reward and high-reward) that complete all first-year courses before the start of the second academic year. Show within a table that background characteristics are balanced over the treatment groups.
+__Compute the fraction of students in all three groups (control, low-reward and high-reward) that complete all first-year courses before the start of the second academic year. Show within a table that background characteristics are balanced over the treatment groups.__
 
 
 ```{r message=FALSE}
@@ -102,7 +108,50 @@ bonus_clean %>%
     pivot_longer(-kind_treatment, names_to = "variable") %>%
     separate(variable, into = c("var", "statistic"), sep = "_") %>%
     pivot_wider(names_from = c(kind_treatment, statistic)) %>%
-    kable(caption = "Means and SDs according to treatment")
+    kable(caption = "Means and SDs according to treatment", digits = 3)
 
 ```
+
+### 2.2
+
+__Use the linear probability model to regress the dummy variable for completing all courses on the assignment of the three treatment groups. Interpret the treatment effects. Next include as additional regressors father's education, high-school math score and the subjective assessment about the pass probability.__
+
+```{r pass on groups, results='asis'}
+# First attach data set for easy access:
+attach(bonus)
+
+# We need to regress pass on the treatment group assignment. This is
+# a simple linear probability model. Model is denoted by prob_1. 
+# Note, we need to ommit bonus0, cause of a dummy variable trap.
+prob_1 <- lm(pass ~ bonus500 + bonus1500, data=bonus)
+
+# Same as before, but now with some extra variables
+prob_2 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0, data=bonus)
+
+# for q2.3:
+prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, data=bonus)
+
+# I think we should take the largest model. BAS???:
+prob_4 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort + dropout + stp2001 + stp2004, data=bonus)
+
+# Create table:
+stargazer(prob_1, prob_2, prob_3, prob_4, header=FALSE, style='aer')
+```
+
+### 2.3
+
+__Next also include as regressors in your model whether a student has a job and the amount of study effort. Comment on this approach. Do you consider this an improvement over (ii)?__
+
+
+
+### 2.4
+
+__Use your preferred model specifcation to estimate the effects of the financial incentives on some other outcomes: dropping out and credit points collected (in the first year and after three years).__
+
+
+
+
+
+
+
 
