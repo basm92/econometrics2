@@ -16,8 +16,54 @@ library(tidyverse)
 library(haven)
 
 # Import Stata dataset
-bonus <- haven::read_dta("./data/bonus.data")
+bonus <- haven::read_dta("./data/bonus.dta")
 ```
 
 ## Question 1
 
+### 1.1
+
+```{r warning=FALSE, message=FALSE}
+data <- tribble(
+    ~ color, ~ no_treated, ~ no_contr, ~ avg_treated, ~avg_control,
+    "purple", 100, 100, 9, 7,
+    "blue", 75, 25, 13, 8,
+    "green", 25, 75, 10, 9
+)
+
+data %>%
+    group_by(color) %>%
+    summarize(treatment_effect = avg_treated - avg_control)
+
+```
+
+### 1.2
+
+The ATE is defined as $\mathbb{E}[\delta] = \mathbb{E}[Y^*_1] - \mathbb{E}[Y^*_0]$ which are the expectations of the potential outcomes. In general, these two variables are not observed. Under the _random assignment_ assumption, we assume that $\mathbb{E}[Y_1^*] = \mathbb{E}[Y_1^* | D = 1]$ and $\mathbb{E}[Y_0^*] = \mathbb{E}[Y_0^* | D = 0]$, which can be estimated by their sample by their sample equivalents:
+
+```{r warning=FALSE, message=FALSE}
+data %>%
+    summarize(
+        e_y1_d_is_1 = (9*100 + 13 * 75 + 10 * 25) / sum(no_treated),
+        e_y0_d_is_0 = (7 * 100 + 8 * 25 + 9 * 75) / sum(no_contr)) %>%
+    summarize(e_y1_d_is_1 - e_y0_d_is_0)
+
+```
+
+### 1.3
+
+The ATT is defined as $\mathbb{E}[\delta | D = 1] = \mathbb{E}[Y^1 | D =1] - \mathbb{E}[Y^0 | D=1]$. The first term is readily observable. The second term is estimated by us as $\hat{\mathbb{E}}[Y^0 | D =1] = \mathbb{E}[Y^0 | D = 0]$. Hence:
+
+```{r warning=FALSE, message=FALSE}
+data_ate <- data %>%
+    mutate(n = no_treated + no_contr) %>%
+    summarize(e_y1_d_is_1 = (9 * 100 + 13 * 75 + 10 * 25) / sum(no_treated),
+              e_y0_d_is_0 = (7 * 100 + 8 * 25 + 9 * 75) / sum(no_contr))
+
+data_ate 
+
+data_ate %>%
+    summarize(att = e_y1_d_is_1 - e_y0_d_is_0)
+```
+
+So the $ATE = ATT$ (because of randomization). 
