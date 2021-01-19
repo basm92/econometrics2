@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(stargazer)
 library(tidyverse)
 library(haven)
+library(knitr)
 
 # Import Stata dataset
 bonus <- haven::read_dta("./data/bonus.dta")
@@ -67,3 +68,41 @@ data_ate %>%
 ```
 
 So the $ATE = ATT$ (because of randomization). 
+
+# Question 2
+
+### 2.1
+
+Compute the fraction of students in all three groups (control, low-reward and high-reward) that complete all first-year courses before the start of the second academic year. Show within a table that background characteristics are balanced over the treatment groups.
+
+
+```{r message=FALSE}
+bonus_clean <- bonus %>%
+    pivot_longer(cols = c(bonus0, bonus500, bonus1500), 
+                 names_to = "kind_treatment",
+                 values_to = "treatment") %>%
+    filter(treatment == 1) 
+
+bonus_clean %>%
+    group_by(kind_treatment) %>%
+    summarize(fraction_pass = sum(pass)/n()) %>%
+    kable(caption = "Fraction passed per treatment")
+
+```
+
+```{r message = FALSE}
+
+#Drop the outcome variables
+bonus_clean %>%
+    group_by(kind_treatment) %>%
+    select(-c(pass, stp2001, stp2004, dropout)) %>%
+    summarize(across(p0:math, 
+                     list(mean = ~ mean(., na.rm = TRUE), 
+                          sd = ~ sd(., na.rm = TRUE)))) %>%
+    pivot_longer(-kind_treatment, names_to = "variable") %>%
+    separate(variable, into = c("var", "statistic"), sep = "_") %>%
+    pivot_wider(names_from = c(kind_treatment, statistic)) %>%
+    kable(caption = "Means and SDs according to treatment")
+
+```
+
