@@ -130,6 +130,8 @@ __Next also include as regressors in your model whether a student has a job and 
 
 
 ```{r pass on groups, results='asis'}
+attach(bonus)
+
 # We need to regress pass on the treatment group assignment. This is
 # a simple linear probability model. Model is denoted by prob_1. 
 # Note, we need to omit bonus0, cause of a dummy variable trap.
@@ -185,30 +187,43 @@ In the next model, we observe that the point estimates for the treatment effects
 
 # For now the constants:
 n <- length(p0)
-df <- n - length(prob_4$coefficients)
+df <- n - length(prob_3$coefficients)
 alpha <- 0.05
 t_95 <- qt(1-alpha/2, df)
 sigma2 <- var(prob_4$residuals)
+
+# Ik heb deze maar pre specified. We hebben twee verschillende treatments,
+# zouden we dan niet twee power calculaties moeten doen?
 p<-0.5
+
 # How much power do we want? Range of powers:
 q <- seq(from=0.6, to=0.9, by=0.1)
 
 # Init empty vector of t values for the power:
 t_q = rep(0, length(q))
 
-# Fill vector iteratively and compute MDE:
+# Fill vector iteratively and compute MDE for bonus500:
+mde <- cbind(rep(0, length(q)),rep(0, length(q)))
 counter <- 1
 for (i in q){
     t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
 
-    mde[coutner] <- (t_95 - t_q[counter]) * sqrt( (1/(p(1-p))) * (sigma2 / n) )
+    mde[counter,1] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
     
     counter <- counter + 1
 }
 
+# Treatment bonus1500:
+counter <- 1
+for (i in q){
+    t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
 
-############### TO do: compute sigma2 = var(delta) and define p!
+    mde[counter,2] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
 
+    counter <- counter + 1
+}
+
+kable(mde)
 
 ```
 
