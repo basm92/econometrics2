@@ -213,7 +213,6 @@ for (i in q){
 ```
 
 
-
 ### 2.6
 
 __Initially, the researchers were aiming at an increases in the pass rate of 10% points. How large should the sample size of the experiment have been in that case?__
@@ -233,6 +232,4 @@ The estimated variance of the error term in the full model is
 We know that the minimum effect size as a function of $p$, power $q$, level $\alpha$, 
 
 
-### 2.6
 
-__Initially, the researchers were aiming at an increases in the pass rate of 10%- points. How large should the sample size of the experiment have been in that case?__
