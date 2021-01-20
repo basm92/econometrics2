@@ -1,7 +1,7 @@
 ---
 title: "Assignment 3"
 author: "Walter Verwer & Bas Machielsen"
-date: "1/17/2021"
+date: \today
 output:
   pdf_document:
     includes:
@@ -118,11 +118,20 @@ bonus_clean %>%
 
 ```
 
+
 ### 2.2
 
 __Use the linear probability model to regress the dummy variable for completing all courses on the assignment of the three treatment groups. Interpret the treatment effects. Next include as additional regressors father's education, high-school math score and the subjective assessment about the pass probability.__
 
+
+### 2.3
+
+__Next also include as regressors in your model whether a student has a job and the amount of study effort. Comment on this approach. Do you consider this an improvement over (ii)?__
+
+
 ```{r pass on groups, results='asis'}
+attach(bonus)
+
 # We need to regress pass on the treatment group assignment. This is
 # a simple linear probability model. Model is denoted by prob_1. 
 # Note, we need to omit bonus0, cause of a dummy variable trap.
@@ -132,6 +141,8 @@ prob_2 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0, data=bonus)
 # for q2.3:
 prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, data=bonus)
 
+# # q2.4; I think we should take the largest model. BAS???:
+# prob_4 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort + dropout + stp2001 + stp2004, data=bonus)
 
 # Implement HC-robust standard errors (standard in linear prob model)
 #library(sandwich)
@@ -142,15 +153,10 @@ prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, da
 stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer')
 ```
 
+
 In the first model, we find that students who receive the 500 bonus are 0.007 percentage points more likely to pass the first year, and students who receive the f 1,500 bonus are 0.046 percentage points more likely to pass the first year, both relative to the group that receives no bonus. This effect is, however, not statistically significant, indicating that there is a high variance in passing within treatment groups, or, alternatively, that the sample size is too sample to statistically detect a relatively small effect size.
 
 The point estimates change only slightly when including a vector of control variables, indicating that the treatment conditional on these (potential) confounders does not significantly increase the probability of passing. 
-
-### 2.3
-
-__Next also include as regressors in your model whether a student has a job and the amount of study effort. Comment on this approach. Do you consider this an improvement over (ii)?__
-
-In the next model, we observe that the point estimates for the treatment effects increase a bit, indicating that effort was a confounder. Hence, we do consider this to be an improvement, although the treatment effects are still not significantly different from zero. 
 
 
 ### 2.4
@@ -172,7 +178,59 @@ stargazer(prob_4, prob_5, prob_6, style='aer')
 
 ### 2.5
 
-Given the sample size and the estimates you have obtained above, what would be the minimum detectable effect size of this experiment?
+__Given the sample size and the estimates you have obtained above, what would be the minimum detectable effect size of this experiment?__
+In the next model, we observe that the point estimates for the treatment effects increase a bit, indicating that effort was a confounder. Hence, we do consider this to be an improvement, although the treatment effects are still not significantly different from zero. 
+
+<!-- @Bas: wat denk jij? De MDE zou toch een fucntie moeten zijn van onder andere power? Dus we zouden voor meerder waardes van power de MDE moeten uitrekenen toch? -->
+
+```{r power and MDE, results='asis'}
+
+# For now the constants:
+n <- length(p0)
+df <- n - length(prob_3$coefficients)
+alpha <- 0.05
+t_95 <- qt(1-alpha/2, df)
+sigma2 <- var(prob_4$residuals)
+
+# Ik heb deze maar pre specified. We hebben twee verschillende treatments,
+# zouden we dan niet twee power calculaties moeten doen?
+p<-0.5
+
+# How much power do we want? Range of powers:
+q <- seq(from=0.6, to=0.9, by=0.1)
+
+# Init empty vector of t values for the power:
+t_q = rep(0, length(q))
+
+# Fill vector iteratively and compute MDE for bonus500:
+mde <- cbind(rep(0, length(q)),rep(0, length(q)))
+counter <- 1
+for (i in q){
+    t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
+
+    mde[counter,1] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
+    
+    counter <- counter + 1
+}
+
+# Treatment bonus1500:
+counter <- 1
+for (i in q){
+    t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
+
+    mde[counter,2] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
+
+    counter <- counter + 1
+}
+
+kable(mde)
+
+```
+
+
+### 2.6
+
+__Initially, the researchers were aiming at an increases in the pass rate of 10% points. How large should the sample size of the experiment have been in that case?__
 
 The proportion of treated subjects $p = \frac{83+84}{82+83+84} = 0.67$. 
 
@@ -189,6 +247,4 @@ The estimated variance of the error term in the full model is
 We know that the minimum effect size as a function of $p$, power $q$, level $\alpha$, 
 
 
-### 2.6
 
-Initially, the researchers were aiming at an increases in the pass rate of 10%- points. How large should the sample size of the experiment have been in that case?
