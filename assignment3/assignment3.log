@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  21 JAN 2021 10:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  21 JAN 2021 11:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -910,7 +910,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 629.
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 632.
 [4] [5] [6] [7] [8] (./assignment3.aux)
 
 LaTeX Warning: There were multiply-defined labels.
@@ -921,11 +921,11 @@ Package rerunfilecheck Info: File `assignment3.out' has not changed.
 Here is how much of TeX's memory you used:
  14079 strings out of 481252
  196793 string characters out of 5914123
- 500204 words of memory out of 5000000
+ 500220 words of memory out of 5000000
  30700 multiletter control sequences out of 15000+600000
  467962 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,10n,74p,433b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,10n,74p,439b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.e
 nc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1
 .enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/erewhon
@@ -943,7 +943,7 @@ lic/lm/lmtk10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 mf-dist/fonts/type1/public/newtx/txmiaSTbb.pfb><c:/Users/walte/AppData/Roaming/
 TinyTeX/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb><c:/Users/walte/AppData/
 Roaming/TinyTeX/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on assignment3.pdf (8 pages, 230872 bytes).
+Output written on assignment3.pdf (8 pages, 231444 bytes).
 PDF statistics:
  184 PDF objects out of 1000 (max. 8388607)
  148 compressed objects within 2 object streams

@@ -184,13 +184,15 @@ In the next model, we observe that the point estimates for the treatment effects
 <!-- @Bas: wat denk jij? De MDE zou toch een fucntie moeten zijn van onder andere power? Dus we zouden voor meerder waardes van power de MDE moeten uitrekenen toch? -->
 
 ```{r power and MDE, results='asis'}
+library(estimatr)
+power <- lm_robust(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, data=bonus)
 
 # For now the constants:
 n <- length(p0)
 df <- n - length(prob_3$coefficients)
 alpha <- 0.05
 t_95 <- qt(1-alpha/2, df)
-sigma2 <- var(prob_4$residuals)
+sigma2 <- var(prob_3$residuals)
 
 # Ik heb deze maar pre specified. We hebben twee verschillende treatments,
 # zouden we dan niet twee power calculaties moeten doen?
@@ -203,17 +205,17 @@ q <- seq(from=0.6, to=0.9, by=0.1)
 t_q = rep(0, length(q))
 
 # Fill vector iteratively and compute MDE for bonus500:
-mde <- cbind(rep(0, length(q)))
+mde <- cbind(q*100, rep(0, length(q)))
 counter <- 1
 for (i in q){
     t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
 
-    mde[counter] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
+    mde[counter,2] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
     
     counter <- counter + 1
 }
 
-kable(mde)
+kable(mde, col.names = c('Power (%)','MDE'))
 
 ```
 
@@ -240,14 +242,17 @@ bonus_clean %>%
 power_req <- 0.8
 mde_req <- 0.1
 n_95 <- qnorm(1-alpha/2) 
-n_q <- qnorm(power_req)
+n_q <- qnorm(1-power_req)
 
 # Formula:
-n_min <- (sigma2/p*(1-p)) / (mde_req/(n_95-n_q))^2
+n_min <- (sigma2/(p*(1-p))) / (mde_req/(n_95-n_q))^2
 
 
 
 ```
+
+Filling in the formula, we obtain that the sample size should be approximately `r round(n_min,0)`.
+
 
 <!-- The estimated variance of the error term in the full model is -->
 
