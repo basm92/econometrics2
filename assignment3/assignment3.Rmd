@@ -194,7 +194,7 @@ sigma2 <- var(prob_4$residuals)
 
 # Ik heb deze maar pre specified. We hebben twee verschillende treatments,
 # zouden we dan niet twee power calculaties moeten doen?
-p<-0.5
+p<-(83+84)/(82+83+84)
 
 # How much power do we want? Range of powers:
 q <- seq(from=0.6, to=0.9, by=0.1)
@@ -203,23 +203,13 @@ q <- seq(from=0.6, to=0.9, by=0.1)
 t_q = rep(0, length(q))
 
 # Fill vector iteratively and compute MDE for bonus500:
-mde <- cbind(rep(0, length(q)),rep(0, length(q)))
+mde <- cbind(rep(0, length(q)))
 counter <- 1
 for (i in q){
     t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
 
-    mde[counter,1] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
+    mde[counter] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
     
-    counter <- counter + 1
-}
-
-# Treatment bonus1500:
-counter <- 1
-for (i in q){
-    t_q[counter] <- qt(1-i, df)  # A check: from slides, t_0.7 = -0.525...
-
-    mde[counter,2] <- (t_95 - t_q[counter]) * sqrt( (1/(p*(1-p))) * (sigma2 / n) )
-
     counter <- counter + 1
 }
 
@@ -232,7 +222,13 @@ kable(mde)
 
 __Initially, the researchers were aiming at an increases in the pass rate of 10% points. How large should the sample size of the experiment have been in that case?__
 
-The proportion of treated subjects $p = \frac{83+84}{82+83+84} = 0.67$. 
+The proportion of treated subjects $p = \frac{83+84}{82+83+84} = 0.67$. Then in order to obtain the minimum size of the sample, we have re-written the general equation for the minimum detectable effect size in terms of $n$, the sample size. Formally, it takes the following form.
+
+\begin{equation}
+n = \frac{\sigma^2}{p(1-p)} / \left(\frac{mde}{(t_{1-\alpha}-t_q)}\right)^2
+\end{equation}
+
+We have to however assume that we have a sufficiently large sample size that we can use the quantiles of the normal distribution. The reason is that the quantiles of the t-distribution depend on the number of degrees of freedom, which in turn depends on the sample size. Thus, we can not find an explicit expression in terms of $n$.
 
 ```{r}
 bonus_clean %>%
@@ -240,11 +236,22 @@ bonus_clean %>%
     summarize(test = n()) %>% 
     kable()
 
+# Constants:
+power_req <- 0.8
+mde_req <- 0.1
+n_95 <- qnorm(1-alpha/2) 
+n_q <- qnorm(power_req)
+
+# Formula:
+n_min <- (sigma2/p*(1-p)) / (mde_req/(n_95-n_q))^2
+
+
+
 ```
 
-The estimated variance of the error term in the full model is
+<!-- The estimated variance of the error term in the full model is -->
 
-We know that the minimum effect size as a function of $p$, power $q$, level $\alpha$, 
+<!-- We know that the minimum effect size as a function of $p$, power $q$, level $\alpha$,  -->
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  20 JAN 2021 12:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.12)  21 JAN 2021 10:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -919,13 +919,13 @@ Package rerunfilecheck Info: File `assignment3.out' has not changed.
 (rerunfilecheck)             Checksum: 97F34DAA224F944B1BDE0E8EF2993A6B;819.
  ) 
 Here is how much of TeX's memory you used:
- 14073 strings out of 481252
- 196744 string characters out of 5914123
- 500220 words of memory out of 5000000
- 30699 multiletter control sequences out of 15000+600000
- 466471 words of font info for 119 fonts, out of 8000000 for 9000
+ 14079 strings out of 481252
+ 196793 string characters out of 5914123
+ 500204 words of memory out of 5000000
+ 30700 multiletter control sequences out of 15000+600000
+ 467962 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,10n,74p,436b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,10n,74p,433b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.e
 nc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1
 .enc}{c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/erewhon
@@ -939,13 +939,14 @@ n/erewMI.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/pub
 lic/lm/lmtk10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
 1/public/lm/lmtt10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/fonts
 /type1/public/lm/lmtti10.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/newtx/txmiaSTbb.pfb><c:/Users/walte/AppData/Roaming/TinyTeX
-/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb><c:/Users/walte/AppData/Roaming
-/TinyTeX/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on assignment3.pdf (8 pages, 225934 bytes).
+/fonts/type1/public/newtx/txexs.pfb><c:/Users/walte/AppData/Roaming/TinyTeX/tex
+mf-dist/fonts/type1/public/newtx/txmiaSTbb.pfb><c:/Users/walte/AppData/Roaming/
+TinyTeX/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb><c:/Users/walte/AppData/
+Roaming/TinyTeX/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
+Output written on assignment3.pdf (8 pages, 230872 bytes).
 PDF statistics:
- 178 PDF objects out of 1000 (max. 8388607)
- 144 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
+ 184 PDF objects out of 1000 (max. 8388607)
+ 148 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
  89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
