@@ -178,7 +178,7 @@ prob_6 <- lm(stp2004 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort
 stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456')
 ```
 
-
+We have presented our results in table \ref{tab:456}. We observe similar effects as before. It appears that math and effort remain highly significant 
 
 ### 2.5
 
