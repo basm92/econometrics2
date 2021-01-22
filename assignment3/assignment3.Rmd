@@ -123,11 +123,15 @@ bonus_clean %>%
 
 __Use the linear probability model to regress the dummy variable for completing all courses on the assignment of the three treatment groups. Interpret the treatment effects. Next include as additional regressors father's education, high-school math score and the subjective assessment about the pass probability.__
 
+For table \ref{tab:123}, in the first model, we find that students who receive the 500 bonus are 0.007 percentage points more likely to pass the first year, and students who receive the f 1,500 bonus are 0.046 percentage points more likely to pass the first year, both relative to the group that receives no bonus. This effect is, however, not statistically significant, indicating that there is a high variance in passing within treatment groups, or, alternatively, that the sample size is too sample to statistically detect a relatively small effect size.
+
+The point estimates change only slightly when including a vector of control variables, indicating that the treatment conditional on these (potential) confounders does not significantly increase the probability of passing. What we however find when we include the additional variables, is that the adjusted-$R^2$ increases a lot, meaning a very high increase in explanatory power. These variables added also appear to be highly statistically significant.
 
 ### 2.3
 
 __Next also include as regressors in your model whether a student has a job and the amount of study effort. Comment on this approach. Do you consider this an improvement over (ii)?__
 
+The results are again displayed in table \ref{tab:123}. Including job and study effort increases the adjusted-$R^2$. The coefficient of $P_0$ becomes less insignificant, and effort is highly signicicant. This indicates that there is probably some correlation between $P_0$ and effort that was previously not captured by the model. Thus indicating an omitted variable bias problem beforehand. The rest of the coefficients and standard errors do not change that much by the additional variables. However, seeing that there is some indication of omitted variable bias, we conclude that this approach is an improvement.
 
 ```{r pass on groups, results='asis'}
 attach(bonus)
@@ -142,7 +146,8 @@ prob_2 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0, data=bonus)
 prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, data=bonus)
 
 # # q2.4; I think we should take the largest model. BAS???:
-# prob_4 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort + dropout + stp2001 + stp2004, data=bonus)
+# prob_4 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job +
+# effort + dropout + stp2001 + stp2004, data=bonus)
 
 # Implement HC-robust standard errors (standard in linear prob model)
 #library(sandwich)
@@ -150,13 +155,10 @@ prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, da
 #robust.se <- sqrt(diag(cov))
 
 # Create table:
-stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer')
+stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer', label='tab:123')
 ```
 
 
-In the first model, we find that students who receive the 500 bonus are 0.007 percentage points more likely to pass the first year, and students who receive the f 1,500 bonus are 0.046 percentage points more likely to pass the first year, both relative to the group that receives no bonus. This effect is, however, not statistically significant, indicating that there is a high variance in passing within treatment groups, or, alternatively, that the sample size is too sample to statistically detect a relatively small effect size.
-
-The point estimates change only slightly when including a vector of control variables, indicating that the treatment conditional on these (potential) confounders does not significantly increase the probability of passing. 
 
 
 ### 2.4
@@ -173,8 +175,10 @@ prob_5 <- lm(stp2001 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort
 prob_6 <- lm(stp2004 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
              data=bonus)
 
-stargazer(prob_4, prob_5, prob_6, style='aer')
+stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456')
 ```
+
+We have presented our results in table \ref{tab:456}. We observe similar effects as before. It appears that math and effort remain highly significant 
 
 ### 2.5
 
