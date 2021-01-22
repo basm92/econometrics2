@@ -175,7 +175,7 @@ prob_5 <- lm(stp2001 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort
 prob_6 <- lm(stp2004 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
              data=bonus)
 
-stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456')
+stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456', header = FALSE)
 ```
 
 We have presented our results in table \ref{tab:456}. We observe similar effects as before. It appears that math and effort remain highly significant 
@@ -192,7 +192,7 @@ library(estimatr)
 power <- lm_robust(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, data=bonus)
 
 # For now the constants:
-n <- length(p0)
+n <- nrow(bonus)
 df <- n - length(prob_3$coefficients)
 alpha <- 0.05
 t_95 <- qt(1-alpha/2, df)
@@ -231,7 +231,7 @@ __Initially, the researchers were aiming at an increases in the pass rate of 10%
 The proportion of treated subjects $p = \frac{83+84}{82+83+84} = 0.67$. Then in order to obtain the minimum size of the sample, we have re-written the general equation for the minimum detectable effect size in terms of $n$, the sample size. Formally, it takes the following form.
 
 \begin{equation}
-n = \frac{\sigma^2}{p(1-p)} / \left(\frac{mde}{(t_{1-\alpha}-t_q)}\right)^2
+n = \frac{\sigma^2}{p(1-p)} / \left(\frac{mde}{(t_{1-\alpha}-t_{1-q})}\right)^2
 \end{equation}
 
 We have to however assume that we have a sufficiently large sample size that we can use the quantiles of the normal distribution. The reason is that the quantiles of the t-distribution depend on the number of degrees of freedom, which in turn depends on the sample size. Thus, we can not find an explicit expression in terms of $n$.
