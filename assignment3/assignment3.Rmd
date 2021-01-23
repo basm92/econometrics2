@@ -145,10 +145,6 @@ prob_2 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0, data=bonus)
 # for q2.3:
 prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, data=bonus)
 
-# # q2.4; I think we should take the largest model. BAS???:
-# prob_4 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job +
-# effort + dropout + stp2001 + stp2004, data=bonus)
-
 # Implement HC-robust standard errors (standard in linear prob model)
 library(sandwich)
 cov1 <- vcovHC(prob_1, type = "HC")
@@ -172,7 +168,7 @@ stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer', label='tab:123',
 
 __Use your preferred model specifcation to estimate the effects of the financial incentives on some other outcomes: dropping out and credit points collected (in the first year and after three years).__
 
-```{r echo=FALSE, results='asis'}
+```{r results='asis'}
 prob_4 <- lm(dropout~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
              data = bonus)
 prob_5 <- lm(stp2001 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
@@ -263,8 +259,6 @@ n_q <- qnorm(1-power_req)
 
 # Formula:
 n_min <- (sigma2/(p*(1-p))) / (mde_req/(n_95-n_q))^2
-
-
 
 ```
 
