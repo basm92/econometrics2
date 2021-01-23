@@ -12,10 +12,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 
 # Register an inline hook (set rounding to 3 digitis):
-knitr::knit_hooks$set(inline = function(x) {
-  x <- sprintf("%1.3f", x)
-  paste(x, collapse = ", ")
-})
+# knitr::knit_hooks$set(inline = function(x) {
+#   x <- sprintf("%1.3f", x)
+#   paste(x, collapse = ", ")
+# })
 
 library(stargazer)
 library(tidyverse)
@@ -64,7 +64,7 @@ data %>%
 
 ### 1.3
 
-The ATT is defined as $\mathbb{E}[\delta | D = 1] = \mathbb{E}[Y^1 | D =1] - \mathbb{E}[Y^0 | D=1]$. The first term is readily observable. The second term is estimated by us as $\hat{\mathbb{E}}[Y^0 | D =1] = \mathbb{E}[Y^0 | D = 0]$. Hence:
+The ATET is defined as $\mathbb{E}[\delta | D = 1] = \mathbb{E}[Y^1 | D =1] - \mathbb{E}[Y^0 | D=1]$. The first term is readily observable. The second term is estimated by us as $\hat{\mathbb{E}}[Y^0 | D =1] = \mathbb{E}[Y^0 | D = 0]$. Hence:
 
 ```{r warning=FALSE, message=FALSE}
 data_ate <- data %>%
@@ -75,11 +75,11 @@ data_ate <- data %>%
 data_ate 
 
 data_ate %>%
-    summarize(att = e_y1_d_is_1 - e_y0_d_is_0) %>%
-    kable(caption = "ATT")
+    summarize(atet = e_y1_d_is_1 - e_y0_d_is_0) %>%
+    kable(caption = "ATET")
 ```
 
-So the $ATE = ATT$ (because of randomization). 
+So the $ATE = ATET$ (because of randomization). 
 
 # Question 2
 
@@ -150,12 +150,19 @@ prob_3 <- lm(pass ~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort, da
 # effort + dropout + stp2001 + stp2004, data=bonus)
 
 # Implement HC-robust standard errors (standard in linear prob model)
-#library(sandwich)
-#cov <- vcovHC(reg.model, type = "HC")
-#robust.se <- sqrt(diag(cov))
+library(sandwich)
+cov1 <- vcovHC(prob_1, type = "HC")
+robust_se1 <- sqrt(diag(cov1))
+
+cov2 <- vcovHC(prob_2, type = "HC")
+robust_se2 <- sqrt(diag(cov2))
+
+cov3 <- vcovHC(prob_3, type = "HC")
+robust_se3 <- sqrt(diag(cov3))
 
 # Create table:
-stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer', label='tab:123')
+stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer', label='tab:123',
+           se = list(robust_se1, robust_se2, robust_se3))
 ```
 
 
@@ -166,8 +173,6 @@ stargazer(prob_1, prob_2, prob_3, header=FALSE, style='aer', label='tab:123')
 __Use your preferred model specifcation to estimate the effects of the financial incentives on some other outcomes: dropping out and credit points collected (in the first year and after three years).__
 
 ```{r echo=FALSE, results='asis'}
-# I think we should take the largest model. BAS???:
-# Du hast Recht und wir sind Eindverstanden!
 prob_4 <- lm(dropout~ bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
              data = bonus)
 prob_5 <- lm(stp2001 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
@@ -175,7 +180,18 @@ prob_5 <- lm(stp2001 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort
 prob_6 <- lm(stp2004 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort,
              data=bonus)
 
-stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456')
+
+cov4 <- vcovHC(prob_4, type = "HC")
+robust_se4 <- sqrt(diag(cov4))
+
+cov5 <- vcovHC(prob_5, type = "HC")
+robust_se5 <- sqrt(diag(cov5))
+
+cov6 <- vcovHC(prob_6, type = "HC")
+robust_se6 <- sqrt(diag(cov6))
+
+stargazer(prob_4, prob_5, prob_6, header=FALSE, style='aer', label='tab:456', 
+          se = list(robust_se4, robust_se5, robust_se6))
 ```
 
 We have presented our results in table \ref{tab:456}. We observe similar effects as before. It appears that math and effort remain highly significant 
@@ -197,9 +213,6 @@ df <- n - length(prob_3$coefficients)
 alpha <- 0.05
 t_95 <- qt(1-alpha/2, df)
 sigma2 <- var(prob_3$residuals)
-
-# Ik heb deze maar pre specified. We hebben twee verschillende treatments,
-# zouden we dan niet twee power calculaties moeten doen?
 p<-(83+84)/(82+83+84)
 
 # How much power do we want? Range of powers:
@@ -258,9 +271,7 @@ n_min <- (sigma2/(p*(1-p))) / (mde_req/(n_95-n_q))^2
 Filling in the formula, we obtain that the sample size should be approximately `r round(n_min,0)`.
 
 
-<!-- The estimated variance of the error term in the full model is -->
 
-<!-- We know that the minimum effect size as a function of $p$, power $q$, level $\alpha$,  -->
 
 
 
