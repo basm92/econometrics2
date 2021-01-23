@@ -181,7 +181,10 @@ prob_6 <- lm(stp2004 ~  bonus500 + bonus1500 + fyeduc + math + p0 + job + effort
              data=bonus)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> attempt_walter
 cov4 <- vcovHC(prob_4, type = "HC")
 robust_se4 <- sqrt(diag(cov4))
 
@@ -193,9 +196,15 @@ robust_se6 <- sqrt(diag(cov6))
 
 stargazer(prob_4, prob_5, prob_6, header=FALSE, style='aer', label='tab:456', 
           se = list(robust_se4, robust_se5, robust_se6))
+<<<<<<< HEAD
 =======
 stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456', header = FALSE)
 >>>>>>> 1c82fb667ee6175332f425cd7d0c811358b20c5d
+=======
+
+stargazer(prob_4, prob_5, prob_6, style='aer', label='tab:456', header = FALSE)
+
+>>>>>>> attempt_walter
 ```
 
 We have presented our results in table \ref{tab:456}. We observe similar effects as before. It appears that math and effort remain highly significant 
