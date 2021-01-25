@@ -1,0 +1,30 @@
+---
+title: "Assignment 4"
+author: "Walter Verwer & Bas Machielsen"
+date: \today
+output:
+  pdf_document:
+    includes:
+      in_header: "preamble.tex"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Register an inline hook (set rounding to 3 digitis):
+# knitr::knit_hooks$set(inline = function(x) {
+#   x <- sprintf("%1.3f", x)
+#   paste(x, collapse = ", ")
+# })
+
+library(stargazer)
+library(tidyverse)
+library(haven)
+library(knitr)
+library(lmtest)
+library(sandwich)
+
+# Import Stata dataset
+flu <- haven::read_dta("./data/FluData.dta")
+
+```
