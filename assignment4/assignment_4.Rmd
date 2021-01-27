@@ -51,6 +51,31 @@ An always taker is someone who always takes up treatment. In this situation an a
 ## Problem 2: Eating and Drinking
 __(i) Perform a power calculation for the number of students that the teacher should include in the field experiment.__
 
+Compute the power as follows.
+
+\[MDE = (t_{1-\alpha/2} -t_{1-q}) \sqrt{\frac{1}{p(1-p)}}\sqrt{\frac{\sigma^2}{n}}\]
+
+Filling in the values given, results in the following.
+
+\[0.1 = (1.96 + 0.524) \sqrt{\frac{1}{0.25}}\sqrt{\frac{0.25}{n}} \implies n\approx617\]
+
+In this calculation, the variance follows from a standard Bernoulli variance calculation. In our case $p=0.5$, which implies that the variance is 0.25.
+
+__(ii)The teacher assumes that 20% of the students randomized in the treatment group will actually have breakfast. How does this change the number of students required to participate in the field experiment?__
+
+We take the formula from the previous question and change it accordingly. This results the following formula.
+
+\[MDE = (t_{1-\alpha/2} -t_{1-q}) \sqrt{\frac{1}{p(1-p)}}\sqrt{\frac{\sigma^2}{n}}\frac{1}{r_t-t_c}\]
+
+Filling in the values again gives us the following.
+
+\[0.1 = (1.96 + 0.524) \sqrt{\frac{1}{0.25}}\sqrt{\frac{0.25}{n}}\frac{1}{0.8-0} \implies n\approx964\]
+
+Concluding, we observe that the partial compliance increases the number of observations needed.
+
+
+## Problem 3: Flu shots for young children
+__(i) Compute for the children assigned to the control group the variance in u incidence. If the researcher aims at reducing u incidence by 0.05, how many children should participate in the randomized experiment.__
 
 
 
@@ -58,6 +83,11 @@ __(i) Perform a power calculation for the number of students that the teacher sh
 
 
 
-```{r}
 
-```
+
+
+
+
+
+
+
