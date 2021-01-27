@@ -1,6 +1,6 @@
 ---
 title: "Assignment 4"
-author: "Walter Verwer & Bas Machielsen"
+author: "Bas Machielsen & Walter Verwer"
 date: \today
 output:
   pdf_document:
@@ -26,5 +26,36 @@ library(sandwich)
 
 # Import Stata dataset
 flu <- haven::read_dta("./data/FluData.dta")
+
+```
+
+## Problem 1: Judges and Prison Sentences
+__(i) Use the Wald estimator to compute the causal effect of a prison sentence on the probability of being arrested later.__
+
+The Wald estimator is defined as follows:
+
+\[\frac{E[Y|Z=1] - E[Y|Z=0]}{E[D|Z=1] - E[D|Z=0]}\]
+
+In our case, $Y$ is the future arrest, $Z=1$ if the judge is Jones, and it is equal to zero if it is Smith, and $D=1$ if the individual went to prison, and zero otherwise. Filling in the formula with the numbers given, results in following:
+
+\[ \frac{(70\% \cdot 40\% + 30\% \cdot 60\%)- (40\% \cdot 20\% + 60\% \cdot 50\%)}{70\% - 40\%} = 0.27 \]
+
+__(ii) What is the interpretation of the estimated effect? And for which fraction of the population does this causal effect hold?__
+
+The interpretation of this is that sending an individual to prison results in a 27% higher probability that the individual has to go to prison again. The fraction for which this causal effect hold is the people that comply. In other words, the fraction of the people that go to prison if they are sentenced to it and if it is otherwise they do that. In this case there are no never takers, because the treatment is enforced. The fraction that this corresponds to is, assuming an equal division of cases over the judges, the following. Fraction of population that are compliers is equal to $0.5(0.4+0.6)-0.5(0.2+0.5)=85/%$
+
+__(iii) Explain what an always taker is in this setting and which fraction of the population are always takers?__
+An always taker is someone who always takes up treatment. In this situation an always taker is someone who will always want to go to prison if offered the choice.
+
+
+
+
+
+
+
+
+
+
+```{r}
 
 ```
