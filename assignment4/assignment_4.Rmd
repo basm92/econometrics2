@@ -75,19 +75,92 @@ Concluding, we observe that the partial compliance increases the number of obser
 
 
 ## Problem 3: Flu shots for young children
-__(i) Compute for the children assigned to the control group the variance in u incidence. If the researcher aims at reducing u incidence by 0.05, how many children should participate in the randomized experiment.__
+__(i) Compute for the children assigned to the control group the variance in u incidence. If the researcher aims at reducing flu incidence by 0.05, how many children should participate in the randomized experiment.__
+
+First, we calculate the variance in the population (without the treatment) of getting the flu:
+
+```{r wollah}
+var <- flu %>% 
+    filter(TreatGroup == 0 ) %>%
+    summarize(var = var(Flu)) %>% 
+    pull()
+
+var
+```
+
+Then, we calculate the power based on the following specification, with MDE $0.045$, $t_{1-\alpha/2} = 1.96$, $t_{1-q} = -0.52$, and the proportion of treated subjects $p = 0.80$:
+
+\[MDE = (t_{1-\alpha/2} -t_{1-q}) \sqrt{\frac{1}{p(1-p)}}\sqrt{\frac{\sigma^2}{n}}\]
+
+```{r}
+# Proportion of treatment
+p <- flu %>%
+    summarize(prop_treated = mean(TreatGroup)) %>%
+    pull()
+
+#Effect size
+mde <- 0.05
+
+# Alpha, and Q: alpha = 5%, alpha/2 = 2.5%, power  = 0.7
+t_1_min_alpha_div_2 <- qnorm(0.975)
+t_1_min_power <- qnorm(0.3)
+
+# Compute the required sample size
+n = var * ((t_1_min_alpha_div_2 - t_1_min_power)^2) / ((mde*sqrt(p*(1-p)))^2)
+n <- round(n, 2)
+```
 
 
+Hence, $n$ should be greater than approximately `r n`. 
 
 
+__(ii) Compute which fraction of the children in the treatment group actually received a flu shot. What is the implication for the power analysis of the experiment?__
 
+```{r}
+fraction <- flu %>% 
+    filter(TreatGroup == 1) %>%
+    summarize(fraction = mean(Treatment)) %>%
+    pull() %>%
+    round(2)
+```
 
+Only `r fraction` percent of the individuals in the treatment group actually received the treatment. The previously effectuated power analysis therefore underestimates the sample size needed to discover the effect at the required $\alpha$ level with the required power. 
 
+__(iii) Make a table with summary statistics for (1) the control group, (2) the treated treatment group, and (3) the untreated treatment group. What do you conclude?__
 
+```{r}
+#gender of the child, age of the mother at birth, years of education of the mother, whether or not the mother is married, nationality and monthly household income
 
+#control group
+ctrl <- flu %>%
+    filter(TreatGroup == 0) %>%
+    summarize(across(c(GenderChild, AgeMother, EducationMother, 
+                       Married, Nationality, Hhincome), mean)) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "mean_control")
 
+#treated treatment group
+tt <- flu %>%
+    filter(TreatGroup == 1, Treatment == 1) %>%
+    summarize(across(c(GenderChild, AgeMother, EducationMother, 
+                       Married, Nationality, Hhincome), mean)) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "mean_tt")
+    
+#untreated treatment group
+utt <- flu %>%
+    filter(TreatGroup == 1, Treatment == 0) %>%
+    summarize(across(c(GenderChild, AgeMother, EducationMother, 
+                       Married, Nationality, Hhincome), mean)) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "mean_utt")
+    
+merge(ctrl, tt) %>%
+    merge(utt) %>%
+    kable(digits = 3)
+```
 
+The researcher first focuses on only those children randomized in the treatment group. The researcher specifies the linear regression model
 
+$$Flu_i = \alpha + \delta FluShot_i + U_i$$
+__(iv) Estimate this model using OLS. Next, include subsequently the individual characteristics. What do you learn from these regressions?__
 
 
 
