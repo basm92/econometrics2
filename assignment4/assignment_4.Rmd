@@ -125,6 +125,8 @@ Only `r fraction` percent of the individuals in the treatment group actually rec
 __(iii) Make a table with summary statistics for (1) the control group, (2) the treated treatment group, and (3) the untreated treatment group. What do you conclude?__
 
 ```{r henk}
+
+## For mean:
 #control group
 ctrl <- flu %>%
     filter(TreatGroup == 0) %>%
@@ -145,13 +147,38 @@ utt <- flu %>%
     summarize(across(c(GenderChild, AgeMother, EducationMother, 
                        Married, Nationality, Hhincome), mean)) %>%
     pivot_longer(everything(), names_to = "var", values_to = "mean_utt")
+
+## For sd:
+#control group
+ctrl_sd <- flu %>%
+    filter(TreatGroup == 0) %>%
+    summarize(across(c(GenderChild, AgeMother, EducationMother, 
+                       Married, Nationality, Hhincome), sd)) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "sd_control")
+
+#treated treatment group
+tt_sd <- flu %>%
+    filter(TreatGroup == 1, Treatment == 1) %>%
+    summarize(across(c(GenderChild, AgeMother, EducationMother, 
+                       Married, Nationality, Hhincome), sd)) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "d_tt")
     
-merge(ctrl, tt) %>%
-    merge(utt) %>%
+#untreated treatment group
+utt_sd <- flu %>%
+    filter(TreatGroup == 1, Treatment == 0) %>%
+    summarize(across(c(GenderChild, AgeMother, EducationMother, 
+                       Married, Nationality, Hhincome), sd)) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "sd_utt")
+    
+merge(ctrl, ctrl_sd) %>%
+    merge(tt) %>%
+    merge(tt_sd) %>%
+    merge(utt)%>%
+    merge(utt_sd)%>%
     kable(digits = 3)
 ```
 
-We conclude that the covariates are still fairly balanced among the three groups: we can observe that, compared to the treated treatment group, the untreated treatment group (the individuals who chose not to opt for the treatment despite being assigned) had slightly younger mothers, slightly less education and income, and were slightly less likely to be married. In addition, they were more likely to be (Nationality?). The differences, however, are very small. 
+We conclude that the covariates are still fairly balanced among the three groups: we can observe that, compared to the treated treatment group, the untreated treatment group (the individuals who chose not to opt for the treatment despite being assigned) had slightly younger mothers, slightly less education and income, and were slightly less likely to be married. In addition, they were more likely to be (Nationality?). The differences, however, are very small. We also observe that if we compare the standard deviations of the mean estimates, we see no significant differences in means. In other words, all means are well within two standard deviations from each other.
 
 __The researcher first focuses on only those children randomized in the treatment group. The researcher specifies the linear regression model__
 
@@ -179,6 +206,8 @@ We conclude that the treatment effect of a flu vaccination has a significant and
 
 __(v) Use 2SLS to estimate $\delta$ and check the robustness with respect to adding individual characteristics.__
 
+
+[WE STILL NEED TO DO THIS, @BAS, I WILL DO IT ;)]
 ```{r iv est, results='asis'}
 ivmodel1 <- ivreg(data = flu, formula = Flu ~ Treatment | TreatGroup)
 
@@ -208,7 +237,7 @@ stargazer(firststage_1, firststage_2, header = FALSE,
             title = "First stage regressions")
 ```
 
-No, the F-statistics are very high in both models.
+No, the F-statistics are very high in both models. 
 
 __(vii) Explain why in this case the local average treatment effect is the same as the average treatment effect on the treated.__
 
