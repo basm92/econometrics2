@@ -17,12 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #   paste(x, collapse = ", ")
 # })
 
-library(stargazer)
-library(tidyverse)
-library(haven)
-library(knitr)
-library(lmtest)
-library(sandwich)
+library(stargazer); library(tidyverse); library(haven)
+library(knitr); library(lmtest); library(sandwich); library(ivreg)
 
 # Import Stata dataset
 flu <- haven::read_dta("./data/FluData.dta")
@@ -92,7 +88,7 @@ Then, we calculate the power based on the following specification, with MDE $0.0
 
 \[MDE = (t_{1-\alpha/2} -t_{1-q}) \sqrt{\frac{1}{p(1-p)}}\sqrt{\frac{\sigma^2}{n}}\]
 
-```{r}
+```{r piet}
 # Proportion of treatment
 p <- flu %>%
     summarize(prop_treated = mean(TreatGroup)) %>%
@@ -116,7 +112,7 @@ Hence, $n$ should be greater than approximately `r n`.
 
 __(ii) Compute which fraction of the children in the treatment group actually received a flu shot. What is the implication for the power analysis of the experiment?__
 
-```{r}
+```{r jaap}
 fraction <- flu %>% 
     filter(TreatGroup == 1) %>%
     summarize(fraction = mean(Treatment)) %>%
@@ -128,9 +124,7 @@ Only `r fraction` percent of the individuals in the treatment group actually rec
 
 __(iii) Make a table with summary statistics for (1) the control group, (2) the treated treatment group, and (3) the untreated treatment group. What do you conclude?__
 
-```{r}
-#gender of the child, age of the mother at birth, years of education of the mother, whether or not the mother is married, nationality and monthly household income
-
+```{r henk}
 #control group
 ctrl <- flu %>%
     filter(TreatGroup == 0) %>%
@@ -157,10 +151,93 @@ merge(ctrl, tt) %>%
     kable(digits = 3)
 ```
 
-The researcher first focuses on only those children randomized in the treatment group. The researcher specifies the linear regression model
+We conclude that the covariates are still fairly balanced among the three groups: we can observe that, compared to the treated treatment group, the untreated treatment group (the individuals who chose not to opt for the treatment despite being assigned) had slightly younger mothers, slightly less education and income, and were slightly less likely to be married. In addition, they were more likely to be (Nationality?). The differences, however, are very small. 
+
+__The researcher first focuses on only those children randomized in the treatment group. The researcher specifies the linear regression model__
 
 $$Flu_i = \alpha + \delta FluShot_i + U_i$$
 __(iv) Estimate this model using OLS. Next, include subsequently the individual characteristics. What do you learn from these regressions?__
 
+```{r regressione lineare, results='asis'}
+modele_uno <- lm(data = flu,
+    formula = Flu ~ TreatGroup) 
 
+modele_duo <- lm(data = flu,
+    formula = Flu ~ TreatGroup + AgeMother + EducationMother + 
+        GenderChild + Hhincome + Married + Nationality)
+
+stargazer(modele_uno, modele_duo, 
+          header = FALSE, 
+          column.labels = c("Without Controls", "With Controls")
+          )
+
+```
+
+We conclude that the treatment effect of a flu vaccination has a significant and negative effect on flu incidence. This result is robust to certain factors that are correlated with taking the treatment, such as Parental Education and Household Income. However, there is only partial compliance with the treatment assignment. Intuitively, the OLS estimator incorporates the effect of the treatment on the treated subjects, but also the effect of not taking the treatment among the subjects that were assigned the treatment. Concretely, assuming the effect of treatment is negative, the OLS estimator would underestimate the effect of the treatment, because it is (falsely) implied that the subjects assigned to take the treatment also take it. 
+
+\clearpage
+
+__(v) Use 2SLS to estimate $\delta$ and check the robustness with respect to adding individual characteristics.__
+
+```{r iv est, results='asis'}
+ivmodel1 <- ivreg(data = flu, formula = Flu ~ Treatment | TreatGroup)
+
+ivmodel2 <- ivreg(data = flu, formula = Flu ~ Treatment + AgeMother + 
+                      EducationMother + GenderChild + Hhincome
+                  + Married + Nationality | 
+                      TreatGroup + AgeMother + EducationMother + 
+        GenderChild + Hhincome + 
+            Married + Nationality)
+
+stargazer(ivmodel1, ivmodel2, header = FALSE)
+```
+
+__(vi) Estimate the first-stage regression using OLS. Are you afraid of a weak instruments problem?__
+
+```{r premiere phase, results = 'asis'}
+firststage_1 <- lm(data = flu, 
+                   formula = Treatment ~ TreatGroup
+                 )
+
+firststage_2 <- lm(data = flu,
+                   formula = Treatment ~ TreatGroup + 
+                       AgeMother + EducationMother + 
+        GenderChild + Hhincome + Married + Nationality)
+
+stargazer(firststage_1, firststage_2, header = FALSE,
+            title = "First stage regressions")
+```
+
+No, the F-statistics are very high in both models.
+
+__(vii) Explain why in this case the local average treatment effect is the same as the average treatment effect on the treated.__
+
+If we have no defiers (by assumption), and we have no always takers (you cannot take the vaccine if you have not been assigned to the treatment), the actually treated population consists only of never takers and compliers. Let $p$ be the proportion of compliers in the assigned treatment group, $q$ be the proportion of compliers in the control group. Then, we know:
+
+\[
+\mathbb{E}[Y|Z=1] = (1-p) Y^*_{0, NT} + p Y^*_{1, C} 
+\]
+
+\[
+\mathbb{E}[Y|Z=0] = (1-q) Y^*_{0, NT} + q Y^*_{0, C} 
+\]
+
+The IV (Wald) estimator is defined as:
+
+\[
+\delta_{W} = \frac{\mathbb{E}[Y|Z=1] - \mathbb{E}[Y|Z=0]}{Pr(D=1|Z=1) - Pr(D=1|Z=0)} 
+\]
+
+Which, after realizing that because of randomization, $p = q$, that $Pr(D=1|Z=0) = 0$, and substitution of the two above equations simplifies to:
+
+\[
+\delta_{W} = \frac{p (Y^*_{1,C} - Y^*_{0,C} + (1-p) (Y^*_{0,NT} - Y^*_{0,NT}))}{p}
+\]
+
+Which finally simplifies to: 
+\[
+\delta_{W} = Y^*_{1,c} - Y^*_{0,c} = ATET
+\]
+
+where the $ATET$ is the definition of the average treatment effect on the treated in this setting, because the only subjects that are treated are compliers (i.e. always takers do not exist). 
 
