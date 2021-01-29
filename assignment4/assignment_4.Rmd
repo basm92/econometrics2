@@ -206,8 +206,8 @@ We conclude that the treatment effect of a flu vaccination has a significant and
 
 __(v) Use 2SLS to estimate $\delta$ and check the robustness with respect to adding individual characteristics.__
 
+Adding the control variables (individual characteristics), increases the adjusted r squared. Also, it appears that most of the added variables are highly significant. These findings indicate a robust finding because the coefficient of treatment changes by only a fraction of the standard error. Thus, if we would test whether there is a significant difference between the two coefficients, we would not be able to reject the hypothesis that the two are significantly different at common stated levels.
 
-[WE STILL NEED TO DO THIS, @BAS, I WILL DO IT ;)]
 ```{r iv est, results='asis'}
 ivmodel1 <- ivreg(data = flu, formula = Flu ~ Treatment | TreatGroup)
 
