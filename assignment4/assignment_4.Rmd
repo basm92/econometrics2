@@ -71,7 +71,7 @@ Concluding, we observe that the partial compliance increases the number of obser
 
 
 ## Problem 3: Flu shots for young children
-__(i) Compute for the children assigned to the control group the variance in u incidence. If the researcher aims at reducing flu incidence by 0.05, how many children should participate in the randomized experiment.__
+__(i) Compute for the children assigned to the control group the variance in flu incidence. If the researcher aims at reducing flu incidence by 0.05, how many children should participate in the randomized experiment.__
 
 First, we calculate the variance in the population (without the treatment) of getting the flu:
 
@@ -120,62 +120,50 @@ fraction <- flu %>%
     round(2)
 ```
 
-Only `r fraction` percent of the individuals in the treatment group actually received the treatment. The previously effectuated power analysis therefore underestimates the sample size needed to discover the effect at the required $\alpha$ level with the required power. 
+Only `r fraction` of the individuals in the treatment group actually received the treatment. The previously effectuated power analysis therefore underestimates the sample size needed to discover the effect at the required $\alpha$ level with the required power. 
 
 __(iii) Make a table with summary statistics for (1) the control group, (2) the treated treatment group, and (3) the untreated treatment group. What do you conclude?__
 
 ```{r henk}
 
-## For mean:
 #control group
 ctrl <- flu %>%
     filter(TreatGroup == 0) %>%
     summarize(across(c(GenderChild, AgeMother, EducationMother, 
-                       Married, Nationality, Hhincome), mean)) %>%
-    pivot_longer(everything(), names_to = "var", values_to = "mean_control")
+                       Married, Nationality, Hhincome), 
+                     list(mean.ctrl = ~ mean(.),sd.ctrl =  ~ sd(.))
+                     )
+              ) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "value") %>%
+    separate(var, into = c('var', 'stat'), sep ="_")
 
 #treated treatment group
 tt <- flu %>%
     filter(TreatGroup == 1, Treatment == 1) %>%
     summarize(across(c(GenderChild, AgeMother, EducationMother, 
-                       Married, Nationality, Hhincome), mean)) %>%
-    pivot_longer(everything(), names_to = "var", values_to = "mean_tt")
+                       Married, Nationality, Hhincome), 
+                     list(mean.tt = ~ mean(.),sd.tt =  ~ sd(.))
+                     )
+              ) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "value") %>%
+    separate(var, into = c('var', 'stat'), sep ="_")
     
 #untreated treatment group
 utt <- flu %>%
     filter(TreatGroup == 1, Treatment == 0) %>%
     summarize(across(c(GenderChild, AgeMother, EducationMother, 
-                       Married, Nationality, Hhincome), mean)) %>%
-    pivot_longer(everything(), names_to = "var", values_to = "mean_utt")
+                       Married, Nationality, Hhincome), 
+                     list(mean.utt = ~ mean(.),sd.utt =  ~ sd(.))
+                     )
+              ) %>%
+    pivot_longer(everything(), names_to = "var", values_to = "value") %>%
+    separate(var, into = c('var', 'stat'), sep ="_")
 
-## For sd:
-#control group
-ctrl_sd <- flu %>%
-    filter(TreatGroup == 0) %>%
-    summarize(across(c(GenderChild, AgeMother, EducationMother, 
-                       Married, Nationality, Hhincome), sd)) %>%
-    pivot_longer(everything(), names_to = "var", values_to = "sd_control")
-
-#treated treatment group
-tt_sd <- flu %>%
-    filter(TreatGroup == 1, Treatment == 1) %>%
-    summarize(across(c(GenderChild, AgeMother, EducationMother, 
-                       Married, Nationality, Hhincome), sd)) %>%
-    pivot_longer(everything(), names_to = "var", values_to = "d_tt")
-    
-#untreated treatment group
-utt_sd <- flu %>%
-    filter(TreatGroup == 1, Treatment == 0) %>%
-    summarize(across(c(GenderChild, AgeMother, EducationMother, 
-                       Married, Nationality, Hhincome), sd)) %>%
-    pivot_longer(everything(), names_to = "var", values_to = "sd_utt")
-    
-merge(ctrl, ctrl_sd) %>%
-    merge(tt) %>%
-    merge(tt_sd) %>%
-    merge(utt)%>%
-    merge(utt_sd)%>%
+rbind(ctrl, tt, utt) %>%
+    pivot_wider(names_from = stat, 
+                values_from = value) %>%
     kable(digits = 3)
+
 ```
 
 We conclude that the covariates are still fairly balanced among the three groups: we can observe that, compared to the treated treatment group, the untreated treatment group (the individuals who chose not to opt for the treatment despite being assigned) had slightly younger mothers, slightly less education and income, and were slightly less likely to be married. In addition, they were more likely to be (Nationality?). The differences, however, are very small. We also observe that if we compare the standard deviations of the mean estimates, we see no significant differences in means. In other words, all means are well within two standard deviations from each other.
@@ -221,6 +209,7 @@ ivmodel2 <- ivreg(data = flu, formula = Flu ~ Treatment + AgeMother +
 stargazer(ivmodel1, ivmodel2, header = FALSE)
 ```
 
+\clearpage
 __(vi) Estimate the first-stage regression using OLS. Are you afraid of a weak instruments problem?__
 
 ```{r premiere phase, results = 'asis'}
@@ -238,6 +227,8 @@ stargazer(firststage_1, firststage_2, header = FALSE,
 ```
 
 No, the F-statistics are very high in both models. 
+
+\clearpage
 
 __(vii) Explain why in this case the local average treatment effect is the same as the average treatment effect on the treated.__
 
@@ -260,7 +251,7 @@ The IV (Wald) estimator is defined as:
 Which, after realizing that because of randomization, $p = q$, that $Pr(D=1|Z=0) = 0$, and substitution of the two above equations simplifies to:
 
 \[
-\delta_{W} = \frac{p (Y^*_{1,C} - Y^*_{0,C} + (1-p) (Y^*_{0,NT} - Y^*_{0,NT}))}{p}
+\delta_{W} = \frac{p (Y^*_{1,C} - Y^*_{0,C}) + (1-p) (Y^*_{0,NT} - Y^*_{0,NT}))}{p}
 \]
 
 Which finally simplifies to: 
