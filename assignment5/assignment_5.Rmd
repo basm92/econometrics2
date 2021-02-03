@@ -90,16 +90,32 @@ kable(table)
 did <- (6.154916 - 5.086213) - (8.448658 - 7.960866)
 ```
 
-
 The difference in difference estimator is equal to `r did`, indicating an increase of illegal births by `r did` percentage points, consistent with the hypothesis. 
+
+\clearpage 
 
 __(iii) Estimate the following model, which estimates the difference-in-differences estimator in a regression equation. What is the interpretation of the coefficients $\beta_1$ and $\beta_2$? What do you conclude about the effect of male scarcity on the number of out-of-wedlock births?__
 
-```{r q3}
+```{r q3, echo = FALSE, results='asis'}
 model_q3 <- lm(data = data, 
                formula = "illeg ~ post + post:mortality")
 
+cov1 <- vcovHC(model1, type = "HC1")
+robust_se <- sqrt(diag(cov1))
+
+stargazer(model_q3, 
+          dep.var.labels = "Illegal Births",
+          omit.stat = "ser",
+          header = F,
+          se = list(robust_se))
+
 ```
+
+The coefficient $\beta_1$ represents the average illegal births rate post-war, and the constant term represents the average illegant births pre-war. The coefficient $\beta_2$ represents the effect on illegal births of a 1-percentage point increase in mortality. The coefficient is negative, but not significant. The point estimate is, however, in accordance with the hypothesis, in that an increased mortality leads to an increase in out-of-wedlock births. 
+
+The coefficient, however, might be biased because the model does not take into account systematic differences in the out-of-wedlock birth rate between various departments. 
+
+
 
 
 
