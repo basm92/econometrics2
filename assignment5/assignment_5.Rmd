@@ -26,3 +26,15 @@ data <- haven::read_dta("./data/marriagemarket.dta")
 ```
 
 ## Problem 1
+
+We assume the following regression model: $Y_{t,g} = \alpha_{t,g} + \delta \cdot D_{t,g} + \eta_{g} + u_{t,g}$ for $g \in \{T,C\}$ and $t \in \{0,1\}$. Then, the difference-in-difference estimator equals $\hat{\delta} = \delta \cdot D_1 + \alpha_{1,T} - \alpha_{0,T} + U_{1,T} - U_{0,T} - [\alpha_{1,C} - \alpha_{0,C} + U_{1,C} - U_{0,C}]$. The ATT = expected value of the DiD estimator is then:
+
+\[
+\mathbb{E}[\hat{\delta}|D=1] = \delta + [\alpha_{1,T} - \alpha_{0,T}] - [\alpha_{1,C} - \alpha_{0,C}]
+\]
+
+Hence, the expected value of $\hat{delta}$ depends on the assumption that the sum of the terms containing the $\alpha$'s equal zero, in other words, if there is a common time trend between treatment and control groups. 
+
+If we assume that the program is known beforehand (by the students), and grades are a function of effort and ability $\in \{ \text{High, Low} \}$, and high-ability students are all in the treatment group, then a fraction of the treatment group will also consist of high-effort and low-ability students, whereas the control group will consist of low-ability students only. After being provided with the incentive of housing, they will readjust their effort in the 2nd year, and hence, obtain lower grades. This causes a violation of the common trend, because the low-ability individuals who are in the treatment group will revert back to their effort level that is unincentivized by housing. 
+
+If we assume the program is not known beforehand, the students have no differing incentives, irrespective of their ability and effort. Hence, the common time trend assumption is justified and the estimator is unbiased. 
