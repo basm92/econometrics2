@@ -17,7 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #   paste(x, collapse = ", ")
 # })
 
-library(stargazer); library(tidyverse); library(haven)
+library(stargazer); library(tidyverse); 
+library(sandwich);library(haven)
 library(knitr); library(lmtest); library(sandwich); library(ivreg)
 
 # Import Stata dataset
@@ -39,11 +40,15 @@ If we assume that the program is known beforehand (by the students), and grades 
 
 If we assume the program is not known beforehand, the students have no differing incentives, irrespective of their ability and effort. Hence, the common time trend assumption is justified and the estimator is unbiased. 
 
-
 ## Problem 2
 
 __(i) Regress the number of out-of-wedlock births on the sex ratio, using only the observations from the pre-war period. Discuss your result. How can a difference-in-differences approach using the military mortality rate during WWI improve on this estimation strategy?__
 
+```{r frederik, results='asis'}
+model1 <- data %>%
+    filter(post == 0) %>%
+    lm(formula = "illeg ~ sr")
+```
 
 __(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
 
@@ -60,10 +65,21 @@ data$dummy_median_mortality <- ifelse(data$mortality > median_mortality, 1, 0) #
 
 
 
+=======
+cov1 <- vcovHC(model1, type = "HC1")
+robust_se <- sqrt(diag(cov1))
+>>>>>>> f99dcd776cb674edbdf3108599f11a2588a2580c
+
+stargazer(model1, 
+          dep.var.labels = "Illegal Births",
+          omit.stat = "ser",
+          header = F,
+          se = list(robust_se))
+```
 
 
 
-
+__(ii) Generate a dummy variable that indicates whether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
 
 
 
