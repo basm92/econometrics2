@@ -48,6 +48,15 @@ __(i) Regress the number of out-of-wedlock births on the sex ratio, using only t
 model1 <- data %>%
     filter(post == 0) %>%
     lm(formula = "illeg ~ sr")
+
+cov1 <- vcovHC(model1, type = "HC1")
+robust_se <- sqrt(diag(cov1))
+
+stargazer(model1, 
+          dep.var.labels = "Illegal Births",
+          omit.stat = "ser",
+          header = F,
+          se = list(robust_se))
 ```
 
 __(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
@@ -56,25 +65,6 @@ __(ii) Generate a dummy variable that indicates wether the military mortality in
 median_mortality <- median(mortality, na.rm=TRUE)
 data$dummy_median_mortality <- ifelse(data$mortality > median_mortality, 1, 0) # Above the median! There are some equal!
 
-```
-
-
-
-
-
-
-
-
-=======
-cov1 <- vcovHC(model1, type = "HC1")
-robust_se <- sqrt(diag(cov1))
->>>>>>> f99dcd776cb674edbdf3108599f11a2588a2580c
-
-stargazer(model1, 
-          dep.var.labels = "Illegal Births",
-          omit.stat = "ser",
-          header = F,
-          se = list(robust_se))
 ```
 
 
