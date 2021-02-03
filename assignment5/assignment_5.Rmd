@@ -17,7 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #   paste(x, collapse = ", ")
 # })
 
-library(stargazer); library(tidyverse); library(haven)
+library(stargazer); library(tidyverse); 
+library(sandwich);library(haven)
 library(knitr); library(lmtest); library(sandwich); library(ivreg)
 
 # Import Stata dataset
@@ -38,3 +39,22 @@ Hence, the expected value of $\hat{delta}$ depends on the assumption that the su
 If we assume that the program is known beforehand (by the students), and grades are a function of effort and ability $\in \{ \text{High, Low} \}$, and high-ability students are all in the treatment group, then a fraction of the treatment group will also consist of high-effort and low-ability students, whereas the control group will consist of low-ability students only. After being provided with the incentive of housing, they will readjust their effort in the 2nd year, and hence, obtain lower grades. This causes a violation of the common trend, because the low-ability individuals who are in the treatment group will revert back to their effort level that is unincentivized by housing. 
 
 If we assume the program is not known beforehand, the students have no differing incentives, irrespective of their ability and effort. Hence, the common time trend assumption is justified and the estimator is unbiased. 
+
+## Problem 2
+
+```{r frederik, results='asis'}
+model1 <- data %>%
+    filter(post == 0) %>%
+    lm(formula = "illeg ~ sr")
+
+cov1 <- vcovHC(model1, type = "HC1")
+robust_se <- sqrt(diag(cov1))
+
+stargazer(model1, 
+          dep.var.labels = "Illegal Births",
+          omit.stat = "ser",
+          header = F,
+          se = list(robust_se))
+```
+
+
