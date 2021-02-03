@@ -38,3 +38,29 @@ Hence, the expected value of $\hat{delta}$ depends on the assumption that the su
 If we assume that the program is known beforehand (by the students), and grades are a function of effort and ability $\in \{ \text{High, Low} \}$, and high-ability students are all in the treatment group, then a fraction of the treatment group will also consist of high-effort and low-ability students, whereas the control group will consist of low-ability students only. After being provided with the incentive of housing, they will readjust their effort in the 2nd year, and hence, obtain lower grades. This causes a violation of the common trend, because the low-ability individuals who are in the treatment group will revert back to their effort level that is unincentivized by housing. 
 
 If we assume the program is not known beforehand, the students have no differing incentives, irrespective of their ability and effort. Hence, the common time trend assumption is justified and the estimator is unbiased. 
+
+
+## Problem 2
+
+__(i) Regress the number of out-of-wedlock births on the sex ratio, using only the observations from the pre-war period. Discuss your result. How can a difference-in-differences approach using the military mortality rate during WWI improve on this estimation strategy?__
+
+
+__(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
