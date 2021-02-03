@@ -48,27 +48,9 @@ __(i) Regress the number of out-of-wedlock births on the sex ratio, using only t
 model1 <- data %>%
     filter(post == 0) %>%
     lm(formula = "illeg ~ sr")
-```
 
-__(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
-
-``` {r q2}
-median_mortality <- median(mortality, na.rm=TRUE)
-data$dummy_median_mortality <- ifelse(data$mortality > median_mortality, 1, 0) # Above the median! There are some equal!
-
-```
-
-
-
-
-
-
-
-
-=======
 cov1 <- vcovHC(model1, type = "HC1")
 robust_se <- sqrt(diag(cov1))
->>>>>>> f99dcd776cb674edbdf3108599f11a2588a2580c
 
 stargazer(model1, 
           dep.var.labels = "Illegal Births",
@@ -79,10 +61,36 @@ stargazer(model1,
 
 The estimates focus on the cross-section and relies on between-department variation to find the correlation between the sex-rate and illegal births. This gives a biased estimate, because the (unaccounted for) department effects might be correlated with the sex ratio. The difference in difference estimator can improve on this by considering the within-departement estimate, thereby eliminating time- and department-specific effects from the estimate for the influence of the sex ratio. 
 
-__(ii) Generate a dummy variable that indicates whether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
+__(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
+
+``` {r q2, message = FALSE}
+data <- data %>%
+    mutate(htm_mortality = if_else(mortality > median(mortality, na.rm = T), 
+                                   1, 
+                                   0)
+           )
+
+table <-  data %>%
+    filter(!is.na(htm_mortality)) %>%
+    group_by(post, htm_mortality) %>%
+    summarize(mean_illeg = mean(illeg, na.rm = T)) 
+
+kable(table)
+
+did <- (6.154916 - 5.086213) - (8.448658 - 7.960866)
+
+```
 
 
+The difference in difference estimator is equal to `r did`, indicating an increase of illegal births by `r did` percentage points, consistent with the hypothesis. 
 
+__(iii) Estimate the following model, which estimates the difference-in-differences estimator in a regression equation. What is the interpretation of the coefficients $\beta_1$ and $\beta_2$? What do you conclude about the effect of male scarcity on the number of out-of-wedlock births?__
+
+```{r q3}
+model_q3 <- lm(data = data, 
+               formula = "illeg ~ post + post:mortality")
+
+```
 
 
 
