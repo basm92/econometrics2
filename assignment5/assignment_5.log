@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.1.28)  3 FEB 2021 17:16
+=======
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.3)  3 FEB 2021 17:16
+>>>>>>> e6ade670ed4049181bb712c1795c723396fb1c89
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -655,6 +659,9 @@ File: l3backend-pdftex.def 2021-01-09 L3 backend support: PDF output (pdfTeX)
 
 LaTeX Warning: Label `' multiply defined.
 
+
+LaTeX Warning: Label `' multiply defined.
+
 )
 \openout1 = `assignment_5.aux'.
 
@@ -833,11 +840,19 @@ LaTeX Font Info:    Font shape `T1/erewhon-LF/m/it' will be
 (Font)              scaled to size 10.63995pt on input line 193.
 [1
 
+<<<<<<< HEAD
 {c:/Users/walte/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}] [2]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
 344.
 (c:/Users/walte/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+=======
+{/Users/basmachielsen/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.
+map}] [2]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+325.
+(/Users/basmachielsen/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+>>>>>>> e6ade670ed4049181bb712c1795c723396fb1c89
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3
 
@@ -849,6 +864,7 @@ Package rerunfilecheck Info: File `assignment_5.out' has not changed.
 (rerunfilecheck)             Checksum: 3921C61A2C52784ADB21D781F6F62C6B;184.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
  14018 strings out of 481252
  196210 string characters out of 5914123
  485741 words of memory out of 5000000
@@ -876,5 +892,35 @@ PDF statistics:
  96 PDF objects out of 1000 (max. 8388607)
  69 compressed objects within 1 object stream
  12 named destinations out of 1000 (max. 500000)
+=======
+ 14197 strings out of 481252
+ 200107 string characters out of 5914303
+ 490866 words of memory out of 5000000
+ 30846 multiletter control sequences out of 15000+600000
+ 467004 words of font info for 120 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 71i,10n,74p,339b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.en
+c}{/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/erewhon/zut1
+_totpyl.enc}{/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm
+/lm-ec.enc}{/Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/enc/dvips/ere
+whon/zut1_vcw2hi.enc}</Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/typ
+e1/public/erewhon/Erewhon-Bold.pfb></Users/basmachielsen/Library/TinyTeX/texmf-
+dist/fonts/type1/public/erewhon/Erewhon-Italic.pfb></Users/basmachielsen/Librar
+y/TinyTeX/texmf-dist/fonts/type1/public/erewhon/Erewhon-Regular.pfb></Users/bas
+machielsen/Library/TinyTeX/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></Us
+ers/basmachielsen/Library/TinyTeX/texmf-dist/fonts/type1/public/erewhon/erewMI.
+pfb></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk
+10.pfb></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/l
+mtt10.pfb></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/type1/public/n
+ewtx/txmiaSTbb.pfb></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts/type1
+/public/newtx/txmiaX.pfb></Users/basmachielsen/Library/TinyTeX/texmf-dist/fonts
+/type1/public/newtx/txsys.pfb>
+Output written on assignment_5.pdf (4 pages, 203452 bytes).
+PDF statistics:
+ 103 PDF objects out of 1000 (max. 8388607)
+ 74 compressed objects within 1 object stream
+ 13 named destinations out of 1000 (max. 500000)
+>>>>>>> e6ade670ed4049181bb712c1795c723396fb1c89
  17 words of extra memory for PDF output out of 10000 (max. 10000000)
 
