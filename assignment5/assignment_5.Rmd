@@ -114,7 +114,6 @@ library(plm)
 model_q4 <- plm(data = data, 
                formula = "illeg ~ post + post:mortality", 
                model='within',
-               effect = 'twoways',
                index = 'depc')
 summary(model_q4)
 ```
