@@ -59,9 +59,11 @@ stargazer(model1,
           se = list(robust_se))
 ```
 
-
+The estimates focus on the cross-section and relies on between-department variation to find the correlation between the sex-rate and illegal births. This gives a biased estimate, because the (unaccounted for) department effects might be correlated with the sex ratio. The difference in difference estimator can improve on this by considering the within-departement estimate, thereby eliminating time- and department-specific effects from the estimate for the influence of the sex ratio. 
 
 __(ii) Generate a dummy variable that indicates whether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
+
+
 
 
 
