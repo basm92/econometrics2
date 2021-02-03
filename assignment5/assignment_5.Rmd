@@ -48,16 +48,6 @@ __(i) Regress the number of out-of-wedlock births on the sex ratio, using only t
 model1 <- data %>%
     filter(post == 0) %>%
     lm(formula = "illeg ~ sr")
-<<<<<<< HEAD
-
-cov1 <- vcovHC(model1, type = "HC1")
-robust_se <- sqrt(diag(cov1))
-
-stargazer(model1, 
-          dep.var.labels = "Illegal Births",
-          omit.stat = "ser",
-          header = F,
-          se = list(robust_se))
 
 cov1 <- vcovHC(model1, type = "HC1")
 robust_se <- sqrt(diag(cov1))
@@ -71,7 +61,7 @@ stargazer(model1,
 
 The estimates focus on the cross-section and relies on between-department variation to find the correlation between the sex-rate and illegal births. This gives a biased estimate, because the (unaccounted for) department effects might be correlated with the sex ratio. The difference in difference estimator can improve on this by considering the within-departement estimate, thereby eliminating time- and department-specific effects from the estimate for the influence of the sex ratio. 
 
-__(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
+__(ii) Generate a dummy variable that indicates whether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
 
 ``` {r q2, message = FALSE}
 data <- data %>%
@@ -114,12 +104,6 @@ stargazer(model_q3,
 The coefficient $\beta_1$ represents the average illegal births rate post-war, and the constant term represents the average illegant births pre-war. The coefficient $\beta_2$ represents the effect on illegal births of a 1-percentage point increase in mortality. The coefficient is negative, but not significant. The point estimate is, however, in accordance with the hypothesis, in that an increased mortality leads to an increase in out-of-wedlock births. 
 
 The coefficient, however, might be biased because the model does not take into account systematic differences in the out-of-wedlock birth rate between various departments. 
-
-
-
-
-
-
 
 
 
