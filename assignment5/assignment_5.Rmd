@@ -89,16 +89,6 @@ table <-  data %>%
 kable(table)
 
 did <- (6.154916 - 5.086213) - (8.448658 - 7.960866)
-
->>>>>>> 9ba8d866e1f1aeb758598231e75f0566c1722d25
-```
-
-__(ii) Generate a dummy variable that indicates wether the military mortality in a region is above the median military mortality or not. Make a table with the mean percentage of out-of-wedlock births for the high and low mortality regions, both before and after the war. Use the numbers from the table to calculate the difference-in-differences estimator.__
-
-``` {r q2}
-median_mortality <- median(mortality, na.rm=TRUE)
-data$dummy_median_mortality <- ifelse(data$mortality > median_mortality, 1, 0) # Above the median! There are some equal!
-
 ```
 
 
