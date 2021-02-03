@@ -48,7 +48,6 @@ __(i) Regress the number of out-of-wedlock births on the sex ratio, using only t
 model1 <- data %>%
     filter(post == 0) %>%
     lm(formula = "illeg ~ sr")
-<<<<<<< HEAD
 
 cov1 <- vcovHC(model1, type = "HC1")
 robust_se <- sqrt(diag(cov1))
@@ -59,14 +58,6 @@ stargazer(model1,
           header = F,
           se = list(robust_se))
 
-cov1 <- vcovHC(model1, type = "HC1")
-robust_se <- sqrt(diag(cov1))
-
-stargazer(model1, 
-          dep.var.labels = "Illegal Births",
-          omit.stat = "ser",
-          header = F,
-          se = list(robust_se))
 ```
 
 The estimates focus on the cross-section and relies on between-department variation to find the correlation between the sex-rate and illegal births. This gives a biased estimate, because the (unaccounted for) department effects might be correlated with the sex ratio. The difference in difference estimator can improve on this by considering the within-departement estimate, thereby eliminating time- and department-specific effects from the estimate for the influence of the sex ratio. 
@@ -116,10 +107,20 @@ The coefficient $\beta_1$ represents the average illegal births rate post-war, a
 The coefficient, however, might be biased because the model does not take into account systematic differences in the out-of-wedlock birth rate between various departments. 
 
 
+__(iv) Run the same regression but now include dummies for all the departments. Discuss your results. Do you prefer this estimation over the estimation of question iii)? Why?__
+
+```{r}
+library(plm)
+model_q4 <- plm(data = data, 
+               formula = "illeg ~ post + post:mortality", 
+               model='within',
+               effect = 'twoways',
+               index = 'depc')
+summary(model_q4)
+```
 
 
-
-
+We prefer this estimation over the estimation of question iii, because in question iii we do not take the department specifc fixed effects into account. These are likely to bias our estimate of the treatment effect if excluded. This is because it is likely that there are department specific levels of out of wedlock births, thus not including department dummies, means that in the regression of question iii there could be a correlation between the error term (includes the department specific effects) and the mortality rate. This correlation would then violate the zero conditional mean assumption.
 
 
 
