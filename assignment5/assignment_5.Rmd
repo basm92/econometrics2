@@ -34,7 +34,7 @@ We assume the following regression model: $Y_{t,g} = \alpha_{t,g} + \delta \cdot
 \mathbb{E}[\hat{\delta}|D=1] = \delta + [\alpha_{1,T} - \alpha_{0,T}] - [\alpha_{1,C} - \alpha_{0,C}]
 \]
 
-Hence, the expected value of $\hat{delta}$ depends on the assumption that the sum of the terms containing the $\alpha$'s equal zero, in other words, if there is a common time trend between treatment and control groups. 
+Hence, the expected value of $\hat{\delta}$ depends on the assumption that the sum of the terms containing the $\alpha$'s equal zero, in other words, if there is a common time trend between treatment and control groups. 
 
 If we assume that the program is known beforehand (by the students), and grades are a function of effort and ability $\in \{ \text{High, Low} \}$, and high-ability students are all in the treatment group, then a fraction of the treatment group will also consist of high-effort and low-ability students, whereas the control group will consist of low-ability students only. After being provided with the incentive of housing, they will readjust their effort in the 2nd year, and hence, obtain lower grades. This causes a violation of the common trend, because the low-ability individuals who are in the treatment group will revert back to their effort level that is unincentivized by housing. 
 
@@ -91,7 +91,7 @@ __(iii) Estimate the following model, which estimates the difference-in-differen
 model_q3 <- lm(data = data, 
                formula = "illeg ~ post + post:mortality")
 
-cov1 <- vcovHC(model1, type = "HC1")
+cov1 <- vcovHC(model_q3, type = "HC1")
 robust_se <- sqrt(diag(cov1))
 
 stargazer(model_q3, 
@@ -102,7 +102,7 @@ stargazer(model_q3,
 
 ```
 
-The coefficient $\beta_1$ represents the average illegal births rate post-war, and the constant term represents the average illegal births pre-war. The coefficient $\beta_2$ represents the effect on illegal births of a 1-percentage point increase in mortality. The coefficient is negative, but not significant. The point estimate is, however, in accordance with the hypothesis, in that an increased mortality leads to an increase in out-of-wedlock births. 
+The coefficient $\beta_2$ represents the average illegal births rate post-war if the mortality rate would have been zero, and the constant term represents the average illegal births pre-war. The coefficient $\beta_1$ represents the effect on illegal births of a 1-percentage point increase in mortality. The coefficient is negative, and significant. The point estimate is, however, not in accordance with the hypothesis, because according to these estimates, an increased war mortality leads to a decrease in out-of-wedlock births. 
 
 The coefficient, however, might be biased because the model does not take into account systematic differences in the out-of-wedlock birth rate between various departments. 
 
@@ -121,7 +121,7 @@ stargazer(model_q4,
 ```
 
 
-We prefer this estimation over the estimation of question iii, because in question iii we do not take the department specifc fixed effects into account. These are likely to bias our estimate of the treatment effect if excluded. This is because it is likely that there are department specific levels of out of wedlock births, thus not including department dummies, means that in the regression of question iii there could be a correlation between the error term (includes the department specific effects) and the mortality rate. This correlation would then violate the zero conditional mean assumption.
+We prefer this estimation over the estimation of question iii, because in question iii we do not take the department specific fixed effects into account. These are likely to bias our estimate of the treatment effect if excluded. This is because it is likely that there are department specific levels of out of wedlock births, thus not including department dummies, means that in the regression of question iii there could be a correlation between the error term (includes the department specific effects) and the mortality rate. This correlation would then violate the zero conditional mean assumption.
 
 __(v) What is the key assumption when you apply difference-in-differences? What would be a way to investigate the plausibility of this assumption? Why is that not possible with this dataset?__
 
